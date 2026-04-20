@@ -8,6 +8,7 @@ import ScrollCTA from './components/ScrollCTA'
 import SoundControl from './components/SoundControl'
 import SplashScreen from './components/SplashScreen'
 import SmoothFollower from './components/SmoothFollower'
+import BackgroundVideo from './components/BackgroundVideo'
 import './App.css'
 
 function App() {
@@ -15,6 +16,7 @@ function App() {
 
   return (
     <>
+      <BackgroundVideo overlayClassName="global-overlay" />
       <SmoothFollower />
       {!hasStarted ? (
         <SplashScreen onStart={() => setHasStarted(true)} />
