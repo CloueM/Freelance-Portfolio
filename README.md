@@ -10,36 +10,11 @@ Hi! I'm **Cloue Macadangdang**, a Front-End Web Developer and Designer specializ
 ---
 
 ## Connect with Me
-- **Portfolio Website:** [clouemac.com](https://clouemac.com/)
+- **Portfolio Website:** [kurowii.com](https://kurowii.com/)
 - **LinkedIn:** [Cloue Macadangdang](https://www.linkedin.com/in/cloue-macadangdang)
-- **Email:** [contact@clouemac.com](mailto:contact@clouemac.com)
+- **Email:** [hello@kurowii.com](mailto:hello@kurowii.com)
 
 ---
-
-## Tech Stack
-
-### Development
-- **Core:** JavaScript (ES6+), React, HTML5, CSS3, SASS
-- **Backend/Tools:** Node.js, MySQL, Firebase, Git, GitHub
-- **E-commerce:** WordPress, Shopify, WooCommerce
-
-### Design
-- **UI/UX:** Figma, Adobe XD
-- **Creative:** Adobe Illustrator, Adobe Photoshop, Canva
-
-### Infrastructure & Cloud
-- **Platforms:** AWS, Azure, Linux
-
----
-
-## Project Structure
-- `src/components/`: Modular React components.
-- `src/styles/`: Vanilla CSS and component-specific styles.
-- `src/data/`: Static data for projects, stacks, and FAQs.
-- `public/`: Public assets and SEO metadata.
-
----
-
 <p align="center">
   Thank you for visiting my github portfolio! - Cloue Macadangdang
 </p>
