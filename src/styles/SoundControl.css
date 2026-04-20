@@ -1,0 +1,47 @@
+.sound-control-container {
+  position: fixed;
+  bottom: 30px;
+  left: 30px;
+  z-index: 1000;
+}
+
+.sound-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  border: none;
+  background-color: white;
+  color: var(--color-charcoal);
+  cursor: pointer;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
+}
+
+.sound-btn.scrolled {
+  background-color: var(--color-charcoal);
+  color: var(--color-off-white);
+}
+
+.sound-btn:hover {
+  background-color: #f0f0f0;
+  transform: translateY(-2px);
+}
+
+.sound-btn.scrolled:hover {
+  background-color: var(--color-stone);
+}
+
+@media (max-width: 768px) {
+  .sound-control-container {
+    bottom: 20px;
+    left: 20px;
+  }
+
+  .sound-btn {
+    width: 40px;
+    height: 40px;
+  }
+}

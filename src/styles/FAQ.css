@@ -1,0 +1,110 @@
+.faq-section {
+    width: 100%;
+    background-color: var(--color-dust);
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* Container (single column) */
+.faq-container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Main Column — Accordion */
+.faq-right {
+    background-color: var(--color-dust);
+    color: var(--color-charcoal);
+    padding: 5rem var(--layout-margin);
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.faq-title {
+    font-family: var(--font-primary);
+    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-weight: var(--font-weight-h1);
+    color: var(--color-charcoal);
+    line-height: 1;
+    margin: 0;
+    text-transform: uppercase;
+}
+
+/* Accordion List */
+.faq-list {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Individual FAQ Item */
+.faq-item {
+    border-bottom: 1px solid rgba(30, 30, 30, 0.15);
+}
+
+.faq-item:first-child {
+    border-top: 1px solid rgba(30, 30, 30, 0.15);
+}
+
+.faq-question {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 1.25rem 0;
+    text-align: left;
+    color: var(--color-stone);
+    transition: color 0.25s ease;
+}
+
+.faq-question:hover {
+    color: var(--color-charcoal);
+}
+
+.faq-item.open .faq-question {
+    color: var(--color-charcoal);
+}
+
+.faq-question-text {
+    font-family: var(--font-primary);
+    font-size: var(--text-h3);
+    font-weight: var(--font-weight-h3);
+    line-height: 1.3;
+}
+
+.faq-icon {
+    font-size: 0.75rem;
+    flex-shrink: 0;
+    color: var(--color-stone);
+    transition: color 0.25s ease;
+}
+
+.faq-item.open .faq-icon {
+    color: var(--color-charcoal);
+}
+
+.faq-answer-wrapper {
+    overflow: hidden;
+    transition: max-height 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.faq-answer {
+    font-family: var(--font-primary);
+    font-size: var(--text-body);
+    font-weight: var(--font-weight-body);
+    color: var(--color-charcoal);
+    line-height: 1.7;
+    margin: 0;
+    padding-bottom: 1.25rem;
+    opacity: 0.65;
+}
+
+@media (min-width: 769px) {
+    .faq-right {
+        padding: 6rem var(--layout-margin);
+    }
+}

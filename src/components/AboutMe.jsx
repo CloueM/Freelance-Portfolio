@@ -1,0 +1,116 @@
+import React, { useState } from 'react';
+import { stackCategories, categoryLabels } from '../data/categorizedStacks';
+import { playHoverSound, playSelectSound } from '../utils/sound';
+import '../styles/AboutMe.css';
+
+const AboutMe = () => {
+    const [activeCategory, setActiveCategory] = useState('All');
+    const stacks = stackCategories[activeCategory];
+
+    return (
+        <section className="about-me-section">
+            <div className="about-me-container">
+
+                {/* Left Column — Title & Description */}
+                <div className="about-me-left">
+                    <h2 className="about-me-title">About Me</h2>
+                    <div className="about-me-description">
+                        <p>
+                            I’m a front-end developer and web designer, but my foundation is actually in IT infrastructure.
+                        </p>
+                        <p>
+                            From 2022 to 2024, I completed the Computer Information Technology (CIT) diploma at BCIT. It was a heavy, hands-on program focused on the backend of tech. I spent two years working directly with Linux servers, enterprise networking, databases, and Python. It taught me exactly how systems communicate under the hood.
+                        </p>
+                        <p>
+                            However, I realized I really wanted to build the things people actually see and interact with. To make that switch, I completed the Front-End Web Developer Certificate, also at BCIT. That program allowed me to focus purely on the user-facing side of the web, spending my time strictly on React, JavaScript, advanced CSS, and modern web platforms like WordPress and Shopify.
+                        </p>
+                        <p>
+                            Having both of these backgrounds completely changes how I work. Because of my IT diploma, I care just as much about how a codebase is organized, optimized, and deployed as I do about how a button feels on hover.
+                        </p>
+                        <p>
+                            Today, my focus is on the front-end, designing clean UI in Figma, shipping production ready React apps, and developing high-performance web solutions, built with an understanding of how they run from the server to the screen.
+                        </p>
+                    </div>
+                </div>
+
+                {/* Right Column — Stack Nav & Grid */}
+                <div className="about-me-right">
+                    {/* Category Nav */}
+                    <nav className="stacks-nav">
+                        <div className="stacks-nav-pill">
+                            {categoryLabels.map((label) => (
+                                <button
+                                    key={label}
+                                    className={`stacks-nav-btn ${activeCategory === label ? 'active' : ''}`}
+                                    onMouseEnter={playHoverSound}
+                                    onClick={() => { playSelectSound(); setActiveCategory(label); }}
+                                >
+                                    {label}
+                                </button>
+                            ))}
+                        </div>
+                    </nav>
+
+                    {/* Stacks Grid */}
+                    <div className="stacks-grid">
+                        {stacks.filter(Boolean).map((stack) => {
+                            const Icon = stack.icon;
+                            return (
+                                <div key={stack.name} className="stack-pill" onMouseEnter={playHoverSound}>
+                                    <span className="stack-pill-icon">
+                                        <Icon width={20} height={20} />
+                                    </span>
+                                    <span className="stack-pill-name">{stack.name}</span>
+                                </div>
+                            );
+                        })}
+                    </div>
+
+                    {/* Social Links */}
+                    <div className="about-me-socials">
+                        <p className="socials-title">Social Links</p>
+                        <div className="socials-row">
+                            <a
+                                href="https://github.com/CloueM"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-link"
+                                aria-label="GitHub"
+                                onMouseEnter={playHoverSound}
+                                onClick={playSelectSound}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2A10 10 0 0 0 2 12c0 4.42 2.87 8.17 6.84 9.5c.5.08.66-.23.66-.5v-1.69c-2.77.6-3.36-1.34-3.36-1.34c-.46-1.16-1.11-1.47-1.11-1.47c-.91-.62.07-.6.07-.6c1 .07 1.53 1.03 1.53 1.03c.87 1.52 2.34 1.07 2.91.83c.09-.65.35-1.09.63-1.34c-2.22-.25-4.55-1.11-4.55-4.92c0-1.11.38-2 1.03-2.71c-.1-.25-.45-1.29.1-2.64c0 0 .84-.27 2.75 1.02c.79-.22 1.65-.33 2.5-.33s1.71.11 2.5.33c1.91-1.29 2.75-1.02 2.75-1.02c.55 1.35.2 2.39.1 2.64c.65.71 1.03 1.6 1.03 2.71c0 3.82-2.34 4.66-4.57 4.91c.36.31.69.92.69 1.85V21c0 .27.16.59.67.5C19.14 20.16 22 16.42 22 12A10 10 0 0 0 12 2" /></svg>
+                                <span className="social-label">Github</span>
+                            </a>
+                            <a
+                                href="https://www.linkedin.com/in/cloue-macadangdang"
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="social-link"
+                                aria-label="LinkedIn"
+                                onMouseEnter={playHoverSound}
+                                onClick={playSelectSound}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z" /></svg>
+                                <span className="social-label">LinkedIn</span>
+                            </a>
+                            <a
+                                href="mailto:hello@kurowii.com"
+                                className="social-link"
+                                aria-label="Email"
+                                onMouseEnter={playHoverSound}
+                                onClick={playSelectSound}
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4l-8 5l-8-5V6l8 5l8-5z" /></svg>
+                                <span className="social-label">Email</span>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+    );
+};
+
+export default AboutMe;

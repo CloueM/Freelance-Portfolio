@@ -1,0 +1,126 @@
+.site-footer {
+    background-color: var(--color-charcoal);
+    color: var(--color-off-white);
+    padding: 6rem var(--layout-margin) 3rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.footer-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+.footer-top {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+}
+
+@media (min-width: 768px) {
+    .footer-top {
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: flex-start;
+    }
+}
+
+.footer-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.footer-logo {
+    width: 80px;
+    height: 80px;
+}
+
+
+.footer-nav {
+    display: flex;
+    gap: 4rem;
+}
+
+.footer-nav-group {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.footer-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    opacity: 0.4;
+    margin-bottom: 0.5rem;
+}
+
+.footer-link {
+    color: var(--color-off-white);
+    text-decoration: none;
+    font-size: 1rem;
+    font-weight: 400;
+    transition: opacity 0.3s ease;
+    opacity: 0.8;
+}
+
+.footer-link:hover {
+    opacity: 1;
+}
+
+.footer-bottom {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    color: rgba(255, 255, 255, 0.4);
+    font-size: 0.75rem;
+    font-weight: 400;
+    letter-spacing: 0.05em;
+}
+
+@media (min-width: 768px) {
+    .footer-bottom {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}
+
+.footer-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.copyright {
+    margin: 0;
+}
+
+.music-credit {
+    margin: 0;
+    font-size: 0.65rem;
+    opacity: 0.6;
+    letter-spacing: 0.1em;
+    font-weight: 500;
+}
+
+.music-credit a {
+    color: inherit;
+    text-decoration: none;
+    transition: opacity 0.2s ease;
+}
+
+.music-credit a:hover {
+    opacity: 1;
+    text-decoration: underline;
+}
+
+.footer-tagline {
+    font-weight: 600;
+}

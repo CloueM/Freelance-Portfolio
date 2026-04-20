@@ -1,0 +1,74 @@
+@font-face {
+   font-family: 'Chillax';
+   src: url('./fonts/Chillax-Variable.woff2') format('woff2'),
+      url('./fonts/Chillax-Variable.woff') format('woff'),
+      url('./fonts/Chillax-Variable.ttf') format('truetype');
+   font-weight: 200 700;
+   font-style: normal;
+   font-display: swap;
+}
+
+:root {
+   --color-off-white: #F7F5F2;
+   --color-dust: #DCD6CC;
+   --color-neutral: #A99F96;
+   --color-stone: #6F6860;
+   --color-charcoal: #1E1E1E;
+
+   --font-primary: 'Chillax', sans-serif;
+
+   --text-display: 3rem;
+   --text-h1: 2rem;
+   --text-h2: 1.5rem;
+   --text-h3: 1.25rem;
+   --text-body: 0.875rem;
+   --text-caption: 0.6875rem;
+
+   --font-weight-display: 700;
+   --font-weight-h1: 700;
+   --font-weight-h2: 600;
+   --font-weight-h3: 500;
+   --font-weight-body: 400;
+   --font-weight-caption: 200;
+
+   --layout-margin: 1rem;
+}
+
+@media (min-width: 768px) {
+   :root {
+      --text-display: clamp(4rem, 6.5vw, 6.5rem);
+      --text-h1: 4rem;
+      --text-h2: 3rem;
+      --text-h3: 2rem;
+      --text-body: 1rem;
+      --text-caption: 0.75rem;
+
+      --layout-margin: clamp(2rem, 10vw, 13rem);
+   }
+}
+
+body {
+   font-family: var(--font-primary);
+   margin: 0;
+   padding: 0;
+   background-color: var(--color-dust);
+   color: var(--color-charcoal);
+   box-sizing: border-box;
+}
+
+* {
+   box-sizing: border-box;
+}
+
+/* Hidden, just for SEO */
+.sr-only {
+   position: absolute;
+   width: 1px;
+   height: 1px;
+   padding: 0;
+   margin: -1px;
+   overflow: hidden;
+   clip: rect(0, 0, 0, 0);
+   white-space: nowrap;
+   border-width: 0;
+}
