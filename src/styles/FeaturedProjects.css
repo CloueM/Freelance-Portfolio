@@ -27,7 +27,7 @@
     align-items: center;
     gap: 0.5rem;
     padding: 0.75rem 1.5rem;
-    background-color: rgba(255, 255, 255, 0.1);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.1), rgba(255, 255, 255, 0.05));
     backdrop-filter: blur(12px);
     -webkit-backdrop-filter: blur(12px);
     color: var(--color-off-white);
@@ -125,12 +125,10 @@
 .project-overlay {
     position: absolute;
     inset: 0;
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.9) 0%,
-        rgba(0, 0, 0, 0.6) 40%,
-        transparent 80%
-    );
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.9) 0%,
+            rgba(0, 0, 0, 0.6) 40%,
+            transparent 80%);
     backdrop-filter: blur(8px);
     -webkit-backdrop-filter: blur(8px);
     display: flex;
@@ -143,12 +141,10 @@
 
 .project-card:hover .project-overlay,
 .project-card.active .project-overlay {
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.7) 0%,
-        rgba(0, 0, 0, 0.3) 25%,
-        transparent 60%
-    );
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.7) 0%,
+            rgba(0, 0, 0, 0.3) 25%,
+            transparent 60%);
     backdrop-filter: blur(0);
     -webkit-backdrop-filter: blur(0);
 }
@@ -180,7 +176,7 @@
     .project-overlay {
         padding: 1.25rem;
     }
-    
+
     .overlay-description {
         font-size: 0.85rem;
         margin-bottom: 1rem;
@@ -221,8 +217,8 @@
     font-size: var(--text-body);
     font-weight: var(--font-weight-h3);
     transition: background-color 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
-                box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        transform 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94),
+        box-shadow 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
     cursor: pointer;
 }
 
