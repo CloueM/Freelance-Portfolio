@@ -14,7 +14,6 @@ const FAQ = () => {
         <section className="faq-section">
             <div className="faq-container">
 
-                {/* Full-width FAQ column */}
                 <div className="faq-right">
 
                     <h2 className="faq-title">FAQ</h2>

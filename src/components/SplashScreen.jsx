@@ -11,7 +11,7 @@ const SplashScreen = ({ onStart }) => {
         setIsClosing(true);
         setTimeout(() => {
             onStart();
-        }, 1000); // Wait for the 1s CSS transition to finish
+        }, 1000);
     };
 
     return (

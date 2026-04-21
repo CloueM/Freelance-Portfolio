@@ -28,7 +28,6 @@ const Home = () => {
         }
     }, [location]);
 
-    // Display all projects
     const projects = projectsData;
 
     return (

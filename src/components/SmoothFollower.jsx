@@ -1,5 +1,3 @@
-// Smooth Cursor Follower
-// Source: https://cursify.ui-layouts.com/components/smooth-cursor-follower
 'use client';
 import { useState, useEffect, useRef } from 'react';
 
@@ -27,7 +25,6 @@ export default function SmoothFollower() {
   useEffect(() => {
     if (isMobile) return;
 
-    // Inject global cursor hiding
     const style = document.createElement('style');
     style.innerHTML = `* { cursor: none !important; }`;
     document.head.appendChild(style);
@@ -102,7 +99,6 @@ export default function SmoothFollower() {
 
   return (
     <div style={{ pointerEvents: 'none', position: 'fixed', inset: 0, zIndex: 10000 }}>
-      {/* Dot */}
       <div
         style={{
           position: 'absolute',
@@ -116,13 +112,12 @@ export default function SmoothFollower() {
         }}
       />
 
-      {/* Border */}
       <div
         style={{
           position: 'absolute',
           borderRadius: '50%',
           border: '2px solid #1E1E1E',
-          boxShadow: '0 0 10px 3px rgba(220, 214, 204, 0.6), 0 0 20px 6px rgba(220, 214, 204, 0.3)', /* dust glow */
+          boxShadow: '0 0 10px 3px rgba(220, 214, 204, 0.6), 0 0 20px 6px rgba(220, 214, 204, 0.3)',
           width: isHovering ? '44px' : '28px',
           height: isHovering ? '44px' : '28px',
           transform: 'translate(-50%, -50%)',

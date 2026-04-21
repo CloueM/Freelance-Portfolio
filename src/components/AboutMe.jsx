@@ -1,17 +1,91 @@
-import React, { useState } from 'react';
-import { stackCategories, categoryLabels } from '../data/categorizedStacks';
+import React, { useEffect } from 'react';
+import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
+import L from 'leaflet';
+import 'leaflet/dist/leaflet.css';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import '../styles/AboutMe.css';
 
-const AboutMe = () => {
-    const [activeCategory, setActiveCategory] = useState('All');
-    const stacks = stackCategories[activeCategory];
+const customIcon = new L.divIcon({
+    className: 'custom-map-marker',
+    html: `
+    <div class="marker-content">
+      <div class="marker-dot-container">
+        <div class="marker-ping"></div>
+        <div class="marker-dot"></div>
+      </div>
+      <span class="marker-label">Vancouver</span>
+    </div>
+  `,
+    iconSize: [140, 40],
+    iconAnchor: [70, 20]
+});
 
+const CtrlScrollZoom = () => {
+    const map = useMap();
+    useEffect(() => {
+        const container = map.getContainer();
+        const handleWheel = (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                e.preventDefault();
+                if (!map.scrollWheelZoom.enabled()) {
+                    map.scrollWheelZoom.enable();
+                }
+            } else {
+                if (map.scrollWheelZoom.enabled()) {
+                    map.scrollWheelZoom.disable();
+                }
+            }
+        };
+        container.addEventListener('wheel', handleWheel, { passive: false, capture: true });
+        return () => container.removeEventListener('wheel', handleWheel, { capture: true });
+    }, [map]);
+    return null;
+};
+
+const DynamicMapController = () => {
+    const map = useMap();
+    useEffect(() => {
+        const handleResize = () => {
+            if (window.innerWidth >= 769) {
+                map.setView([49.246292, -145.0], 4);
+            } else {
+                map.setView([35.0, -123.116226], 4);
+            }
+        };
+
+        handleResize();
+        window.addEventListener('resize', handleResize);
+        return () => window.removeEventListener('resize', handleResize);
+    }, [map]);
+    return null;
+};
+
+const AboutMe = () => {
     return (
         <section className="about-me-section">
+
+            <div className="about-me-map-bg">
+                <MapContainer
+                    center={[49.246292, -123.116226]}
+                    zoom={4}
+                    scrollWheelZoom={false}
+                    zoomControl={false}
+                    attributionControl={false}
+                    style={{ height: '100%', width: '100%' }}
+                >
+                    <CtrlScrollZoom />
+                    <DynamicMapController />
+                    <TileLayer
+                        attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
+                        url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
+                        className="dark-map-tiles"
+                    />
+                    <Marker position={[49.246292, -123.116226]} icon={customIcon} />
+                </MapContainer>
+            </div>
+
             <div className="about-me-container">
 
-                {/* Left Column — Title & Description */}
                 <div className="about-me-left">
                     <h2 className="about-me-title">About Me</h2>
                     <div className="about-me-description">
@@ -31,42 +105,7 @@ const AboutMe = () => {
                             Today, my focus is on the front-end, designing clean UI in Figma, shipping production ready React apps, and developing high-performance web solutions, built with an understanding of how they run from the server to the screen.
                         </p>
                     </div>
-                </div>
 
-                {/* Right Column — Stack Nav & Grid */}
-                <div className="about-me-right">
-                    {/* Category Nav */}
-                    <nav className="stacks-nav">
-                        <div className="stacks-nav-pill">
-                            {categoryLabels.map((label) => (
-                                <button
-                                    key={label}
-                                    className={`stacks-nav-btn ${activeCategory === label ? 'active' : ''}`}
-                                    onMouseEnter={playHoverSound}
-                                    onClick={() => { playSelectSound(); setActiveCategory(label); }}
-                                >
-                                    {label}
-                                </button>
-                            ))}
-                        </div>
-                    </nav>
-
-                    {/* Stacks Grid */}
-                    <div className="stacks-grid">
-                        {stacks.filter(Boolean).map((stack) => {
-                            const Icon = stack.icon;
-                            return (
-                                <div key={stack.name} className="stack-pill" onMouseEnter={playHoverSound}>
-                                    <span className="stack-pill-icon">
-                                        <Icon width={20} height={20} />
-                                    </span>
-                                    <span className="stack-pill-name">{stack.name}</span>
-                                </div>
-                            );
-                        })}
-                    </div>
-
-                    {/* Social Links */}
                     <div className="about-me-socials">
                         <p className="socials-title">Social Links</p>
                         <div className="socials-row">
@@ -107,6 +146,8 @@ const AboutMe = () => {
                         </div>
                     </div>
                 </div>
+
+                <div className="about-me-right-empty"></div>
 
             </div>
         </section>

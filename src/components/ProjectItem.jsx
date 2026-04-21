@@ -13,7 +13,6 @@ const ProjectItem = ({ project }) => {
   return (
     <div className="project-item">
       <div className="project-item-container">
-        {/* Header: Title and Actions */}
         <div className="project-header">
           <h2 className="project-title">{title}</h2>
           <div className="project-actions">
@@ -33,7 +32,6 @@ const ProjectItem = ({ project }) => {
         </div>
 
         <div className="project-body">
-          {/* Left Column: Project Image */}
           <div className="project-image-column" onMouseEnter={playProjectsHoverSound} onMouseDown={playProjectsHoverSound}>
             <div className="image-wrapper">
               <img src={image} alt={title} className="project-main-image" />
@@ -41,7 +39,6 @@ const ProjectItem = ({ project }) => {
             </div>
           </div>
 
-          {/* Right Column: description/Reflection Tabs */}
           <div className="project-details-column">
             <div className="details-rows">
               <div className="tabs-nav">
