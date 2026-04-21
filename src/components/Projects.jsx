@@ -32,7 +32,7 @@ const Projects = () => {
                     </div>
 
                     <div className="projects-content">
-                        <h1 className="projects-title">PROJECTS</h1>
+                        <h1 className="projects-title" data-text="PROJECTS">PROJECTS</h1>
                     </div>
 
                     <div className={`projects-nav-wrapper ${isScrolled ? 'fixed-nav' : ''}`}>

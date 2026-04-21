@@ -33,11 +33,11 @@ const Hero = () => {
                     <h1 className="sr-only">Cloue Macadangdang | Front End Web Developer & Designer Portfolio</h1>
                     
                     <div className="hero-left">
-                        <div className="hero-web">WEB</div>
+                        <div className="hero-web" data-text="WEB">WEB</div>
                     </div>
                     <div className="hero-right">
-                        <div className="hero-designer">DESIGNER</div>
-                        <div className="hero-developer">DEVELOPER</div>
+                        <div className="hero-designer" data-text="DESIGNER">DESIGNER</div>
+                        <div className="hero-developer" data-text="DEVELOPER">DEVELOPER</div>
                     </div>
                 </div>
 

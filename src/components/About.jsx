@@ -32,11 +32,11 @@ const About = () => {
 
                     <div className="hero-content">
                         <div className="hero-left">
-                            <h1 className="hero-web">HEY</h1>
+                            <h1 className="hero-web" data-text="HEY">HEY</h1>
                         </div>
                         <div className="hero-right">
-                            <h1 className="hero-designer">I AM</h1>
-                            <h1 className="hero-developer">CLOUE MAC</h1>
+                            <h1 className="hero-designer" data-text="I AM">I AM</h1>
+                            <h1 className="hero-developer" data-text="CLOUE MAC">CLOUE MAC</h1>
                         </div>
                     </div>
 
