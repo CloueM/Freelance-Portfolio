@@ -1,7 +1,7 @@
 .coffee-cta-section {
     width: 100%;
     padding: 8rem var(--layout-margin);
-    background-color: rgba(0, 0, 0, 0.26);
+    background-color: rgba(58, 55, 51, 0.534);
     backdrop-filter: blur(4px);
     -webkit-backdrop-filter: blur(4px);
     box-sizing: border-box;
