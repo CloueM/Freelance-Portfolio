@@ -70,6 +70,8 @@ body {
     object-fit: cover;
     z-index: -2;
     pointer-events: none;
+    will-change: transform;
+    transform: translateZ(0);
 }
 
 .global-overlay {

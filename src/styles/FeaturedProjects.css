@@ -29,6 +29,7 @@
     padding: 0.75rem 1.5rem;
     background-color: rgba(255, 255, 255, 0.1);
     backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
     color: var(--color-off-white);
     text-decoration: none;
     border-radius: 9999px;
@@ -131,6 +132,7 @@
         transparent 80%
     );
     backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     display: flex;
     flex-direction: column;
     padding: 2rem;
@@ -148,6 +150,7 @@
         transparent 60%
     );
     backdrop-filter: blur(0);
+    -webkit-backdrop-filter: blur(0);
 }
 
 .overlay-content {

@@ -8,6 +8,7 @@ const BackgroundVideo = ({ overlayClassName = "hero-overlay" }) => {
                 muted 
                 loop 
                 playsInline 
+                preload="metadata"
                 className="hero-video-bg"
             >
                 <source src="/images/background-live.mp4" type="video/mp4" />
