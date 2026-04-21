@@ -1,7 +1,9 @@
 .coffee-cta-section {
     width: 100%;
     padding: 8rem var(--layout-margin);
-    background-color: var(--color-dust);
+    background-color: rgba(0, 0, 0, 0.26);
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
     box-sizing: border-box;
 }
 
@@ -10,7 +12,7 @@
     margin: 0 auto;
     display: grid;
     grid-template-columns: 80px 1fr;
-    grid-template-areas: 
+    grid-template-areas:
         "image title"
         "desc desc"
         "btn btn";
@@ -39,7 +41,7 @@
     grid-area: title;
     font-size: clamp(1.4rem, 5vw, 1.8rem);
     font-weight: 700;
-    color: var(--color-charcoal);
+    color: var(--color-off-white);
     margin: 0;
     line-height: 1.1;
     text-align: left;
@@ -48,7 +50,7 @@
 .coffee-cta-description {
     grid-area: desc;
     font-size: 1rem;
-    color: var(--color-charcoal);
+    color: var(--color-off-white);
     opacity: 0.9;
     line-height: 1.4;
     margin: 0;
@@ -97,7 +99,7 @@
 
     .coffee-cta-container {
         grid-template-columns: minmax(300px, 1fr) 1.5fr;
-        grid-template-areas: 
+        grid-template-areas:
             "image title"
             "image desc"
             "image btn";
