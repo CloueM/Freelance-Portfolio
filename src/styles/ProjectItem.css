@@ -68,17 +68,6 @@
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
 }
 
-.action-btn.github {
-  padding: 0.8rem;
-  aspect-ratio: 1;
-  justify-content: center;
-}
-
-.github-icon {
-  width: 1.4rem;
-  height: 1.4rem;
-}
-
 .project-body {
   display: grid;
   grid-template-columns: 1.2fr 1fr;
@@ -123,41 +112,28 @@
   flex-direction: column;
 }
 
-.tabs-nav {
-  display: flex;
-  gap: 0.75rem;
+.project-scope-header {
   margin-bottom: 2.5rem;
+  border-bottom: 2px solid var(--color-off-white);
+  display: inline-block;
 }
 
-.tab-btn {
-  background: transparent;
-  color: var(--color-neutral);
-  padding: 0.5rem 0;
+.scope-title {
+  color: var(--color-off-white);
   font-family: var(--font-primary);
   font-size: var(--text-caption);
   font-weight: var(--font-weight-h3);
   text-transform: uppercase;
   letter-spacing: 0.1em;
-  border: none;
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
+  margin: 0;
+  padding-bottom: 0.5rem;
 }
 
-.tab-btn:hover {
-  color: var(--color-off-white);
-}
-
-.tab-btn.active {
-  color: var(--color-off-white);
-  border-bottom-color: var(--color-off-white);
-}
-
-.tab-content {
+.description-content {
   min-height: 200px;
 }
 
-.tab-content p {
+.description-content p {
   color: var(--color-off-white);
   font-size: 1.15rem;
   line-height: 1.8;
@@ -188,7 +164,7 @@
     font-size: clamp(1.8rem, 8vw, 3rem);
   }
 
-  .tab-content p {
+  .description-content p {
     font-size: 1rem;
   }
 }

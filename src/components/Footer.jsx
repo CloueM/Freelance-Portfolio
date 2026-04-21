@@ -37,7 +37,6 @@ const Footer = () => {
                         <div className="footer-nav-group">
                             <h3 className="footer-label">Connect</h3>
                             <a href="https://www.linkedin.com/in/cloue-macadangdang" target="_blank" rel="noopener noreferrer" className="footer-link">LinkedIn</a>
-                            <a href="https://github.com/CloueM" target="_blank" rel="noopener noreferrer" className="footer-link">GitHub</a>
                             <a href="mailto:hello@kurowii.com" target="_blank" rel="noopener noreferrer" className="footer-link">Email</a>
                         </div>
                     </nav>
