@@ -1,14 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Hero.css';
 import Logo from '../assets/favicon.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import AboutMe from './AboutMe';
 import FAQ from './FAQ';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import PageTransition from './PageTransition';
+import { scrollToSection } from '../utils/scroll';
 
 const About = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -20,6 +23,16 @@ const About = () => {
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const handleProjectsClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        if (location.pathname === '/') {
+            scrollToSection('home-projects');
+        } else {
+            navigate('/#home-projects');
+        }
+    };
 
     return (
         <PageTransition>
@@ -46,7 +59,7 @@ const About = () => {
                             <nav className="site-nav">
                                 <div className="nav-pill">
                                     <Link to="/" className="nav-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
-                                    <Link to="/projects" className="nav-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Projects</Link>
+                                    <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
                                     <Link to="/about" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>About</Link>
                                 </div>
                             </nav>

@@ -27,7 +27,7 @@ function ScrollCTA() {
         behavior: 'smooth'
       });
     } else {
-      const section = document.getElementById('featured-projects');
+      const section = document.getElementById('home-projects');
       if (section) {
         section.scrollIntoView({
           behavior: 'smooth'

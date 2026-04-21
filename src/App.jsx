@@ -2,7 +2,6 @@ import React, { useState } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import Home from './components/Home'
-import Projects from './components/Projects'
 import About from './components/About'
 import Footer from './components/Footer'
 import ScrollCTA from './components/ScrollCTA'
@@ -41,7 +40,6 @@ function App() {
             <AnimatePresence mode="wait">
               <Routes location={location} key={location.pathname}>
                 <Route path="/" element={<Home />} />
-                <Route path="/projects" element={<Projects />} />
                 <Route path="/about" element={<About />} />
               </Routes>
             </AnimatePresence>

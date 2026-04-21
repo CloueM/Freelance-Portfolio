@@ -1,10 +1,24 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import logo from '../assets/favicon.svg';
 import '../styles/Footer.css';
+import { scrollToSection } from '../utils/scroll';
+import { playSelectSound } from '../utils/sound';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
+    const navigate = useNavigate();
+    const location = useLocation();
+
+    const handleProjectsClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        if (location.pathname === '/') {
+            scrollToSection('home-projects');
+        } else {
+            navigate('/#home-projects');
+        }
+    };
 
     return (
         <footer className="site-footer">
@@ -17,8 +31,8 @@ const Footer = () => {
                         <div className="footer-nav-group">
                             <h3 className="footer-label">Navigation</h3>
                             <Link to="/" className="footer-link">Home</Link>
+                            <a href="#home-projects" className="footer-link" onClick={handleProjectsClick}>Projects</a>
                             <Link to="/about" className="footer-link">About</Link>
-                            <Link to="/projects" className="footer-link">Projects</Link>
                         </div>
                         <div className="footer-nav-group">
                             <h3 className="footer-label">Connect</h3>

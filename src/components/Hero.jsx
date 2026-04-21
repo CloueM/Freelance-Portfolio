@@ -1,23 +1,35 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Hero.css';
 import Logo from '../assets/favicon.svg';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { playHoverSound, playSelectSound } from '../utils/sound';
+import { scrollToSection } from '../utils/scroll';
 
 const Hero = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
-            // Stick to top after scrolling 150px down
             setIsScrolled(window.scrollY > 150);
         };
 
         window.addEventListener('scroll', handleScroll);
-        handleScroll(); // Initialize on mount
+        handleScroll();
 
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
+
+    const handleProjectsClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        if (location.pathname === '/') {
+            scrollToSection('home-projects');
+        } else {
+            navigate('/#home-projects');
+        }
+    };
 
     return (
         <section id="home" className="hero-section">
@@ -29,7 +41,6 @@ const Hero = () => {
                 </div>
 
                 <div className="hero-content">
-                    {/* Hidden H1 for SEO optimization */}
                     <h1 className="sr-only">Cloue Macadangdang | Front End Web Developer & Designer Portfolio</h1>
                     
                     <div className="hero-left">
@@ -45,7 +56,7 @@ const Hero = () => {
                     <nav className="site-nav">
                         <div className="nav-pill"> 
                             <Link to="/" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
-                            <Link to="/projects" className="nav-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Projects</Link>
+                            <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
                             <Link to="/about" className="nav-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>About</Link>
                         </div>
                     </nav>
