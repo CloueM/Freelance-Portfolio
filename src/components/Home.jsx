@@ -1,12 +1,12 @@
 import React, { useEffect } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import Hero from './Hero';
 import ProjectItem from './ProjectItem';
 import AboutMe from './AboutMe';
+import FAQ from './FAQ';
 import CoffeeCTA from './CoffeeCTA';
 import PageTransition from './PageTransition';
 import { projectsData } from '../data/projects';
-import { playHoverSound, playSelectSound } from '../utils/sound';
 import { scrollToSection } from '../utils/scroll';
 
 const Home = () => {
@@ -20,6 +20,10 @@ const Home = () => {
         } else if (location.hash === '#home-about') {
             setTimeout(() => {
                 scrollToSection('home-about');
+            }, 100);
+        } else if (location.hash === '#faq') {
+            setTimeout(() => {
+                scrollToSection('faq');
             }, 100);
         }
     }, [location]);
@@ -44,6 +48,8 @@ const Home = () => {
                 <div id="home-about">
                     <AboutMe />
                 </div>
+
+                <FAQ />
 
                 <CoffeeCTA />
             </main>

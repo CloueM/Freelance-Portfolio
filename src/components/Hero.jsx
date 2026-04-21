@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import '../styles/Hero.css';
 import Logo from '../assets/favicon.svg';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import { scrollToSection } from '../utils/scroll';
 
 const Hero = () => {
     const [isScrolled, setIsScrolled] = useState(false);
-    const navigate = useNavigate();
-    const location = useLocation();
 
     useEffect(() => {
         const handleScroll = () => {
@@ -24,21 +22,13 @@ const Hero = () => {
     const handleProjectsClick = (e) => {
         e.preventDefault();
         playSelectSound();
-        if (location.pathname === '/') {
-            scrollToSection('home-projects');
-        } else {
-            navigate('/#home-projects');
-        }
+        scrollToSection('home-projects');
     };
 
     const handleAboutClick = (e) => {
         e.preventDefault();
         playSelectSound();
-        if (location.pathname === '/') {
-            scrollToSection('home-about');
-        } else {
-            navigate('/#home-about');
-        }
+        scrollToSection('home-about');
     };
 
     return (

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link, useNavigate, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import logo from '../assets/favicon.svg';
 import '../styles/Footer.css';
 import { scrollToSection } from '../utils/scroll';
@@ -7,27 +7,17 @@ import { playSelectSound } from '../utils/sound';
 
 const Footer = () => {
     const currentYear = new Date().getFullYear();
-    const navigate = useNavigate();
-    const location = useLocation();
 
     const handleProjectsClick = (e) => {
         e.preventDefault();
         playSelectSound();
-        if (location.pathname === '/') {
-            scrollToSection('home-projects');
-        } else {
-            navigate('/#home-projects');
-        }
+        scrollToSection('home-projects');
     };
 
     const handleAboutClick = (e) => {
         e.preventDefault();
         playSelectSound();
-        if (location.pathname === '/') {
-            scrollToSection('home-about');
-        } else {
-            navigate('/#home-about');
-        }
+        scrollToSection('home-about');
     };
 
     return (
