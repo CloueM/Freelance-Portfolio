@@ -5,13 +5,13 @@
     overflow: hidden;
 }
 
-/* Container (single column) */
+
 .faq-container {
     display: flex;
     flex-direction: column;
 }
 
-/* Main Column — Accordion */
+
 .faq-right {
     background-color: rgba(58, 55, 51, 0.8);
     backdrop-filter: blur(12px);
@@ -34,13 +34,13 @@
     text-transform: uppercase;
 }
 
-/* Accordion List */
+
 .faq-list {
     display: flex;
     flex-direction: column;
 }
 
-/* Individual FAQ Item */
+
 .faq-item {
     border-bottom: 1px solid rgba(255, 255, 255, 0.15);
 }

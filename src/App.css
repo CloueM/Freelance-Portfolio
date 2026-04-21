@@ -60,7 +60,7 @@ body {
    box-sizing: border-box;
 }
 
-/* Global Background Video */
+
 .hero-video-bg {
     position: fixed;
     top: 0;
@@ -85,7 +85,7 @@ body {
     pointer-events: none;
 }
 
-/* Hidden, just for SEO */
+
 .sr-only {
    position: absolute;
    width: 1px;
