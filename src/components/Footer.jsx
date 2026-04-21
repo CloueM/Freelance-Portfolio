@@ -20,6 +20,16 @@ const Footer = () => {
         }
     };
 
+    const handleAboutClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        if (location.pathname === '/') {
+            scrollToSection('home-about');
+        } else {
+            navigate('/#home-about');
+        }
+    };
+
     return (
         <footer className="site-footer">
             <div className="footer-container">
@@ -31,8 +41,8 @@ const Footer = () => {
                         <div className="footer-nav-group">
                             <h3 className="footer-label">Navigation</h3>
                             <Link to="/" className="footer-link">Home</Link>
+                            <a href="#home-about" className="footer-link" onClick={handleAboutClick}>About</a>
                             <a href="#home-projects" className="footer-link" onClick={handleProjectsClick}>Projects</a>
-                            <Link to="/about" className="footer-link">About</Link>
                         </div>
                         <div className="footer-nav-group">
                             <h3 className="footer-label">Connect</h3>

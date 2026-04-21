@@ -31,6 +31,16 @@ const Hero = () => {
         }
     };
 
+    const handleAboutClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        if (location.pathname === '/') {
+            scrollToSection('home-about');
+        } else {
+            navigate('/#home-about');
+        }
+    };
+
     return (
         <section id="home" className="hero-section">
             <div className="hero-container">
@@ -57,7 +67,7 @@ const Hero = () => {
                         <div className="nav-pill"> 
                             <Link to="/" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
                             <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
-                            <Link to="/about" className="nav-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>About</Link>
+                            <a href="#home-about" className="nav-link" onMouseEnter={playHoverSound} onClick={handleAboutClick}>About</a>
                         </div>
                     </nav>
                 </div>

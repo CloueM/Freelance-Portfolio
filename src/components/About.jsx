@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import '../styles/Hero.css';
 import Logo from '../assets/favicon.svg';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
-import AboutMe from './AboutMe';
 import FAQ from './FAQ';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import PageTransition from './PageTransition';
@@ -34,6 +33,16 @@ const About = () => {
         }
     };
 
+    const handleAboutClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        if (location.pathname === '/') {
+            scrollToSection('home-about');
+        } else {
+            navigate('/#home-about');
+        }
+    };
+
     return (
         <PageTransition>
             <div>
@@ -60,14 +69,13 @@ const About = () => {
                                 <div className="nav-pill">
                                     <Link to="/" className="nav-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
                                     <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
-                                    <Link to="/about" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>About</Link>
+                                    <a href="#home-about" className="nav-link" onMouseEnter={playHoverSound} onClick={handleAboutClick}>About</a>
                                 </div>
                             </nav>
                         </div>
                     </div>
                 </section>
 
-                <AboutMe />
                 <FAQ />
             </div>
         </PageTransition>

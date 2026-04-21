@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Hero from './Hero';
 import ProjectItem from './ProjectItem';
+import AboutMe from './AboutMe';
 import CoffeeCTA from './CoffeeCTA';
 import PageTransition from './PageTransition';
 import { projectsData } from '../data/projects';
@@ -13,9 +14,12 @@ const Home = () => {
 
     useEffect(() => {
         if (location.hash === '#home-projects') {
-            // Small delay to ensure the page has rendered
             setTimeout(() => {
                 scrollToSection('home-projects');
+            }, 100);
+        } else if (location.hash === '#home-about') {
+            setTimeout(() => {
+                scrollToSection('home-about');
             }, 100);
         }
     }, [location]);
@@ -35,6 +39,10 @@ const Home = () => {
                     {projects.map(project => (
                         <ProjectItem key={project.id} project={project} />
                     ))}
+                </div>
+
+                <div id="home-about">
+                    <AboutMe />
                 </div>
 
                 <CoffeeCTA />
