@@ -12,26 +12,28 @@
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  border: none;
-  background-color: white;
-  color: var(--color-charcoal);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background-color: rgba(0, 0, 0, 0.2);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  color: var(--color-off-white);
   cursor: pointer;
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
 
 .sound-btn.scrolled {
-  background-color: var(--color-charcoal);
+  background-color: rgba(138, 135, 135, 0.4);
   color: var(--color-off-white);
 }
 
 .sound-btn:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
 }
 
 .sound-btn.scrolled:hover {
-  background-color: var(--color-stone);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 @media (max-width: 768px) {

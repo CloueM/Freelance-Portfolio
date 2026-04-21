@@ -9,10 +9,12 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: white;
-  color: var(--color-charcoal);
+  background-color: rgba(0, 0, 0, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  -webkit-backdrop-filter: blur(15px);
+  backdrop-filter: blur(15px);
+  color: var(--color-off-white);
   padding: 15px 25px;
-  border: none;
   border-radius: 50px;
   font-family: var(--font-primary);
   font-size: 14px;
@@ -22,17 +24,17 @@
 }
 
 .scroll-cta-btn.scrolled {
-  background-color: var(--color-charcoal);
+  background-color: rgba(138, 135, 135, 0.4);
   color: var(--color-off-white);
 }
 
 .scroll-cta-btn:hover {
-  background-color: #f0f0f0;
+  background-color: rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
 }
 
 .scroll-cta-btn.scrolled:hover {
-  background-color: var(--color-stone);
+  background-color: rgba(0, 0, 0, 0.5);
 }
 
 .scroll-cta-text {
