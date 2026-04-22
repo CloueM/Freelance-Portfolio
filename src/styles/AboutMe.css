@@ -48,7 +48,7 @@
 
 .about-me-title {
     font-family: var(--font-primary);
-    font-size: clamp(1.5rem, 4vw, 3rem);
+    font-size: var(--text-h1);
     font-weight: var(--font-weight-h1);
     color: var(--color-off-white);
     line-height: 1;

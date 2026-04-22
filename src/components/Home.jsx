@@ -36,8 +36,8 @@ const Home = () => {
                 <Hero />
                 
                 <div id="home-projects" className="home-projects-section">
-                    <div className="section-header" style={{ padding: '4rem var(--layout-margin) 2rem', backgroundColor: 'var(--color-charcoal)', display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-                        <h2 style={{ color: 'var(--color-off-white)', margin: 0, fontSize: 'var(--text-h2)', textAlign: 'center' }}>PROJECTS</h2>
+                    <div className="section-header" style={{ position: 'sticky', top: 0, zIndex: 100, padding: '6rem var(--layout-margin) 2rem', backgroundColor: 'var(--color-charcoal)', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                        <h2 style={{ color: 'var(--color-off-white)', margin: 0, fontSize: 'var(--text-h1)', textAlign: 'left', lineHeight: 1 }}>PROJECTS</h2>
                     </div>
                     {projects.map(project => (
                         <ProjectItem key={project.id} project={project} />
