@@ -51,10 +51,10 @@ const DynamicMapController = () => {
         const zoom = 11;
         const vancouverPoint = map.project(vancouver, zoom);
         const size = map.getSize();
-        
+
         const offsetX = window.innerWidth >= 769 ? -size.x * 0.25 : 0;
-        const offsetY = window.innerWidth < 769 ? size.y * 0.25 : 0;
-        
+        const offsetY = window.innerWidth < 769 ? size.y * 0.3 : 0;
+
         const targetPoint = vancouverPoint.add([offsetX, offsetY]);
         return map.unproject(targetPoint, zoom);
     }, [map]);
