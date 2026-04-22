@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from './Hero';
 import ProjectItem from './ProjectItem';
+import Services from './Services';
 import AboutMe from './AboutMe';
 import FAQ from './FAQ';
 import CoffeeCTA from './CoffeeCTA';
@@ -16,6 +17,10 @@ const Home = () => {
         if (location.hash === '#home-projects') {
             setTimeout(() => {
                 scrollToSection('home-projects');
+            }, 100);
+        } else if (location.hash === '#home-services') {
+            setTimeout(() => {
+                scrollToSection('home-services');
             }, 100);
         } else if (location.hash === '#home-about') {
             setTimeout(() => {
@@ -42,6 +47,13 @@ const Home = () => {
                     {projects.map(project => (
                         <ProjectItem key={project.id} project={project} />
                     ))}
+                </div>
+
+                <div id="home-services" className="home-services-section">
+                    <div className="section-header" style={{ position: 'sticky', top: 0, zIndex: 100, padding: '6rem var(--layout-margin) 2rem', backgroundColor: 'var(--color-charcoal)', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                        <h2 style={{ color: 'var(--color-off-white)', margin: 0, fontSize: 'var(--text-h1)', textAlign: 'left', lineHeight: 1 }}>SERVICES</h2>
+                    </div>
+                    <Services />
                 </div>
 
                 <div id="home-about" className="home-about-section">

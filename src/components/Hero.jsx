@@ -25,6 +25,12 @@ const Hero = () => {
         scrollToSection('home-projects');
     };
 
+    const handleServicesClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        scrollToSection('home-services');
+    };
+
     const handleAboutClick = (e) => {
         e.preventDefault();
         playSelectSound();
@@ -57,6 +63,7 @@ const Hero = () => {
                         <div className="nav-pill"> 
                             <Link to="/" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
                             <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
+                            <a href="#home-services" className="nav-link" onMouseEnter={playHoverSound} onClick={handleServicesClick}>Services</a>
                             <a href="#home-about" className="nav-link" onMouseEnter={playHoverSound} onClick={handleAboutClick}>About</a>
                         </div>
                     </nav>

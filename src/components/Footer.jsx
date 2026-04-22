@@ -14,6 +14,12 @@ const Footer = () => {
         scrollToSection('home-projects');
     };
 
+    const handleServicesClick = (e) => {
+        e.preventDefault();
+        playSelectSound();
+        scrollToSection('home-services');
+    };
+
     const handleAboutClick = (e) => {
         e.preventDefault();
         playSelectSound();
@@ -33,6 +39,7 @@ const Footer = () => {
                             <Link to="/" className="footer-link">Home</Link>
                             <a href="#home-about" className="footer-link" onClick={handleAboutClick}>About</a>
                             <a href="#home-projects" className="footer-link" onClick={handleProjectsClick}>Projects</a>
+                            <a href="#home-services" className="footer-link" onClick={handleServicesClick}>Services</a>
                         </div>
                         <div className="footer-nav-group">
                             <h3 className="footer-label">Connect</h3>
