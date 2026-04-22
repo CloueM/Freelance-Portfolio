@@ -1,7 +1,7 @@
 .about-me-section {
     position: relative;
     width: 100%;
-    min-height: 100vh;
+    height: calc(100vh - var(--section-header-height));
     background-color: var(--color-charcoal);
     box-sizing: border-box;
     overflow: hidden;
@@ -22,7 +22,7 @@
     flex-direction: column;
     justify-content: flex-end;
     width: 100%;
-    height: 100vh;
+    height: 100%;
     pointer-events: none;
 }
 
