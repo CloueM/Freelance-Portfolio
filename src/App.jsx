@@ -7,7 +7,7 @@ import ScrollCTA from './components/ScrollCTA'
 import SoundControl from './components/SoundControl'
 import SplashScreen from './components/SplashScreen'
 import SmoothFollower from './components/SmoothFollower'
-import BackgroundVideo from './components/BackgroundVideo'
+import Aurora from './components/Aurora'
 import './App.css'
 
 function App() {
@@ -16,7 +16,15 @@ function App() {
 
   return (
     <>
-      <BackgroundVideo overlayClassName="global-overlay" />
+      <div className="global-aurora-bg">
+        <Aurora
+          colorStops={["#DCD6CC","#6F6860","#A99F96"]}
+          blend={0.63}
+          amplitude={1.0}
+          speed={1}
+        />
+      </div>
+      <div className="global-overlay"></div>
       <SmoothFollower />
       <AnimatePresence mode="wait">
         {!hasStarted ? (

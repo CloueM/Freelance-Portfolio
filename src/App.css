@@ -52,7 +52,7 @@ body {
    font-family: var(--font-primary);
    margin: 0;
    padding: 0;
-   background-color: var(--color-dust);
+   background-color: var(--color-charcoal);
    color: var(--color-charcoal);
    box-sizing: border-box;
 }
@@ -62,17 +62,14 @@ body {
 }
 
 
-.hero-video-bg {
+.global-aurora-bg {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
     z-index: -2;
     pointer-events: none;
-    will-change: transform;
-    transform: translateZ(0);
 }
 
 .global-overlay {
