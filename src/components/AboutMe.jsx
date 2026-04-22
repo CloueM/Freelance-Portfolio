@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
@@ -42,9 +42,14 @@ const CtrlScrollZoom = () => {
     return null;
 };
 
-const DynamicMapController = () => {
+const DynamicMapController = ({ isCollapsed }) => {
     const map = useMap();
     const timeoutRef = React.useRef(null);
+    const isCollapsedRef = React.useRef(isCollapsed);
+
+    useEffect(() => {
+        isCollapsedRef.current = isCollapsed;
+    }, [isCollapsed]);
 
     const getInitialPosition = React.useCallback(() => {
         const vancouver = [49.246292, -123.116226];
@@ -52,8 +57,13 @@ const DynamicMapController = () => {
         const vancouverPoint = map.project(vancouver, zoom);
         const size = map.getSize();
 
-        const offsetX = window.innerWidth >= 769 ? -size.x * 0.25 : 0;
-        const offsetY = window.innerWidth < 769 ? size.y * 0.3 : 0;
+        let offsetX = 0;
+        let offsetY = 0;
+
+        if (!isCollapsedRef.current) {
+            offsetX = window.innerWidth >= 769 ? -size.x * 0.25 : 0;
+            offsetY = window.innerWidth < 769 ? size.y * 0.3 : 0;
+        }
 
         const targetPoint = vancouverPoint.add([offsetX, offsetY]);
         return map.unproject(targetPoint, zoom);
@@ -73,6 +83,12 @@ const DynamicMapController = () => {
         });
     }, [map, getInitialPosition]);
 
+    // Animate gracefully when collapsed state changes
+    useEffect(() => {
+        resetToInitial();
+    }, [isCollapsed, resetToInitial]);
+
+    // Handle map movement timeout
     useEffect(() => {
         const startTimer = () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -90,22 +106,28 @@ const DynamicMapController = () => {
         map.on('movestart', onMoveStart);
         map.on('moveend', onMoveEnd);
 
-        // Initial setup
-        handleResize();
-        window.addEventListener('resize', handleResize);
-
         return () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
             map.off('movestart', onMoveStart);
             map.off('moveend', onMoveEnd);
+        };
+    }, [map, resetToInitial]);
+
+    // Handle window resize separately, so it doesn't run on isCollapsed change
+    useEffect(() => {
+        handleResize(); // initial setup
+        window.addEventListener('resize', handleResize);
+        return () => {
             window.removeEventListener('resize', handleResize);
         };
-    }, [map, handleResize, resetToInitial]);
+    }, [handleResize]);
 
     return null;
 };
 
 const AboutMe = () => {
+    const [isCollapsed, setIsCollapsed] = useState(false);
+
     return (
         <section className="about-me-section">
 
@@ -122,7 +144,7 @@ const AboutMe = () => {
                     style={{ height: '100%', width: '100%' }}
                 >
                     <CtrlScrollZoom />
-                    <DynamicMapController />
+                    <DynamicMapController isCollapsed={isCollapsed} />
                     <TileLayer
                         attribution='&copy; <a href="https://carto.com/attributions">CARTO</a>'
                         url="https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}{r}.png"
@@ -134,24 +156,40 @@ const AboutMe = () => {
 
             <div className="about-me-container">
 
-                <div className="about-me-left">
-                    <h2 className="about-me-greeting">Hello, I'm Cloue</h2>
-                    <div className="about-me-description">
-                        <p>
-                            I’m a front-end developer and web designer, but my foundation is actually in IT infrastructure.
-                        </p>
-                        <p>
-                            From 2022 to 2024, I completed the Computer Information Technology (CIT) diploma at BCIT. It was a heavy, hands-on program focused on the backend of tech. I spent two years working directly with Linux servers, enterprise networking, databases, and Python. It taught me exactly how systems communicate under the hood.
-                        </p>
-                        <p>
-                            However, I realized I really wanted to build the things people actually see and interact with. To make that switch, I completed the Front-End Web Developer Certificate, also at BCIT. That program allowed me to focus purely on the user-facing side of the web, spending my time strictly on React, JavaScript, advanced CSS, and modern web platforms like WordPress and Shopify.
-                        </p>
-                        <p>
-                            Having both of these backgrounds completely changes how I work. Because of my IT diploma, I care just as much about how a codebase is organized, optimized, and deployed as I do about how a button feels on hover.
-                        </p>
-                        <p>
-                            Today, my focus is on the front-end, designing clean UI in Figma, shipping production ready React apps, and developing high-performance web solutions, built with an understanding of how they run from the server to the screen.
-                        </p>
+                <div className={`about-me-left ${isCollapsed ? 'collapsed' : ''}`}>
+                    <button 
+                        className="collapse-btn" 
+                        onClick={() => {
+                            playSelectSound();
+                            setIsCollapsed(!isCollapsed);
+                        }}
+                        onMouseEnter={playHoverSound}
+                        aria-label="Toggle About Me Panel"
+                    >
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" className="collapse-icon">
+                            <path fill="currentColor" d="M7.41 8.59L12 13.17l4.59-4.58L18 10l-6 6l-6-6l1.41-1.41z"/>
+                        </svg>
+                    </button>
+
+                    <div className="about-me-text-content">
+                        <h2 className="about-me-greeting">Hello, I'm Cloue</h2>
+                        <div className="about-me-description">
+                            <p>
+                                I’m a front-end developer and web designer, but my foundation is actually in IT infrastructure.
+                            </p>
+                            <p>
+                                From 2022 to 2024, I completed the Computer Information Technology (CIT) diploma at BCIT. It was a heavy, hands-on program focused on the backend of tech. I spent two years working directly with Linux servers, enterprise networking, databases, and Python. It taught me exactly how systems communicate under the hood.
+                            </p>
+                            <p>
+                                However, I realized I really wanted to build the things people actually see and interact with. To make that switch, I completed the Front-End Web Developer Certificate, also at BCIT. That program allowed me to focus purely on the user-facing side of the web, spending my time strictly on React, JavaScript, advanced CSS, and modern web platforms like WordPress and Shopify.
+                            </p>
+                            <p>
+                                Having both of these backgrounds completely changes how I work. Because of my IT diploma, I care just as much about how a codebase is organized, optimized, and deployed as I do about how a button feels on hover.
+                            </p>
+                            <p>
+                                Today, my focus is on the front-end, designing clean UI in Figma, shipping production ready React apps, and developing high-performance web solutions, built with an understanding of how they run from the server to the screen.
+                            </p>
+                        </div>
                     </div>
 
                     <div className="about-me-socials">
