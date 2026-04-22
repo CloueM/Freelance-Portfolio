@@ -8,13 +8,11 @@
     display: flex;
     align-items: center;
 }
-
 .about-me-map-bg {
     position: absolute;
     inset: 0;
     z-index: 0;
 }
-
 .about-me-container {
     position: relative;
     z-index: 10;
@@ -25,18 +23,15 @@
     height: 100%;
     pointer-events: none;
 }
-
 .about-me-left {
     background-color: rgba(0, 0, 0, 0.45);
     backdrop-filter: blur(16px);
     -webkit-backdrop-filter: blur(16px);
-    
     margin: 0;
     width: 100%;
     height: 50vh;
     border-radius: 0;
     padding: 3rem 2rem 2rem var(--layout-margin);
-    
     color: var(--color-off-white);
     display: flex;
     flex-direction: column;
@@ -45,7 +40,6 @@
     box-shadow: 0 -10px 40px rgba(0, 0, 0, 0.3);
     box-sizing: border-box;
 }
-
 .about-me-greeting {
     font-family: var(--font-primary);
     font-size: var(--text-h2);
@@ -55,7 +49,6 @@
     line-height: 1.1;
     letter-spacing: -0.02em;
 }
-
 .about-me-description {
     display: flex;
     flex-direction: column;
@@ -67,24 +60,19 @@
     scrollbar-width: thin;
     scrollbar-color: rgba(255, 255, 255, 0.2) transparent;
 }
-
 .about-me-description::-webkit-scrollbar {
     width: 6px;
 }
-
 .about-me-description::-webkit-scrollbar-track {
     background: transparent;
 }
-
 .about-me-description::-webkit-scrollbar-thumb {
     background: rgba(255, 255, 255, 0.2);
     border-radius: 4px;
 }
-
 .about-me-description::-webkit-scrollbar-thumb:hover {
     background: rgba(255, 255, 255, 0.3);
 }
-
 .about-me-description p {
     color: var(--color-off-white);
     font-weight: var(--font-weight-body);
@@ -92,21 +80,17 @@
     margin: 0;
     opacity: 0.85;
 }
-
 .about-me-right-empty {
     pointer-events: none;
 }
-
 .dark-map-tiles {
     filter: sepia(0.3) hue-rotate(345deg) saturate(0.8) brightness(0.9);
 }
-
 .custom-map-marker {
     display: flex;
     justify-content: center;
     align-items: center;
 }
-
 .marker-content {
     display: flex;
     align-items: center;
@@ -117,7 +101,6 @@
     border: 1px solid rgba(255, 255, 255, 0.1);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
 }
-
 .marker-dot-container {
     position: relative;
     display: flex;
@@ -126,7 +109,6 @@
     width: 14px;
     height: 14px;
 }
-
 .marker-label {
     color: var(--color-off-white);
     font-family: var(--font-primary);
@@ -136,7 +118,6 @@
     text-transform: uppercase;
     letter-spacing: 0.05em;
 }
-
 .marker-ping {
     position: absolute;
     width: 28px;
@@ -146,7 +127,6 @@
     opacity: 0.6;
     animation: ping 1.5s cubic-bezier(0, 0, 0.2, 1) infinite;
 }
-
 .marker-dot {
     position: relative;
     width: 12px;
@@ -156,15 +136,12 @@
     box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
     z-index: 2;
 }
-
 @keyframes ping {
     75%, 100% {
         transform: scale(2.5);
         opacity: 0;
     }
 }
-
-
 .about-me-socials {
     display: flex;
     flex-direction: column;
@@ -173,7 +150,6 @@
     padding-top: 1.5rem;
     border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .socials-title {
     font-family: var(--font-primary);
     font-size: var(--text-caption);
@@ -184,13 +160,11 @@
     opacity: 0.6;
     margin: 0;
 }
-
 .socials-row {
     display: flex;
     align-items: center;
     gap: 1.5rem;
 }
-
 .social-link {
     display: flex;
     flex-direction: column;
@@ -200,27 +174,22 @@
     text-decoration: none;
     transition: color 0.25s ease, transform 0.25s ease;
 }
-
 .social-link:hover {
     color: var(--color-stone);
     transform: translateY(-3px);
 }
-
 .social-label {
     font-family: var(--font-primary);
     font-size: var(--text-caption);
     font-weight: var(--font-weight-body);
     white-space: nowrap;
 }
-
-
 @media (min-width: 769px) {
     .about-me-container {
         flex-direction: row;
         justify-content: flex-start;
         align-items: stretch;
     }
-
     .about-me-left {
         flex: 0 0 50vw;
         max-width: none;
@@ -233,13 +202,12 @@
         justify-content: flex-start;
         box-shadow: 10px 0 40px rgba(0, 0, 0, 0.3);
     }
-    
     .about-me-description {
         flex: 1;
         min-height: 0;
     }
-
     .about-me-right-empty {
         flex: 1;
     }
 }
+

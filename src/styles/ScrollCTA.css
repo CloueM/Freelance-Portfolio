@@ -4,7 +4,6 @@
   right: 30px;
   z-index: 1000;
 }
-
 .scroll-cta-btn {
   display: flex;
   align-items: center;
@@ -22,33 +21,28 @@
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease;
 }
-
 .scroll-cta-btn.scrolled {
   background-color: rgba(138, 135, 135, 0.4);
   color: var(--color-off-white);
 }
-
 .scroll-cta-btn:hover {
   background-color: rgba(0, 0, 0, 0.3);
   transform: translateY(-2px);
 }
-
 .scroll-cta-btn.scrolled:hover {
   background-color: rgba(0, 0, 0, 0.5);
 }
-
 .scroll-cta-text {
   margin-right: 10px;
 }
-
 @media (max-width: 768px) {
   .scroll-cta-container {
     bottom: 20px;
     right: 20px;
   }
-
   .scroll-cta-btn {
     padding: 10px 20px;
     font-size: 12px;
   }
 }
+

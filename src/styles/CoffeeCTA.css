@@ -8,7 +8,6 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     box-sizing: border-box;
 }
-
 .coffee-cta-container {
     max-width: 1200px;
     margin: 0 auto;
@@ -21,24 +20,20 @@
     gap: 1.5rem 1rem;
     align-items: center;
 }
-
 .coffee-cta-header,
 .coffee-cta-content {
     display: contents;
 }
-
 .coffee-cta-image-wrapper {
     grid-area: image;
     display: flex;
     justify-content: flex-start;
 }
-
 .coffee-cta-image {
     width: 100%;
     height: auto;
     object-fit: contain;
 }
-
 .coffee-cta-title {
     grid-area: title;
     font-size: clamp(1.4rem, 5vw, 1.8rem);
@@ -48,7 +43,6 @@
     line-height: 1.1;
     text-align: left;
 }
-
 .coffee-cta-description {
     grid-area: desc;
     font-size: 1rem;
@@ -57,7 +51,6 @@
     line-height: 1.4;
     margin: 0;
 }
-
 .coffee-cta-btn {
     grid-area: btn;
     display: inline-flex;
@@ -78,27 +71,21 @@
     margin: 1rem auto 0 auto;
     text-transform: uppercase;
 }
-
 .coffee-cta-btn svg {
     transition: transform 0.3s ease;
 }
-
 .coffee-cta-btn:hover {
     background-color: #fff;
     transform: translateY(-2px);
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
 }
-
 .coffee-cta-btn:hover svg {
     transform: translate(2px, -2px);
 }
-
-
 @media (min-width: 768px) {
     .coffee-cta-section {
         padding: 16rem var(--layout-margin);
     }
-
     .coffee-cta-container {
         grid-template-columns: minmax(300px, 1fr) 1.5fr;
         grid-template-areas:
@@ -108,24 +95,21 @@
         gap: 0.5rem 6rem;
         align-items: center;
     }
-
     .coffee-cta-image-wrapper {
         justify-content: center;
     }
-
     .coffee-cta-title {
         font-size: clamp(2.5rem, 5vw, 4rem);
         align-self: flex-end;
     }
-
     .coffee-cta-description {
         font-size: 1.1rem;
         max-width: 500px;
     }
-
     .coffee-cta-btn {
         margin: 1rem 0 0 0;
         width: auto;
         padding: 1.25rem 3rem;
     }
 }
+

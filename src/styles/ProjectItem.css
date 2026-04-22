@@ -4,7 +4,6 @@
   --bg-blur: blur(12px);
   --header-blur: blur(25px);
   --header-shadow: transparent;
-
   width: 100%;
   padding: 0;
   background-color: var(--bg-color);
@@ -16,7 +15,6 @@
   align-items: center;
   border-bottom: 1px solid rgba(255, 255, 255, 0.03);
 }
-
 .project-item-container {
   width: 100%;
   display: flex;
@@ -24,7 +22,6 @@
   gap: 2rem;
   padding: 2rem 0 6rem 0;
 }
-
 .project-header {
   position: sticky;
   top: calc(8rem + var(--text-h1) + 1px);
@@ -40,11 +37,9 @@
   margin: 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
-
 .header-content {
   width: 100%;
 }
-
 .project-title {
   font-family: var(--font-primary);
   font-size: var(--text-h3);
@@ -56,14 +51,12 @@
   text-transform: uppercase;
   text-align: left;
 }
-
 .project-actions {
   display: flex;
   gap: 1rem;
   align-items: center;
   margin: auto 0 0 0;
 }
-
 .action-btn {
   background: rgba(0, 0, 0, 0.6);
   backdrop-filter: blur(12px);
@@ -80,14 +73,12 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   text-decoration: none;
 }
-
 .action-btn:hover {
   background: var(--color-off-white);
   color: var(--color-charcoal);
   transform: translateY(-4px);
   box-shadow: 0 10px 30px rgba(255, 255, 255, 0.1);
 }
-
 .project-body {
   display: grid;
   grid-template-columns: 1.5fr 1fr;
@@ -95,7 +86,6 @@
   align-items: stretch;
   padding: 0 var(--layout-margin);
 }
-
 .project-image-column {
   position: relative;
   border-radius: 16px;
@@ -105,13 +95,11 @@
   border: 1px solid rgba(255, 255, 255, 0.05);
   cursor: pointer;
 }
-
 .image-wrapper {
   height: 100%;
   width: 100%;
   position: relative;
 }
-
 .project-main-image {
   height: 100%;
   width: 100%;
@@ -119,12 +107,10 @@
   transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), filter 0.8s ease;
   filter: blur(10px) brightness(0.8);
 }
-
 .project-image-column.revealed .project-main-image {
   transform: scale(1.08);
   filter: blur(0) brightness(1);
 }
-
 .finger-icon-wrapper {
   position: absolute;
   top: 50%;
@@ -143,39 +129,32 @@
   box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   animation: floatIcon 3s ease-in-out infinite;
 }
-
 @keyframes floatIcon {
-
   0%,
   100% {
     transform: translate(-50%, -50%);
   }
-
   50% {
     transform: translate(-50%, -60%);
   }
 }
-
 .project-image-column.revealed .finger-icon-wrapper {
   opacity: 0;
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.8);
 }
-
 .image-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(to bottom, transparent 60%, rgba(0, 0, 0, 0.3) 100%);
   pointer-events: none;
 }
-
 .project-details-column {
   display: flex;
   flex-direction: column;
   height: 0;
   min-height: 100%;
 }
-
 .details-rows {
   display: flex;
   flex-direction: column;
@@ -183,13 +162,11 @@
   min-height: 0;
   margin-bottom: 1.5rem;
 }
-
 .project-scope-header {
   margin-bottom: 2.5rem;
   border-bottom: 2px solid var(--color-off-white);
   display: inline-block;
 }
-
 .scope-title {
   color: var(--color-off-white);
   font-family: var(--font-primary);
@@ -200,31 +177,25 @@
   margin: 0;
   padding-bottom: 0.5rem;
 }
-
 .description-content {
   flex: 1;
   overflow-y: auto;
   padding-right: 1rem;
 }
-
 .description-content::-webkit-scrollbar {
   width: 4px;
 }
-
 .description-content::-webkit-scrollbar-track {
   background: rgba(255, 255, 255, 0.05);
   border-radius: 10px;
 }
-
 .description-content::-webkit-scrollbar-thumb {
   background: rgba(255, 255, 255, 0.2);
   border-radius: 10px;
 }
-
 .description-content::-webkit-scrollbar-thumb:hover {
   background: rgba(255, 255, 255, 0.3);
 }
-
 .description-content p {
   color: var(--color-off-white);
   font-size: 1.15rem;
@@ -233,58 +204,48 @@
   margin: 0;
   white-space: pre-wrap;
 }
-
 @media (max-width: 1024px) {
   .project-body {
     grid-template-columns: 1fr;
     gap: 3rem;
   }
-
   .project-header {
     flex-direction: column;
     align-items: flex-start;
     gap: 1.5rem;
   }
-
   .project-details-column {
     height: auto;
     min-height: auto;
   }
-
   .description-content {
     overflow-y: visible;
   }
-
   .project-actions {
     margin-top: 2.5rem;
   }
 }
-
 @media (max-width: 768px) {
   .project-item {
     padding: 0;
   }
-
   .project-header {
     padding: 1.25rem var(--layout-margin);
   }
-
   .project-title {
     font-size: clamp(1.8rem, 8vw, 3rem);
   }
-
   .description-content p {
     font-size: 1rem;
   }
 }
-
 @media (max-width: 480px) {
   .project-header {
     padding-bottom: 1rem;
   }
-
   .action-btn {
     padding: 0.6rem 1.2rem;
     font-size: 0.9rem;
   }
 }
+

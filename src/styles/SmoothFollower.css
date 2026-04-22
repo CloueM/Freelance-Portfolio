@@ -1,7 +1,6 @@
 body, * {
   cursor: none !important;
 }
-
 .smooth-follower-container {
   pointer-events: none;
   position: fixed;
@@ -11,15 +10,14 @@ body, * {
   height: 100vh;
   z-index: 9999;
 }
-
 .smooth-follower-dot {
   position: absolute;
   border-radius: 50%;
   background-color: var(--color-charcoal, #1E1E1E);
 }
-
 .smooth-follower-border {
   position: absolute;
   border-radius: 50%;
   border: 1px solid var(--color-charcoal, #1E1E1E);
 }
+
