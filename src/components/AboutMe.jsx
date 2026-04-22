@@ -44,19 +44,64 @@ const CtrlScrollZoom = () => {
 
 const DynamicMapController = () => {
     const map = useMap();
+    const timeoutRef = React.useRef(null);
+
+    const getInitialPosition = React.useCallback(() => {
+        const vancouver = [49.246292, -123.116226];
+        const zoom = 11;
+        const vancouverPoint = map.project(vancouver, zoom);
+        const size = map.getSize();
+        
+        const offsetX = window.innerWidth >= 769 ? -size.x * 0.25 : 0;
+        const offsetY = window.innerWidth < 769 ? size.y * 0.25 : 0;
+        
+        const targetPoint = vancouverPoint.add([offsetX, offsetY]);
+        return map.unproject(targetPoint, zoom);
+    }, [map]);
+
+    const handleResize = React.useCallback(() => {
+        map.invalidateSize();
+        const target = getInitialPosition();
+        map.setView(target, 11, { animate: false });
+    }, [map, getInitialPosition]);
+
+    const resetToInitial = React.useCallback(() => {
+        const target = getInitialPosition();
+        map.flyTo(target, 11, {
+            duration: 2,
+            easeLinearity: 0.25
+        });
+    }, [map, getInitialPosition]);
+
     useEffect(() => {
-        const handleResize = () => {
-            if (window.innerWidth >= 769) {
-                map.setView([49.246292, -145.0], 4);
-            } else {
-                map.setView([35.0, -123.116226], 4);
-            }
+        const startTimer = () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            timeoutRef.current = setTimeout(resetToInitial, 3000);
         };
 
+        const onMoveStart = () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+        };
+
+        const onMoveEnd = () => {
+            startTimer();
+        };
+
+        map.on('movestart', onMoveStart);
+        map.on('moveend', onMoveEnd);
+
+        // Initial setup
         handleResize();
         window.addEventListener('resize', handleResize);
-        return () => window.removeEventListener('resize', handleResize);
-    }, [map]);
+
+        return () => {
+            if (timeoutRef.current) clearTimeout(timeoutRef.current);
+            map.off('movestart', onMoveStart);
+            map.off('moveend', onMoveEnd);
+            window.removeEventListener('resize', handleResize);
+        };
+    }, [map, handleResize, resetToInitial]);
+
     return null;
 };
 
@@ -67,7 +112,10 @@ const AboutMe = () => {
             <div className="about-me-map-bg">
                 <MapContainer
                     center={[49.246292, -123.116226]}
-                    zoom={4}
+                    zoom={11}
+                    minZoom={11}
+                    maxBounds={[[-90, -180], [90, 180]]}
+                    maxBoundsViscosity={1.0}
                     scrollWheelZoom={false}
                     zoomControl={false}
                     attributionControl={false}
