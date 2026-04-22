@@ -46,16 +46,6 @@
     box-sizing: border-box;
 }
 
-.about-me-title {
-    font-family: var(--font-primary);
-    font-size: var(--text-h1);
-    font-weight: var(--font-weight-h1);
-    color: var(--color-off-white);
-    line-height: 1;
-    margin: 0;
-    text-transform: uppercase;
-}
-
 .about-me-description {
     display: flex;
     flex-direction: column;

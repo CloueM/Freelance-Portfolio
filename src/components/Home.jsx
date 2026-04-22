@@ -44,7 +44,10 @@ const Home = () => {
                     ))}
                 </div>
 
-                <div id="home-about">
+                <div id="home-about" className="home-about-section">
+                    <div className="section-header" style={{ position: 'sticky', top: 0, zIndex: 100, padding: '6rem var(--layout-margin) 2rem', backgroundColor: 'var(--color-charcoal)', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
+                        <h2 style={{ color: 'var(--color-off-white)', margin: 0, fontSize: 'var(--text-h1)', textAlign: 'left', lineHeight: 1 }}>ABOUT ME</h2>
+                    </div>
                     <AboutMe />
                 </div>
 
