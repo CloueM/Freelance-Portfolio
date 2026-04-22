@@ -135,6 +135,7 @@ const AboutMe = () => {
             <div className="about-me-container">
 
                 <div className="about-me-left">
+                    <h2 className="about-me-greeting">Hello, I'm Cloue</h2>
                     <div className="about-me-description">
                         <p>
                             I’m a front-end developer and web designer, but my foundation is actually in IT infrastructure.
