@@ -228,13 +228,15 @@
         margin: 0;
         border-radius: 0;
         padding: 6rem 4rem 6rem var(--layout-margin);
-        justify-content: center;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
         box-shadow: 10px 0 40px rgba(0, 0, 0, 0.3);
     }
     
     .about-me-description {
-        flex: none;
-        max-height: 50vh;
+        flex: 1;
+        min-height: 0;
     }
 
     .about-me-right-empty {
