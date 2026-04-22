@@ -44,8 +44,8 @@ const Home = () => {
                     <div className="section-header" style={{ position: 'sticky', top: 0, zIndex: 100, padding: '6rem var(--layout-margin) 2rem', backgroundColor: 'var(--color-charcoal)', display: 'flex', justifyContent: 'flex-start', alignItems: 'center', borderBottom: '1px solid rgba(255, 255, 255, 0.05)' }}>
                         <h2 style={{ color: 'var(--color-off-white)', margin: 0, fontSize: 'var(--text-h1)', textAlign: 'left', lineHeight: 1 }}>PROJECTS</h2>
                     </div>
-                    {projects.map(project => (
-                        <ProjectItem key={project.id} project={project} />
+                    {projects.map((project, index) => (
+                        <ProjectItem key={project.id} project={project} index={index} />
                     ))}
                 </div>
 
