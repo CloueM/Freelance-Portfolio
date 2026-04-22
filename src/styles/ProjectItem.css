@@ -245,6 +245,19 @@
     align-items: flex-start;
     gap: 1.5rem;
   }
+
+  .project-details-column {
+    height: auto;
+    min-height: auto;
+  }
+
+  .description-content {
+    overflow-y: visible;
+  }
+
+  .project-actions {
+    margin-top: 2.5rem;
+  }
 }
 
 @media (max-width: 768px) {
