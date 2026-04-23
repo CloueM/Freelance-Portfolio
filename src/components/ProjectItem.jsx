@@ -6,10 +6,12 @@ const ProjectItem = ({ project, index }) => {
   const { title, year, image, liveLink, description, tags } = project;
   const [isVisible, setIsVisible] = useState(false);
   const [isRevealed, setIsRevealed] = useState(false);
+  const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const itemRef = useRef(null);
 
   useEffect(() => {
-    const observer = new IntersectionObserver(
+    // General entrance animation observer
+    const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setIsVisible(true);
@@ -17,8 +19,28 @@ const ProjectItem = ({ project, index }) => {
       },
       { threshold: 0.08 }
     );
-    if (itemRef.current) observer.observe(itemRef.current);
-    return () => observer.disconnect();
+
+    // Active area observer for showing/hiding details
+    const detailsObserver = new IntersectionObserver(
+      ([entry]) => {
+        setIsDetailsVisible(entry.isIntersecting);
+      },
+      {
+        // Triggers when the item is within the middle 60% of the viewport
+        rootMargin: '-20% 0px -20% 0px',
+        threshold: 0.1
+      }
+    );
+
+    if (itemRef.current) {
+      visibilityObserver.observe(itemRef.current);
+      detailsObserver.observe(itemRef.current);
+    }
+
+    return () => {
+      visibilityObserver.disconnect();
+      detailsObserver.disconnect();
+    };
   }, []);
 
   const handleMouseEnter = () => {
@@ -43,7 +65,7 @@ const ProjectItem = ({ project, index }) => {
       {/* Hover shimmer layer */}
       <div className="project-item-shimmer" aria-hidden="true" />
 
-      <div className="project-item-inner">
+      <div className={`project-item-inner ${isDetailsVisible ? 'details-visible' : ''}`}>
         {/* Left column: meta + image */}
         <div className="project-col-left">
           <div className="project-meta-row">
@@ -74,8 +96,12 @@ const ProjectItem = ({ project, index }) => {
         <div className="project-col-right">
           <h3 className="project-title">{title}</h3>
 
-          <div className="project-scope-label">Project Scope</div>
-          <p className="project-description">{description}</p>
+          <div className={`project-details-dropdown ${isDetailsVisible ? 'expanded' : ''}`}>
+            <div className="project-details-inner">
+              <div className="project-scope-label">Project Scope</div>
+              <p className="project-description">{description}</p>
+            </div>
+          </div>
 
           {liveLink && (
             <a
