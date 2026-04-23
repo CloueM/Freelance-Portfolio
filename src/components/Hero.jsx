@@ -71,9 +71,15 @@ const Hero = () => {
                 <div
                     className={`hero-logo-wrapper ${isScrolled ? 'fixed-logo' : ''}`}
                 >
-                    <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
+                    <a href="/" className="logo-link" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
                         <img src={Logo} alt="Logo" className="logo" />
+                        <div className="availability-indicator">
+                            <span className="indicator-dot"></span>
+                        </div>
                     </a>
+                    <div className="availability-status">
+                        <span className="status-text">Available for work</span>
+                    </div>
                 </div>
 
                 <div className="hero-content">
