@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import { Icon } from '@iconify/react';
 import { processData } from '../data/process';
 import '../styles/Process.css';
 
@@ -15,7 +14,6 @@ const Process = () => {
                         className={`process-row ${hoveredIndex === index ? 'hovered' : ''} ${hoveredIndex !== null && hoveredIndex !== index ? 'dimmed' : ''}`}
                         onMouseEnter={() => setHoveredIndex(index)}
                         onMouseLeave={() => setHoveredIndex(null)}
-                        style={hoveredIndex === index ? { backgroundColor: step.hoverColor } : {}}
                     >
                         <div className="process-row-left">
                             <span className="process-number">{step.id}</span>
@@ -27,7 +25,6 @@ const Process = () => {
 
                         <div className="process-row-right">
                             <p className="process-description">{step.description}</p>
-                            <Icon icon={step.icon} className="process-icon" />
                         </div>
                     </div>
                 ))}

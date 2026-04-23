@@ -46,14 +46,11 @@ const Home = () => {
                 <Hero />
                 
                 <div id="home-process" className="home-process-section">
-                    <div className="section-header" data-index="01">
-                        <h2>PROCESS</h2>
-                    </div>
                     <Process />
                 </div>
 
                 <div id="home-projects" className="home-projects-section">
-                    <div className="section-header" data-index="02">
+                    <div className="section-header" data-index="01">
                         <h2>PROJECTS</h2>
                     </div>
                     {projects.map((project, index) => (
@@ -62,14 +59,14 @@ const Home = () => {
                 </div>
 
                 <div id="home-services" className="home-services-section">
-                    <div className="section-header" data-index="03">
+                    <div className="section-header" data-index="02">
                         <h2>SERVICES</h2>
                     </div>
                     <Services />
                 </div>
 
                 <div id="home-about" className="home-about-section">
-                    <div className="section-header" data-index="04">
+                    <div className="section-header" data-index="03">
                         <h2>ABOUT ME</h2>
                     </div>
                     <AboutMe />
