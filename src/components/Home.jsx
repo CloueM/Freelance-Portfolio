@@ -7,6 +7,7 @@ import Services from './Services';
 import AboutMe from './AboutMe';
 import FAQ from './FAQ';
 import CoffeeCTA from './CoffeeCTA';
+import Marquee from './Marquee';
 import PageTransition from './PageTransition';
 import { projectsData } from '../data/projects';
 import { scrollToSection } from '../utils/scroll';
@@ -69,6 +70,8 @@ const Home = () => {
                 </div>
 
                 <FAQ />
+
+                <Marquee />
 
                 <CoffeeCTA />
             </main>
