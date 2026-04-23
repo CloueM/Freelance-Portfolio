@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef, useCallback } from 'react';
 import '../styles/Hero.css';
 import Logo from '../assets/favicon.svg';
 import { Link } from 'react-router-dom';
@@ -10,10 +10,10 @@ const Hero = () => {
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 150);
+            setIsScrolled(window.scrollY > 50);
         };
 
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
 
         return () => window.removeEventListener('scroll', handleScroll);
@@ -40,15 +40,18 @@ const Hero = () => {
     return (
         <section id="home" className="hero-section">
             <div className="hero-container">
-                <div className={`hero-logo-wrapper ${isScrolled ? 'fixed-logo' : ''}`}>
+
+                <div
+                    className={`hero-logo-wrapper ${isScrolled ? 'fixed-logo' : ''}`}
+                >
                     <a href="/" onClick={(e) => { e.preventDefault(); window.location.href = '/'; }}>
                         <img src={Logo} alt="Logo" className="logo" />
                     </a>
                 </div>
 
                 <div className="hero-content">
-                    <h1 className="sr-only">Cloue Macadangdang | Front End Web Developer & Designer Portfolio</h1>
-                    
+                    <h1 className="sr-only">Cloue Macadangdang | Front End Web Developer &amp; Designer Portfolio</h1>
+
                     <div className="hero-left">
                         <div className="hero-web" data-text="WEB">WEB</div>
                     </div>
@@ -58,9 +61,11 @@ const Hero = () => {
                     </div>
                 </div>
 
-                <div className={`hero-nav-wrapper ${isScrolled ? 'fixed-nav' : ''}`}>
+                <div
+                    className={`hero-nav-wrapper ${isScrolled ? 'fixed-nav' : ''}`}
+                >
                     <nav className="site-nav">
-                        <div className="nav-pill"> 
+                        <div className="nav-pill">
                             <Link to="/" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
                             <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
                             <a href="#home-services" className="nav-link" onMouseEnter={playHoverSound} onClick={handleServicesClick}>Services</a>
@@ -68,6 +73,7 @@ const Hero = () => {
                         </div>
                     </nav>
                 </div>
+
             </div>
         </section>
     );

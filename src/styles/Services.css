@@ -90,10 +90,10 @@
 
 .service-number {
     font-family: var(--font-primary);
-    font-size: var(--text-caption);
-    font-weight: var(--font-weight-caption);
-    color: var(--color-stone);
-    letter-spacing: 0.1em;
+    font-size: var(--text-body);
+    font-weight: var(--font-weight-h3);
+    color: var(--color-neutral);
+    letter-spacing: 0.06em;
 }
 
 .service-category {
@@ -131,26 +131,36 @@
     padding: 0;
     margin: 0;
     display: flex;
-    flex-direction: column;
-    gap: 0.55rem;
+    flex-wrap: wrap;
+    gap: 0.65rem;
 }
 
 .service-example-item {
     display: flex;
     align-items: center;
-    gap: 0.6rem;
+    padding: 0.45rem 1rem;
+    background: rgba(255, 255, 255, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    border-radius: 100px;
     font-family: var(--font-primary);
-    font-size: var(--text-body);
+    font-size: 0.8rem;
     color: var(--color-off-white);
-    opacity: 0.6;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    white-space: nowrap;
 }
 
-.example-dot {
-    width: 4px;
-    height: 4px;
-    border-radius: 50%;
-    background: var(--color-neutral);
-    flex-shrink: 0;
+.service-card.visible .service-example-item {
+    opacity: 0.65;
+    transform: translateY(0);
+}
+
+.service-example-item:hover {
+    background: rgba(255, 255, 255, 0.08);
+    opacity: 1;
+    transform: translateY(-2px);
+    border-color: rgba(255, 255, 255, 0.15);
 }
 
 

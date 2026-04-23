@@ -74,8 +74,11 @@ const Services = () => {
                         <p className="service-desc">{type.description}</p>
                         <ul className="service-examples">
                             {type.examples.map((ex, i) => (
-                                <li key={i} className="service-example-item">
-                                    <span className="example-dot" />
+                                <li 
+                                    key={i} 
+                                    className="service-example-item"
+                                    style={{ transitionDelay: `${(idx * 80) + (i * 50)}ms` }}
+                                >
                                     {ex}
                                 </li>
                             ))}
