@@ -1,12 +1,12 @@
-import React, { useState, useEffect, useRef, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../styles/Hero.css';
 import Logo from '../assets/favicon.svg';
-import { Link } from 'react-router-dom';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import { scrollToSection } from '../utils/scroll';
 
 const Hero = () => {
     const [isScrolled, setIsScrolled] = useState(false);
+    const [activeSection, setActiveSection] = useState('');
 
     useEffect(() => {
         const handleScroll = () => {
@@ -16,7 +16,34 @@ const Hero = () => {
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
 
-        return () => window.removeEventListener('scroll', handleScroll);
+        // Intersection Observer for active section highlighting
+        const sectionIds = ['home-services', 'home-projects', 'home-about'];
+        const observers = [];
+
+        const observerOptions = {
+            root: null,
+            rootMargin: '-40% 0px -40% 0px', // Trigger when section is in middle of screen
+            threshold: 0
+        };
+
+        const handleIntersect = (entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    setActiveSection(entry.target.id);
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver(handleIntersect, observerOptions);
+        sectionIds.forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) observer.observe(el);
+        });
+
+        return () => {
+            window.removeEventListener('scroll', handleScroll);
+            observer.disconnect();
+        };
     }, []);
 
     const handleProjectsClick = (e) => {
@@ -66,10 +93,9 @@ const Hero = () => {
                 >
                     <nav className="site-nav">
                         <div className="nav-pill">
-                            <Link to="/" className="nav-link active" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>Home</Link>
-                            <a href="#home-projects" className="nav-link" onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
-                            <a href="#home-services" className="nav-link" onMouseEnter={playHoverSound} onClick={handleServicesClick}>Services</a>
-                            <a href="#home-about" className="nav-link" onMouseEnter={playHoverSound} onClick={handleAboutClick}>About</a>
+                            <a href="#home-services" className={`nav-link ${activeSection === 'home-services' ? 'active' : ''}`} onMouseEnter={playHoverSound} onClick={handleServicesClick}>Services</a>
+                            <a href="#home-projects" className={`nav-link ${activeSection === 'home-projects' ? 'active' : ''}`} onMouseEnter={playHoverSound} onClick={handleProjectsClick}>Projects</a>
+                            <a href="#home-about" className={`nav-link ${activeSection === 'home-about' ? 'active' : ''}`} onMouseEnter={playHoverSound} onClick={handleAboutClick}>About</a>
                         </div>
                     </nav>
                 </div>

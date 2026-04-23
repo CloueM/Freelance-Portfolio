@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { Icon } from '@iconify/react';
 import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../data/services';
+import Process from './Process';
 import '../styles/Services.css';
 
 const Services = () => {
@@ -52,7 +53,18 @@ const Services = () => {
         <section className="services-section" id="home-services">
             {/* Intro description */}
             <div className="services-intro">
-                <p className="services-intro-text">{servicesIntro.description}</p>
+                <div className="services-intro-left">
+                    <p className="services-intro-text">{servicesIntro.description}</p>
+                </div>
+                <div className="services-intro-right">
+                    <button 
+                        className="services-process-cta" 
+                        onClick={() => document.getElementById('services-process').scrollIntoView({ behavior: 'smooth' })}
+                    >
+                        <span>SEE MY PROCESS</span>
+                        <Icon icon="ph:arrow-down-light" />
+                    </button>
+                </div>
             </div>
 
             {/* Website types */}
@@ -136,6 +148,11 @@ const Services = () => {
                         </div>
                     ))}
                 </div>
+            </div>
+
+            {/* Process integrated into Services */}
+            <div id="services-process">
+                <Process />
             </div>
         </section>
     );

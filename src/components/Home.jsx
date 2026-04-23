@@ -17,7 +17,7 @@ const Home = () => {
     useEffect(() => {
         if (location.hash === '#home-process') {
             setTimeout(() => {
-                scrollToSection('home-process');
+                scrollToSection('services-process');
             }, 100);
         } else if (location.hash === '#home-projects') {
             setTimeout(() => {
@@ -44,25 +44,21 @@ const Home = () => {
         <PageTransition>
             <main>
                 <Hero />
-                
-                <div id="home-process" className="home-process-section">
-                    <Process />
+
+                <div id="home-services" className="home-services-section">
+                    <div className="section-header" data-index="01">
+                        <h2>SERVICES</h2>
+                    </div>
+                    <Services />
                 </div>
 
                 <div id="home-projects" className="home-projects-section">
-                    <div className="section-header" data-index="01">
+                    <div className="section-header" data-index="02">
                         <h2>PROJECTS</h2>
                     </div>
                     {projects.map((project, index) => (
                         <ProjectItem key={project.id} project={project} index={index} />
                     ))}
-                </div>
-
-                <div id="home-services" className="home-services-section">
-                    <div className="section-header" data-index="02">
-                        <h2>SERVICES</h2>
-                    </div>
-                    <Services />
                 </div>
 
                 <div id="home-about" className="home-about-section">

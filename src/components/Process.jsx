@@ -7,6 +7,13 @@ const Process = () => {
 
     return (
         <section className="process-wrapper">
+            <div className="process-intro">
+                <span className="process-eyebrow">WORKFLOW</span>
+                <h2 className="process-intro-title">From concept to completion.</h2>
+                <p className="process-intro-desc">
+                    A structured, transparent approach designed to ensure every project is delivered with precision, speed, and a focus on your business goals.
+                </p>
+            </div>
             <div className="process-container">
                 {processData.map((step, index) => (
                     <div
