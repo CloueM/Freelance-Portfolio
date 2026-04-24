@@ -32,10 +32,6 @@ const Home = () => {
             setTimeout(() => {
                 scrollToSection('home-about');
             }, 100);
-        } else if (location.hash === '#faq') {
-            setTimeout(() => {
-                scrollToSection('faq');
-            }, 100);
         }
     }, [location]);
 
@@ -69,9 +65,8 @@ const Home = () => {
                     <AboutMe />
                 </div>
 
-                <FAQ />
-
                 <Marquee />
+                <FAQ />
 
                 <CoffeeCTA />
             </main>

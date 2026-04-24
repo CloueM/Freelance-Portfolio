@@ -32,19 +32,18 @@ export default function SmoothFollower() {
     const handleMouseMove = (e) => {
       mousePosition.current = { x: e.clientX, y: e.clientY };
     };
-    const handleMouseEnter = () => setIsHovering(true);
-    const handleMouseLeave = () => setIsHovering(false);
+    const handleMouseOver = (e) => {
+      const target = e.target.closest('a, button, img, input, textarea, select, .question-btn, .persona-thumb');
+      if (target) {
+        setIsHovering(true);
+      } else {
+        setIsHovering(false);
+      }
+    };
     
     window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseover', handleMouseOver);
     
-    const interactiveElements = document.querySelectorAll(
-      'a, button, img, input, textarea, select'
-    );
-    interactiveElements.forEach((element) => {
-      element.addEventListener('mouseenter', handleMouseEnter);
-      element.addEventListener('mouseleave', handleMouseLeave);
-    });
-
     const animate = () => {
       const lerp = (start, end, factor) => {
         return start + (end - start) * factor;
@@ -86,10 +85,7 @@ export default function SmoothFollower() {
     
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      interactiveElements.forEach((element) => {
-        element.removeEventListener('mouseenter', handleMouseEnter);
-        element.removeEventListener('mouseleave', handleMouseLeave);
-      });
+      window.removeEventListener('mouseover', handleMouseOver);
       cancelAnimationFrame(animationId);
       document.head.removeChild(style);
     };
@@ -98,7 +94,7 @@ export default function SmoothFollower() {
   if (typeof window === 'undefined' || isMobile) return null;
 
   return (
-    <div style={{ pointerEvents: 'none', position: 'fixed', inset: 0, zIndex: 10000 }}>
+    <div style={{ pointerEvents: 'none', position: 'fixed', inset: 0, zIndex: 99999 }}>
       <div
         style={{
           position: 'absolute',
