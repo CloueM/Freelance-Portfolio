@@ -6,14 +6,8 @@ import '../styles/FAQ.css';
 const FAQ = () => {
     const [isOpen, setIsOpen] = useState(false);
     
-    // Persistence: Resume with the last assistant
-    const lastPersonaId = sessionStorage.getItem('last_active_persona_id');
-    const initialPersona = lastPersonaId 
-        ? (assistantPersonas.find(p => p.id === lastPersonaId) || assistantPersonas[0])
-        : assistantPersonas[0];
-
-    const [activePersona, setActivePersona] = useState(initialPersona);
-    const [isArchieUnlocked, setIsArchieUnlocked] = useState(sessionStorage.getItem('faq_unlocked_archie') === 'true');
+    const [activePersona, setActivePersona] = useState(assistantPersonas[0]);
+    const [isTanjiroUnlocked, setIsTanjiroUnlocked] = useState(sessionStorage.getItem('faq_unlocked_tanjiro') === 'true');
     const [messages, setMessages] = useState([]);
     const [isTyping, setIsTyping] = useState(false);
     const [isConnecting, setIsConnecting] = useState(false);
@@ -24,9 +18,10 @@ const FAQ = () => {
     // Control visibility of end call button in video feed
     const [showVideoControls, setShowVideoControls] = useState(false);
 
-    // Track last indices to avoid repetition
     const [lastInactivityIndex, setLastInactivityIndex] = useState(-1);
-    const [lastGreetingIndex, setLastGreetingIndex] = useState(parseInt(sessionStorage.getItem('last_greeting_index') || '-1'));
+    const [lastGreetingIndex, setLastGreetingIndex] = useState(-1);
+    const [interactedInSession, setInteractedInSession] = useState(new Set());
+    const [glowQuestion, setGlowQuestion] = useState(null);
 
     // Draggable PIP State
     const [pipPos, setPipPos] = useState({ x: 0, y: 0 });
@@ -38,7 +33,8 @@ const FAQ = () => {
 
     const messagesEndRef = useRef(null);
     const messagesAreaRef = useRef(null);
-    const bobbyTimerRef = useRef(null);
+    const questionOptionsRef = useRef(null);
+    const zenitsuTimerRef = useRef(null);
     const inactivityTimerRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -49,9 +45,47 @@ const FAQ = () => {
         scrollToBottom();
     }, [messages, isTyping, isAutoPassing]);
 
-    // Draggable Logic for Mobile PIP
+    useEffect(() => {
+        const handleMouseMove = (e) => {
+            if (!isDragging || window.innerWidth > 768) return;
+            
+            let rawX = e.clientX - dragStartRef.current.x;
+            let rawY = e.clientY - dragStartRef.current.y;
+
+            const areaRect = messagesAreaRef.current.getBoundingClientRect();
+            const pipWidth = 120;
+            const pipHeight = 160;
+
+            const initialX = window.innerWidth - 15 - pipWidth;
+            const initialY = 80;
+
+            const currentViewportX = initialX + rawX;
+            const currentViewportY = initialY + rawY;
+
+            const clampedViewportX = Math.max(areaRect.left, Math.min(currentViewportX, areaRect.right - pipWidth));
+            const clampedViewportY = Math.max(areaRect.top, Math.min(currentViewportY, areaRect.bottom - pipHeight));
+
+            setPipPos({
+                x: clampedViewportX - initialX,
+                y: clampedViewportY - initialY
+            });
+        };
+
+        const handleMouseUp = () => setIsDragging(false);
+
+        if (isDragging) {
+            window.addEventListener('mousemove', handleMouseMove);
+            window.addEventListener('mouseup', handleMouseUp);
+        }
+
+        return () => {
+            window.removeEventListener('mousemove', handleMouseMove);
+            window.removeEventListener('mouseup', handleMouseUp);
+        };
+    }, [isDragging]);
+
     const handleTouchStart = (e) => {
-        if (window.innerWidth > 768) return; 
+        if (!messagesAreaRef.current) return;
         const touch = e.touches[0];
         setIsDragging(true);
         dragStartRef.current = {
@@ -92,16 +126,16 @@ const FAQ = () => {
 
     const calculateDelay = (text, personaId) => {
         let multiplier = 30; 
-        if (personaId === 'kody') multiplier = 50; 
-        if (personaId === 'kevin') multiplier = 28; 
-        if (personaId === 'archie') multiplier = 40; 
+        if (personaId === 'giyu') multiplier = 50; 
+        if (personaId === 'mitsuri') multiplier = 28; 
+        if (personaId === 'tanjiro') multiplier = 40; 
 
         return Math.max(1500, text.length * multiplier);
     };
 
     const resetInactivityTimer = () => {
         if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
-        if (!isOpen || isTyping || isConnecting || isEndingCall || isAutoPassing || activePersona.id === 'bobby' || consecutiveInactivityCount >= 2) return;
+        if (!isOpen || isTyping || isConnecting || isEndingCall || isAutoPassing || activePersona.id === 'zenitsu' || consecutiveInactivityCount >= 2) return;
 
         inactivityTimerRef.current = setTimeout(() => {
             handleInactivity();
@@ -135,11 +169,8 @@ const FAQ = () => {
     // Initial greeting and persistence logic
     useEffect(() => {
         if (isOpen && !isEndingCall) {
-            // Save active persona for resuming later
-            sessionStorage.setItem('last_active_persona_id', activePersona.id);
-            
-            const hasInteracted = sessionStorage.getItem(`interacted_${activePersona.id}`);
-            let greetingText = activePersona.initialGreeting;
+            const hasInteracted = interactedInSession.has(activePersona.id);
+            let greetingText = "";
 
             if (hasInteracted && activePersona.repeatGreetings) {
                 let newIdx = Math.floor(Math.random() * activePersona.repeatGreetings.length);
@@ -147,20 +178,30 @@ const FAQ = () => {
                     newIdx = (newIdx + 1) % activePersona.repeatGreetings.length;
                 }
                 setLastGreetingIndex(newIdx);
-                sessionStorage.setItem('last_greeting_index', newIdx.toString());
                 greetingText = activePersona.repeatGreetings[newIdx];
+            } else {
+                const greetings = Array.isArray(activePersona.initialGreeting) 
+                    ? activePersona.initialGreeting 
+                    : [activePersona.initialGreeting];
+                greetingText = greetings[Math.floor(Math.random() * greetings.length)];
             }
 
-            // Mark as interacted for next time
-            sessionStorage.setItem(`interacted_${activePersona.id}`, 'true');
+            // Mark as interacted for next time in THIS session
+            if (!hasInteracted) {
+                setInteractedInSession(prev => new Set(prev).add(activePersona.id));
+            }
 
-            if (activePersona.id === 'bobby') {
+            if (activePersona.id === 'zenitsu') {
                 setMessages([{ id: Date.now(), type: 'bot', text: greetingText, personaId: activePersona.id }]);
-                if (!isArchieUnlocked) {
-                    bobbyTimerRef.current = setTimeout(() => handleEndCallAuto('kevin'), 3000);
-                }
+                zenitsuTimerRef.current = setTimeout(() => handleEndCallAuto('mitsuri'), 3000);
             } else {
                 setIsTyping(true);
+
+                // Allow re-asking questions on fresh calls to Tanjiro
+                if (activePersona.id === 'tanjiro') {
+                    setAskedQuestions(new Set());
+                }
+
                 const delay = calculateDelay(greetingText, activePersona.id);
                 setTimeout(() => {
                     setIsTyping(false);
@@ -169,12 +210,14 @@ const FAQ = () => {
                 }, delay);
             }
         }
-        return () => { if (bobbyTimerRef.current) clearTimeout(bobbyTimerRef.current); };
+        return () => { if (zenitsuTimerRef.current) clearTimeout(zenitsuTimerRef.current); };
     }, [isOpen, activePersona, isEndingCall]);
 
     const handleEndCallAuto = (nextId) => {
         setIsAutoPassing(false);
         setIsEndingCall(true);
+        setMessages([]);
+        setFailRedirect(null);
         const nextPersona = assistantPersonas.find(p => p.id === nextId);
         
         setTimeout(() => {
@@ -191,11 +234,12 @@ const FAQ = () => {
     };
 
     const handleQuestionClick = (question) => {
-        if (isTyping || isConnecting || isEndingCall || activePersona.id === 'bobby' || isAutoPassing) return;
+        if (isTyping || isConnecting || isEndingCall || activePersona.id === 'zenitsu' || isAutoPassing) return;
 
         playSelectSound();
         setConsecutiveInactivityCount(0); 
         setLastInactivityIndex(-1);
+        setFailRedirect(null);
         
         const userMsg = { id: Date.now(), type: 'user', text: question.text };
         setMessages(prev => [...prev, userMsg]);
@@ -204,10 +248,36 @@ const FAQ = () => {
         newAsked.add(question.id);
         setAskedQuestions(newAsked);
 
-        const responsePool = activePersona.responses[question.id] || ["I'm not sure about that..."];
-        const responseText = Array.isArray(responsePool) 
-            ? responsePool[Math.floor(Math.random() * responsePool.length)] 
-            : responsePool;
+        let responseText = "";
+        let isSpecialFail = false;
+
+        if (activePersona.responses[question.id]) {
+            const pool = activePersona.responses[question.id];
+            responseText = Array.isArray(pool) 
+                ? pool[Math.floor(Math.random() * pool.length)] 
+                : pool;
+        } else {
+            isSpecialFail = true;
+            if (activePersona.failResponses) {
+                const pool = activePersona.failResponses;
+                responseText = pool[Math.floor(Math.random() * pool.length)];
+            } else {
+                responseText = "I'm not entirely sure about that specific detail. Let me check my notes...";
+            }
+
+            // Scroll to the bottom of the question options so they see the transfer button
+            setGlowQuestion('transfer');
+            setTimeout(() => setGlowQuestion(null), 3000);
+
+            setTimeout(() => {
+                if (questionOptionsRef.current) {
+                    questionOptionsRef.current.scrollTo({
+                        top: questionOptionsRef.current.scrollHeight,
+                        behavior: 'smooth'
+                    });
+                }
+            }, 600);
+        }
 
         setIsTyping(true);
         const delay = calculateDelay(responseText, activePersona.id);
@@ -216,8 +286,8 @@ const FAQ = () => {
             setIsTyping(false);
             
             let finalResponse = responseText;
-            const callCount = parseInt(sessionStorage.getItem('archie_call_count') || '0');
-            if (activePersona.id === 'archie' && callCount > 2 && Math.random() > 0.5) {
+            const callCount = parseInt(sessionStorage.getItem('tanjiro_call_count') || '0');
+            if (activePersona.id === 'tanjiro' && callCount > 2 && Math.random() > 0.5) {
                 const flavors = ["As I mentioned before, ", "Just to reiterate for you, ", "Like I said, Boss Cloue typically ", "In case you missed it earlier: "];
                 finalResponse = flavors[Math.floor(Math.random() * flavors.length)] + responseText.charAt(0).toLowerCase() + responseText.slice(1);
             }
@@ -226,8 +296,8 @@ const FAQ = () => {
 
             if (question.id === 'transfer') {
                 setTimeout(() => {
-                    if (activePersona.id === 'kevin' || activePersona.id === 'kody') triggerAutoPass();
-                    else if (activePersona.id === 'archie') triggerPersonaOutro();
+                    if (activePersona.id === 'mitsuri' || activePersona.id === 'giyu') triggerAutoPass();
+                    else if (activePersona.id === 'tanjiro') triggerPersonaOutro();
                 }, 1000);
             } else if (newAsked.size === predefinedQuestions.length) {
                 setTimeout(() => triggerPersonaOutro(), 1000);
@@ -237,34 +307,34 @@ const FAQ = () => {
 
     const triggerAutoPass = () => {
         setIsAutoPassing(true);
-        const nextId = activePersona.id === 'kevin' ? 'kody' : 'archie';
+        const nextId = activePersona.id === 'mitsuri' ? 'giyu' : 'tanjiro';
         setTimeout(() => { handleEndCallAuto(nextId); }, 5000);
     };
 
     const triggerPersonaOutro = () => {
         let outroText = "";
-        if (activePersona.id === 'kevin') outroText = "I've told you everything I know! I'll pass you to Kody now, our Front-End Developer. He's usually busy fixing my messy code, but he's a pro!";
-        else if (activePersona.id === 'kody') outroText = "Look, I'm going back to fixing this CSS nightmare Kevin left me. I'm passing you to Archie, our Project Manager. She handles the agency logistics.";
-        else if (activePersona.id === 'archie') {
+        if (activePersona.id === 'mitsuri') outroText = "I've told you everything I know! I'll pass you to Giyu now, our Full Stack Developer. He's usually busy fixing my messy code, but he's a pro!";
+        else if (activePersona.id === 'giyu') outroText = "Look, I'm going back to fixing this code nightmare Mitsuri left me. I'm passing you to Tanjiro, our Project Manager. He handles the business logistics.";
+        else if (activePersona.id === 'tanjiro') {
             const finalMsg1 = "I hope that covers everything. If you wish to proceed with a project, you can contact the Boss directly here: hello@kurowii.com";
             setIsTyping(true);
             setTimeout(() => {
                 setIsTyping(false);
-                setMessages(prev => [...prev, { id: Date.now() + 2, type: 'bot', text: finalMsg1, personaId: 'archie' }]);
+                setMessages(prev => [...prev, { id: Date.now() + 2, type: 'bot', text: finalMsg1, personaId: 'tanjiro' }]);
                 setTimeout(() => {
                     const finalMsg2 = "I'll have to end the call now as the Boss has another client waiting for a consultation. Goodbye!";
                     setIsTyping(true);
                     setTimeout(() => {
                         setIsTyping(false);
-                        setMessages(prev => [...prev, { id: Date.now() + 3, type: 'bot', text: finalMsg2, personaId: 'archie' }]);
+                        setMessages(prev => [...prev, { id: Date.now() + 3, type: 'bot', text: finalMsg2, personaId: 'tanjiro' }]);
                         setTimeout(() => {
-                            sessionStorage.setItem('faq_unlocked_archie', 'true');
-                            setIsArchieUnlocked(true);
+                            sessionStorage.setItem('faq_unlocked_tanjiro', 'true');
+                            setIsTanjiroUnlocked(true);
                             setIsOpen(false);
                         }, 5000);
-                    }, calculateDelay(finalMsg2, 'archie'));
+                    }, calculateDelay(finalMsg2, 'tanjiro'));
                 }, 2000);
-            }, calculateDelay(finalMsg1, 'archie'));
+            }, calculateDelay(finalMsg1, 'tanjiro'));
             return;
         }
 
@@ -352,9 +422,8 @@ const FAQ = () => {
                                         aria-label="End Call"
                                     >
                                         <div className="trigger-icon-wrapper">
-                                            <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" strokeWidth="3">
-                                                <line x1="18" y1="6" x2="6" y2="18"></line>
-                                                <line x1="6" y1="6" x2="18" y2="18"></line>
+                                            <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.42 19.42 0 0 1-3.33-2.67 19.42 19.42 0 0 1-2.67-3.34 19.79 19.79 0 0 1-3.07-8.63A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91" />
                                             </svg>
                                         </div>
                                     </button>
@@ -362,7 +431,7 @@ const FAQ = () => {
                             )}
                         </div>
 
-                        {!isArchieUnlocked && (
+                        {!isTanjiroUnlocked && (
                             <div className="persona-switcher disabled">
                                 <p className="switcher-label">Participants Disconnected</p>
                                 <div className="persona-grid">
@@ -379,7 +448,7 @@ const FAQ = () => {
                     <div className="chat-sidebar-section">
                         <div className="chat-header">
                             <div className="header-text">
-                                <h2 className="chat-title">Secure Connection</h2>
+                                <h2 className="chat-title">Support</h2>
                                 <div className="chat-subtitle">{activePersona.name} | {activePersona.label}</div>
                             </div>
                         </div>
@@ -408,16 +477,16 @@ const FAQ = () => {
 
                         <div className="chat-input-area">
                             <p className="input-label">
-                                {activePersona.id === 'bobby' ? 'System restricted...' : isAutoPassing ? 'Rerouting...' : 'Select a question:'}
+                                {activePersona.id === 'zenitsu' ? 'System restricted...' : isAutoPassing ? 'Rerouting...' : 'Select a question:'}
                             </p>
-                            <div className="question-options">
+                            <div className="question-options" ref={questionOptionsRef}>
                                 {predefinedQuestions.map((q) => (
                                     <button
                                         key={q.id}
-                                        className={`question-btn ${askedQuestions.has(q.id) ? 'asked' : ''}`}
+                                        className={`question-btn ${askedQuestions.has(q.id) ? 'asked' : ''} ${glowQuestion === q.id ? 'glow' : ''}`}
                                         onClick={() => handleQuestionClick(q)}
                                         onMouseEnter={playHoverSound}
-                                        disabled={isTyping || isConnecting || isEndingCall || activePersona.id === 'bobby' || askedQuestions.has(q.id) || isAutoPassing}
+                                        disabled={isTyping || isConnecting || isEndingCall || activePersona.id === 'zenitsu' || askedQuestions.has(q.id) || isAutoPassing}
                                     >
                                         {q.text}
                                     </button>
