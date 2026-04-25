@@ -145,12 +145,10 @@
     .availability-status {
         display: none;
     }
-    
     .hero-logo-wrapper.fixed-logo {
         top: 1rem;
         left: 1rem;
     }
-    
     .hero-nav-wrapper.fixed-nav {
         top: 1rem;
         right: 1rem;
@@ -187,6 +185,7 @@
     text-decoration: none;
     font-size: 0.85rem;
     font-weight: 500;
+    letter-spacing: 0.12em;
     padding: 0 1.25rem;
     height: calc(100% - 0.7rem);
     display: flex;
@@ -268,5 +267,3 @@
         font-size: clamp(8rem, 15vw, 15rem);
     }
 }
-
-

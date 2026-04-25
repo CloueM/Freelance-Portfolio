@@ -98,7 +98,7 @@ const ProjectItem = ({ project, index }) => {
 
           <div className={`project-details-dropdown ${isDetailsVisible ? 'expanded' : ''}`}>
             <div className="project-details-inner">
-              <div className="project-scope-label">Project Scope</div>
+              <div className="project-scope-label">The details</div>
               <p className="project-description">{description}</p>
             </div>
           </div>
@@ -112,7 +112,7 @@ const ProjectItem = ({ project, index }) => {
               onMouseEnter={playHoverSound}
               onMouseDown={playSelectSound}
             >
-              View Live Project
+              Visit website
               <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M7 17L17 7M17 7H7M17 7v10" />
               </svg>

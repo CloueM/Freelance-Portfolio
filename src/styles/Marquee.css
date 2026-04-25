@@ -20,7 +20,6 @@
     font-size: clamp(2rem, 5vw, 4rem);
     font-weight: 700;
     color: var(--color-off-white);
-    text-transform: uppercase;
     letter-spacing: 0.05em;
     padding-right: 4rem;
     opacity: 0.8;
@@ -54,4 +53,3 @@
         animation-duration: 40s;
     }
 }
-

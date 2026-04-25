@@ -50,7 +50,7 @@ const Process = () => {
     return (
         <section className="process-wrapper">
             <div className="process-intro">
-                <span className="process-eyebrow">THE PLAN</span>
+                <span className="process-eyebrow">The plan</span>
                 <h2 className="process-intro-title">How I build your site.</h2>
                 <p className="process-intro-desc">
                     I keep things simple and transparent. No corporate jargon or hidden steps. Just a clear path from our first call to your new website being live.

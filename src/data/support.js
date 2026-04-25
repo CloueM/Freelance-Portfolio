@@ -29,7 +29,7 @@ const assistantPersonas = [
         id: 'mitsuri',
         name: 'Mitsuri',
         label: 'Junior Intern',
-        title: 'Front-End Intern',
+        title: 'Front End Intern',
         video: '/images/Mitsuri.webp',
         signal: 'Stable-ish',
         behavior: 'Socially awkward, stuttering, very shy but incredibly kind.',
@@ -111,7 +111,7 @@ const assistantPersonas = [
                 "Once the site is done, we'll give you a Manual on how to manage it. You also get 30 days of free support. If you need more help after that, our rate is $40 per hour."
             ],
             'tech-stack': [
-                "We use React, JavaScript, and CSS for the front-end. Cloue also uses WordPress for a lot of projects. It's a solid stack that handles most things well.",
+                "We use React, JavaScript, and CSS for the front end. Cloue also uses WordPress for a lot of projects. It's a solid stack that handles most things well.",
                 "React and WordPress are our main tools. We also use things like Vite to keep the development fast. It's a modern setup that's easy to maintain.",
                 "Our stack is straightforward: React for speed and WordPress for content. Cloue sets the design standards, and I make sure the tech matches them."
             ],

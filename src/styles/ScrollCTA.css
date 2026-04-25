@@ -26,12 +26,10 @@
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
 }
-
 .scroll-cta-btn.scrolled {
   background-color: rgba(255, 255, 255, 0.08);
   border-color: rgba(255, 255, 255, 0.15);
 }
-
 .scroll-cta-btn:hover {
   background-color: rgba(255, 255, 255, 0.12);
   transform: translateY(-3px);
@@ -40,7 +38,6 @@
     0 12px 40px rgba(0, 0, 0, 0.4),
     0 0 15px rgba(255, 255, 255, 0.05);
 }
-
 .scroll-cta-btn.scrolled:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }
@@ -58,7 +55,3 @@
     font-size: 12px;
   }
 }
-
-
-
-

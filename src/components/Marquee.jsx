@@ -2,7 +2,7 @@ import React from 'react';
 import '../styles/Marquee.css';
 
 const Marquee = () => {
-    const text = "LET'S TALK — LET'S COLLABORATE — SAY HELLO — WORK WITH ME — ";
+    const text = "Let's talk · Let's collaborate · Say hello · Work with me · ";
     
     return (
         <div className="marquee-wrapper">

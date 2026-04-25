@@ -45,8 +45,7 @@
 .footer-label {
     font-size: 0.75rem;
     font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
     opacity: 0.4;
     margin-bottom: 0.5rem;
 }
@@ -105,6 +104,3 @@
 .footer-tagline {
     font-weight: 600;
 }
-
-
-

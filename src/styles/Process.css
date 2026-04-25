@@ -31,7 +31,7 @@
     font-size: var(--text-caption);
     font-weight: var(--font-weight-h3);
     color: var(--color-neutral);
-    letter-spacing: 0.25em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
 }
 
@@ -202,7 +202,6 @@
     font-weight: var(--font-weight-h1);
     color: var(--color-dust);
     margin: 0;
-    text-transform: uppercase;
     line-height: 0.9;
     letter-spacing: -0.05em;
     position: relative;
@@ -220,7 +219,6 @@
     font-weight: var(--font-weight-h1);
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
-    text-transform: uppercase;
     line-height: 1;
     letter-spacing: -0.04em;
     pointer-events: none;

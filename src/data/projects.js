@@ -5,7 +5,7 @@ export const projectsData = [
     year: '2026',
     image: '/images/portfolio.png',
     liveLink: 'https://kurowii.com/',
-    description: 'A personal portfolio built with React and Vite, deployed on SiteGround. Showcases projects, skills, and experience across all screen sizes. Designed from a Content Inventory and Sitemap through Wireframes and a Hi-Fi Mockup, following a clean, minimalist, and modern visual style.',
+    description: 'My personal website built using modern tools to make it fast and reliable. It shows my work and experience across all devices. I planned everything from simple sketches to the final design to ensure it looks clean and modern.',
   },
 
   {
@@ -14,7 +14,7 @@ export const projectsData = [
     year: '2026',
     image: '/images/cloudytoy.png',
     liveLink: 'https://cloudytoy.bcitwebdeveloper.ca/',
-    description: 'A fully functional toy store built by a team of four using WordPress and WooCommerce. Features a live payment system, mailing integration, and automatic BC tax calculation. Fully responsive across all devices, delivered from wireframes to a polished production site.',
+    description: 'A complete online toy store built with a small team. It includes a working payment system and a way to send newsletters. The site works perfectly on any screen and was delivered as a polished final product.',
   },
 
   {
@@ -23,15 +23,6 @@ export const projectsData = [
     year: '2024',
     image: '/images/lumix.png',
     liveLink: 'https://kurowii.com/lumix/',
-    description: 'A movie browsing app built with React that pulls live data from the TMDB API. Users can browse by category, watch trailers, view film details, and save favourites to a personal watchlist.',
-  },
-
-  {
-    id: 4,
-    title: 'Matcha Moji',
-    year: '2026',
-    image: '/images/matchamoji.png',
-    liveLink: 'https://kurowii.com/matchamoji/',
-    description: 'A card-matching memory game built with pure JavaScript. Players pick a difficulty level — each with a unique countdown timer — then race to match emoji pairs before time runs out. Score is calculated using accuracy, time remaining, and a difficulty multiplier.',
+    description: 'An app for browsing movies that uses a huge database of films. You can look through different categories, watch trailers, and save your favorite movies to a list for later.',
   }
 ];

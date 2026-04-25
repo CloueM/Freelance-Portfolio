@@ -53,16 +53,16 @@ const LOCATIONS = {
     vancouver: {
         pos: [49.246292, -123.116226],
         tz: 'America/Vancouver',
-        label: 'VANCOUVER, BC',
-        sub: 'CURRENT BASE',
+        label: 'Vancouver, BC',
+        sub: 'Current base',
         Flag: CanadaFlag,
         zoom: 10
     },
     philippines: {
         pos: [16.3301, 121.1710],
         tz: 'Asia/Manila',
-        label: 'NUEVA VIZCAYA, PH',
-        sub: 'ORIGINS',
+        label: 'Nueva Vizcaya, PH',
+        sub: 'Origins',
         Flag: PhilippinesFlag,
         zoom: 6
     }
@@ -218,21 +218,21 @@ const AboutMe = () => {
                 <div className="about-content-overlay">
                     <div className="about-content-inner">
                         <div className="about-intro-block">
-                            <h2 className="about-greeting">Hello, I'm Cloue.</h2>
+                            <h2 className="about-greeting">Hi, I'm Cloue.</h2>
                             <p className="about-main-desc">
-                                A Vancouver-based front-end developer and designer. I specialize in building digital experiences that are as performant as they are beautiful.
+                                I'm a designer and developer based in Vancouver. I build websites that look great and actually work. My focus is on making sure your site is fast, easy to use, and helps your business get noticed.
                             </p>
                         </div>
 
                         <div className="about-details-stack">
                             <div className="about-detail-item">
-                                <span className="detail-label">Philosophy</span>
-                                <p>I believe great code is organized code. My background in IT infrastructure taught me that stability and performance are just as important as the visual layer.</p>
+                                <span className="detail-label">My approach</span>
+                                <p>A good website should be as reliable as it is beautiful. Because I have a background in technical systems, I build sites that don't just look good on the surface. They are stable, fast, and ready for whatever comes next.</p>
                             </div>
 
                             <div className="about-detail-item">
-                                <span className="detail-label">Technical Edge</span>
-                                <p>With a BCIT Diploma in CIT, I bring a unique understanding of Linux servers, enterprise networking, and databases to the front-end world.</p>
+                                <span className="detail-label">The technical side</span>
+                                <p>I understand the web from the inside out. I don't just design the surface; I make sure everything behind the scenes is secure and built on a solid foundation that lasts.</p>
                             </div>
 
                             <div className="about-detail-item">
@@ -244,8 +244,8 @@ const AboutMe = () => {
                                         </div>
                                         <div className="edu-content">
                                             <div className="edu-header">
-                                                <span className="edu-year">2024</span>
-                                                <p>Front-End Web Development, BCIT</p>
+                                                <span className="edu-year">2025</span>
+                                                <p>Front End Web Development, BCIT</p>
                                             </div>
                                         </div>
                                     </div>
@@ -285,13 +285,13 @@ const AboutMe = () => {
                                 className={`location-toggle-btn ${activeLoc === 'vancouver' ? 'active' : ''}`}
                                 onClick={() => { setActiveLoc('vancouver'); playSelectSound(); }}
                             >
-                                BASE
+                                Base
                             </button>
                             <button
                                 className={`location-toggle-btn ${activeLoc === 'philippines' ? 'active' : ''}`}
                                 onClick={() => { setActiveLoc('philippines'); playSelectSound(); }}
                             >
-                                ORIGINS
+                                Origins
                             </button>
                         </div>
                         <div className="header-flag-wrapper">
@@ -303,7 +303,7 @@ const AboutMe = () => {
                         <div className="location-time-section">
                             <div className="time-live-indicator">
                                 <span className="live-dot"></span>
-                                LIVE
+                                Live
                             </div>
                             <span className="time-value">{localTime}</span>
                         </div>

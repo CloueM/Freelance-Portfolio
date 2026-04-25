@@ -9,7 +9,7 @@ export const websiteTypes = [
     id: 1,
     category: "E-Commerce Stores",
     icon: "mdi:shopping-outline",
-    tagline: "Sell anything, beautifully.",
+    tagline: "Stop scrolling. Start selling.",
     description:
       "I build online shops that actually convert. From fresh starts to total upgrades, I handle the technical heavy lifting so you can focus on sales.",
     examples: [
@@ -25,7 +25,7 @@ export const websiteTypes = [
     id: 2,
     category: "Service Businesses",
     icon: "mdi:handshake-outline",
-    tagline: "Get found. Get booked.",
+    tagline: "Turn your visits into bookings.",
     description:
       "I build sites for local pros and freelancers. I make it dead simple for clients to find you, see your work, and book you on the spot.",
     examples: [
@@ -43,7 +43,7 @@ export const websiteTypes = [
     id: 3,
     category: "Restaurants & Food",
     icon: "mdi:silverware-fork-knife",
-    tagline: "Make them hungry before they arrive.",
+    tagline: "From screen to table.",
     description:
       "I build websites that make people hungry. From local cafes to catering services, I’ll make sure your menu looks as good as it tastes.",
     examples: [
@@ -58,7 +58,7 @@ export const websiteTypes = [
     id: 4,
     category: "Professional & Personal Brands",
     icon: "mdi:briefcase-outline",
-    tagline: "Look the part. Stand out.",
+    tagline: "Your reputation, digitized.",
     description:
       "I build portfolios for creators and professionals. I’ll make sure you stand out and look like the expert you are from the second they land on your page.",
     examples: [
@@ -75,39 +75,39 @@ export const websiteTypes = [
 export const whatsIncluded = [
   {
     id: 1,
-    title: "Modern foundations",
+    title: "Modern tech stack",
     description:
-      "I use modern frameworks to move fast without cutting corners. No bloated plugins—just clean code and custom design.",
+      "I use lightweight frameworks to build fast without the bloat. You get clean code and a custom design that actually fits your brand.",
   },
   {
     id: 2,
-    title: "Features that work",
+    title: "Built to perform",
     description:
-      "I build exactly what you need. From custom booking systems to full shops, I make sure everything works perfectly.",
+      "I build exactly what your business needs. Whether it's a custom booking system or a full shop, everything is designed to work perfectly.",
   },
   {
     id: 3,
-    title: "Pixel-perfect on every screen",
+    title: "Pixel perfect on any device",
     description:
-      "Your site will look great on everything from an iPhone to a 5K monitor. No broken layouts, just a smooth experience.",
+      "Your site will look great on everything from an iPhone to a 5K monitor. No broken layouts, just a smooth experience for your users.",
   },
   {
     id: 4,
-    title: "Built for speed and SEO",
+    title: "Fast and easy to find",
     description:
-      "I focus on performance so your site loads instantly. I also handle the SEO basics to help you get found online.",
+      "I prioritize performance so your site loads instantly. I also handle the SEO basics to make sure people can actually find you online.",
   },
   {
     id: 5,
-    title: "Security from day one",
+    title: "Secure by default",
     description:
-      "Security isn’t an afterthought. I set up SSL and secure forms from the start so your data stays safe.",
+      "Security is a priority from the start. I set up SSL and secure contact forms so your data and your customers stay safe.",
   },
   {
     id: 6,
-    title: "Start to finish",
+    title: "Total support",
     description:
-      "I handle the tech from start to finish. Domains, hosting, launch—you get a live site without lifting a finger.",
+      "I handle the technical side from start to finish. Domains, hosting, and the final launch. You get a live site without the headache.",
   },
 ];
 

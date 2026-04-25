@@ -44,14 +44,14 @@ const Home = () => {
 
                 <div id="home-services" className="home-services-section">
                     <div className="section-header" data-index="01">
-                        <h2>SERVICES</h2>
+                        <h2>Services</h2>
                     </div>
                     <Services />
                 </div>
 
                 <div id="home-projects" className="home-projects-section">
                     <div className="section-header" data-index="02">
-                        <h2>PROJECTS</h2>
+                        <h2>Projects</h2>
                     </div>
                     {projects.map((project, index) => (
                         <ProjectItem key={project.id} project={project} index={index} />
@@ -60,7 +60,7 @@ const Home = () => {
 
                 <div id="home-about" className="home-about-section">
                     <div className="section-header" data-index="03">
-                        <h2>ABOUT ME</h2>
+                        <h2>About me</h2>
                     </div>
                     <AboutMe />
                 </div>

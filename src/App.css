@@ -121,13 +121,14 @@ body {
 }
 
 .section-header::before {
-    content: attr(data-index) " —";
+    content: attr(data-index);
     font-family: var(--font-primary);
     font-size: var(--text-caption);
     font-weight: var(--font-weight-h3);
     color: var(--color-stone);
     margin-right: 1.5rem;
     letter-spacing: 0.2em;
+    text-transform: uppercase;
     opacity: 0.8;
 }
 
@@ -137,8 +138,8 @@ body {
     font-size: var(--text-h1);
     text-align: left;
     line-height: 1;
-    letter-spacing: -0.02em;
     text-transform: uppercase;
+    letter-spacing: -0.02em;
     position: relative;
     background: linear-gradient(90deg, #F7F5F2 0%, #DCD6CC 50%, #F7F5F2 100%);
     background-size: 200% auto;

@@ -185,8 +185,8 @@ const Services = () => {
             {}
             <div className="services-includes-wrapper">
                 <div className="services-includes-header">
-                    <span className="includes-eyebrow">WHAT'S INCLUDED</span>
-                    <h3 className="includes-title">Everything you need, nothing you don't.</h3>
+                    <span className="includes-eyebrow">Service details</span>
+                    <h3 className="includes-title">Standards I bring to every single project.</h3>
                 </div>
                 <div className="services-includes-grid">
                     {whatsIncluded.map((item, idx) => {
@@ -221,7 +221,7 @@ const Services = () => {
             {}
             <div className="services-why-wrapper">
                 <div className="services-why-left">
-                    <span className="why-eyebrow">WHY WORK WITH ME</span>
+                    <span className="why-eyebrow">Why work with me</span>
                     <h3 className="why-title">
                         I treat your project like it is my own.
                     </h3>

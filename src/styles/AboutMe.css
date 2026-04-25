@@ -77,8 +77,8 @@
     font-family: var(--font-primary);
     font-size: 0.75rem;
     font-weight: 700;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
-    letter-spacing: 0.2em;
     color: var(--color-neutral);
 }
 
@@ -133,7 +133,6 @@
     font-size: 0.7rem;
     font-weight: 700;
     color: var(--color-neutral);
-    text-transform: uppercase;
     letter-spacing: 0.05em;
 }
 
@@ -319,8 +318,7 @@
     font-size: 0.65rem;
     font-weight: 600;
     color: var(--color-neutral);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
 }
 
 .time-date-label {
@@ -441,5 +439,3 @@
         font-size: 2.2rem;
     }
 }
-
-

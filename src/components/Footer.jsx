@@ -51,14 +51,14 @@ const Footer = () => {
                 <div className="footer-bottom">
                     <div className="footer-info">
                         <p className="copyright">
-                            © {currentYear} CLOUE MACADANGDANG
+                            © {currentYear} Cloue Macadangdang
                         </p>
                         <p className="music-credit">
-                            MUSIC: <a href="https://www.youtube.com/watch?v=laZusNy8QiY" target="_blank" rel="noopener noreferrer">HAGGSTROM BY C418</a>
+                            Music: <a href="https://www.youtube.com/watch?v=laZusNy8QiY" target="_blank" rel="noopener noreferrer">Haggstrom by C418</a>
                         </p>
                     </div>
                     <div className="footer-tagline">
-                        THANK YOU FOR VISITING
+                        Thank you for visiting
                     </div>
                 </div>
             </div>
