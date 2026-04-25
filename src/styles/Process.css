@@ -42,6 +42,7 @@
     color: var(--color-off-white);
     margin: 0;
     line-height: 1.1;
+    text-transform: uppercase;
     letter-spacing: -0.04em;
 }
 
@@ -203,6 +204,7 @@
     color: var(--color-dust);
     margin: 0;
     line-height: 0.9;
+    text-transform: uppercase;
     letter-spacing: -0.05em;
     position: relative;
     z-index: 2;
@@ -220,6 +222,7 @@
     color: transparent;
     -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
     line-height: 1;
+    text-transform: uppercase;
     letter-spacing: -0.04em;
     pointer-events: none;
     z-index: 1;

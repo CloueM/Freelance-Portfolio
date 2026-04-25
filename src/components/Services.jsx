@@ -68,9 +68,15 @@ const Services = () => {
         const includeObserver = new IntersectionObserver(
             (entries) => {
                 entries.forEach((entry) => {
+                    const idx = parseInt(entry.target.dataset.idx);
                     if (entry.isIntersecting) {
-                        const idx = parseInt(entry.target.dataset.idx);
                         setVisibleIncludes((prev) => new Set([...prev, idx]));
+                    } else {
+                        setVisibleIncludes((prev) => {
+                            const next = new Set(prev);
+                            next.delete(idx);
+                            return next;
+                        });
                     }
                 });
             },

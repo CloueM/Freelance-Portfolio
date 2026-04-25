@@ -282,21 +282,27 @@
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 1.5px;
+    perspective: 1200px;
 }
 .include-card {
     padding: 3rem 2.5rem;
     background: rgba(255, 255, 255, 0.005);
     border-right: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    transition: background 0.3s ease;
+    transition: 
+        background 0.3s ease,
+        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
+        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
-    transform: translateY(20px);
+    transform: rotateX(-30deg) translateY(60px) scale(0.9);
+    transform-origin: top;
     position: relative;
     overflow: hidden;
+    backface-visibility: hidden;
 }
 .include-card.visible {
     opacity: 1;
-    transform: translateY(0);
+    transform: rotateX(0deg) translateY(0) scale(1);
 }
 .include-card::before {
     content: '';
