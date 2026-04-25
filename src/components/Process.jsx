@@ -1,29 +1,88 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
+import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
+import { Icon } from '@iconify/react';
 import { processData } from '../data/process';
 import '../styles/Process.css';
 
 const Process = () => {
-    const [hoveredIndex, setHoveredIndex] = useState(null);
+    const [activeStep, setActiveStep] = useState(0);
+    const [lineOffsets, setLineOffsets] = useState({ top: 0, bottom: 0 });
+    const containerRef = useRef(null);
+    const firstRowRef = useRef(null);
+    const lastRowRef = useRef(null);
+    
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start 60%", "end 60%"]
+    });
+
+    useMotionValueEvent(scrollYProgress, "change", (latest) => {
+        const stepCount = processData.length;
+        const currentStep = Math.min(
+            Math.floor(latest * stepCount),
+            stepCount - 1
+        );
+        
+        if (latest > 0) {
+            setActiveStep(currentStep);
+        } else {
+            setActiveStep(0);
+        }
+    });
+
+    useEffect(() => {
+        const updateOffsets = () => {
+            if (firstRowRef.current && lastRowRef.current) {
+                setLineOffsets({
+                    top: firstRowRef.current.offsetTop + (firstRowRef.current.offsetHeight / 2),
+                    bottom: (containerRef.current.offsetHeight - (lastRowRef.current.offsetTop + (lastRowRef.current.offsetHeight / 2)))
+                });
+            }
+        };
+
+        updateOffsets();
+        window.addEventListener('resize', updateOffsets);
+        return () => window.removeEventListener('resize', updateOffsets);
+    }, []);
+
+    const scaleYTarget = activeStep / (processData.length - 1);
 
     return (
         <section className="process-wrapper">
             <div className="process-intro">
-                <span className="process-eyebrow">WORKFLOW</span>
-                <h2 className="process-intro-title">From concept to completion.</h2>
+                <span className="process-eyebrow">THE PLAN</span>
+                <h2 className="process-intro-title">How I build your site.</h2>
                 <p className="process-intro-desc">
-                    A structured, transparent approach designed to ensure every project is delivered with precision, speed, and a focus on your business goals.
+                    I keep things simple and transparent. No corporate jargon or hidden steps. Just a clear path from our first call to your new website being live.
                 </p>
             </div>
-            <div className="process-container">
+            <div className="process-container" ref={containerRef}>
+                <div 
+                    className="process-progress-line"
+                    style={{ 
+                        top: `${lineOffsets.top}px`, 
+                        bottom: `${lineOffsets.bottom}px` 
+                    }}
+                >
+                    <motion.div 
+                        className="progress-fill" 
+                        animate={{ scaleY: scaleYTarget }}
+                        style={{ transformOrigin: "top" }}
+                        transition={{ type: "spring", stiffness: 80, damping: 20 }}
+                    />
+                </div>
                 {processData.map((step, index) => (
                     <div
                         key={step.id}
-                        className={`process-row ${hoveredIndex === index ? 'hovered' : ''} ${hoveredIndex !== null && hoveredIndex !== index ? 'dimmed' : ''}`}
-                        onMouseEnter={() => setHoveredIndex(index)}
-                        onMouseLeave={() => setHoveredIndex(null)}
+                        ref={index === 0 ? firstRowRef : (index === processData.length - 1 ? lastRowRef : null)}
+                        className={`process-row ${activeStep >= index ? 'active' : ''}`}
                     >
+                        <div 
+                            className={`process-checkpoint ${activeStep >= index ? 'active' : ''}`}
+                        >
+                            <Icon icon={step.icon} />
+                        </div>
                         <div className="process-row-left">
-                            <span className="process-number">{step.id}</span>
                             <div className="process-title-wrapper">
                                 <h3 className="process-title">{step.title}</h3>
                                 <span className="process-title-ghost">{step.title}</span>
@@ -31,7 +90,17 @@ const Process = () => {
                         </div>
 
                         <div className="process-row-right">
-                            <p className="process-description">{step.description}</p>
+                            <motion.p 
+                                className="process-description"
+                                initial={{ opacity: 0, y: 10 }}
+                                animate={{ 
+                                    opacity: activeStep >= index ? 1 : 0,
+                                    y: activeStep >= index ? 0 : 10
+                                }}
+                                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                            >
+                                {step.description}
+                            </motion.p>
                         </div>
                     </div>
                 ))}
@@ -41,3 +110,4 @@ const Process = () => {
 };
 
 export default Process;
+

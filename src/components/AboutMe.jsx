@@ -87,7 +87,7 @@ const DynamicMapController = ({ activeLoc }) => {
         const offsetX = isDesktop ? -size.x * 0.25 : 0;
         const offsetY = !isDesktop ? -size.y * 0.17 : 0;
 
-        // Round coordinates to avoid sub-pixel jitter
+        
         const finalPoint = L.point(
             Math.round(targetPoint.x + offsetX),
             Math.round(targetPoint.y + offsetY)
@@ -103,11 +103,11 @@ const DynamicMapController = ({ activeLoc }) => {
 
     const resetToInitial = React.useCallback(() => {
         const { center, zoom } = getInitialPosition();
-        // Only fly if we are not already very close to the target center
+        
         const currentCenter = map.getCenter();
         const dist = map.project(currentCenter, zoom).distanceTo(map.project(center, zoom));
 
-        if (dist > 1) { // 1 pixel threshold
+        if (dist > 1) { 
             map.flyTo(center, zoom, {
                 duration: 2.5,
                 easeLinearity: 0.25
@@ -115,16 +115,16 @@ const DynamicMapController = ({ activeLoc }) => {
         }
     }, [map, getInitialPosition]);
 
-    // Fly to new location when activeLoc changes
+    
     useEffect(() => {
         const { center, zoom } = getInitialPosition();
         map.flyTo(center, zoom, {
             duration: 2.5,
             easeLinearity: 0.25
         });
-    }, [activeLoc, getInitialPosition]); // Separate effect for manual toggle
+    }, [activeLoc, getInitialPosition]); 
 
-    // Auto-recenter after 1 second of idle
+    
     useEffect(() => {
         const startTimer = () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -132,7 +132,7 @@ const DynamicMapController = ({ activeLoc }) => {
         };
 
         const onMoveStart = (e) => {
-            // Only stop timer if it's a manual move
+            
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
 
@@ -187,7 +187,7 @@ const AboutMe = () => {
         <section className="about-me-section" id="home-about">
             <div className="about-me-immersive-container">
 
-                {/* Background Map */}
+                {}
                 <div className="about-map-bg">
                     <MapContainer
                         center={LOCATIONS['vancouver'].pos}
@@ -214,7 +214,7 @@ const AboutMe = () => {
                     </MapContainer>
                 </div>
 
-                {/* Content Overlay with Gradient Fade */}
+                {}
                 <div className="about-content-overlay">
                     <div className="about-content-inner">
                         <div className="about-intro-block">
@@ -277,7 +277,7 @@ const AboutMe = () => {
                     </div>
                 </div>
 
-                {/* Floating Location Card */}
+                {}
                 <div className="map-location-card-floating">
                     <div className="location-card-header">
                         <div className="location-toggle-group">
@@ -322,3 +322,4 @@ const AboutMe = () => {
 };
 
 export default AboutMe;
+

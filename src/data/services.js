@@ -1,7 +1,7 @@
 export const servicesIntro = {
   heading: "SERVICES",
   description:
-    "I want to help small to medium businesses build a real, professional presence online — websites that don't just look good, but actually work for you. Whether you're selling products or offering a service, I'll make sure your site feels premium, loads fast, and turns visitors into customers.",
+    "I build high-end websites for businesses that need to scale. Whether you’re selling products or booking clients, I make sure your site looks premium and actually gets results.",
 };
 
 export const websiteTypes = [
@@ -11,7 +11,7 @@ export const websiteTypes = [
     icon: "mdi:shopping-outline",
     tagline: "Sell anything, beautifully.",
     description:
-      "For businesses that sell physical or digital products online. Whether you're launching your first store or upgrading an existing one, I'll build something that looks high-end and converts.",
+      "I build online shops that actually convert. From fresh starts to total upgrades, I handle the technical heavy lifting so you can focus on sales.",
     examples: [
       "Clothing & Apparel Brands",
       "Handmade & Artisan Shops",
@@ -27,7 +27,7 @@ export const websiteTypes = [
     icon: "mdi:handshake-outline",
     tagline: "Get found. Get booked.",
     description:
-      "For local businesses and freelancers that offer services instead of products. I'll build you a site that showcases your work and makes it easy for clients to reach out or book.",
+      "I build sites for local pros and freelancers. I make it dead simple for clients to find you, see your work, and book you on the spot.",
     examples: [
       "Home Care & Cleaning Services",
       "Car Detailing & Auto Services",
@@ -45,11 +45,11 @@ export const websiteTypes = [
     icon: "mdi:silverware-fork-knife",
     tagline: "Make them hungry before they arrive.",
     description:
-      "For cafés, restaurants, bakeries, and food brands that want a site as appetizing as their menu. I'll design something that makes people want to visit — or order — right away.",
+      "I build websites that make people hungry. From local cafes to catering services, I’ll make sure your menu looks as good as it tastes.",
     examples: [
-      "Restaurants & Cafés",
+      "Restaurants & Cafes",
       "Bakeries & Dessert Shops",
-      "Food Trucks & Pop-Ups",
+      "Food Trucks & Pop ups",
       "Catering Services",
       "Meal Prep & Delivery Brands",
     ],
@@ -60,7 +60,7 @@ export const websiteTypes = [
     icon: "mdi:briefcase-outline",
     tagline: "Look the part. Stand out.",
     description:
-      "For freelancers, consultants, creatives, and professionals who need a strong online presence. I'll build a portfolio or personal brand site that earns trust the moment someone lands on it.",
+      "I build portfolios for creators and professionals. I’ll make sure you stand out and look like the expert you are from the second they land on your page.",
     examples: [
       "Freelancer Portfolios",
       "Consultants & Coaches",
@@ -75,65 +75,60 @@ export const websiteTypes = [
 export const whatsIncluded = [
   {
     id: 1,
-    icon: "mdi:palette-outline",
-    title: "Custom Design",
+    title: "Modern foundations",
     description:
-      "No templates. Every site I build is designed from scratch to match your brand — your colors, your personality, your vibe.",
+      "I use modern frameworks to move fast without cutting corners. No bloated plugins—just clean code and custom design.",
   },
   {
     id: 2,
-    icon: "mdi:cog-outline",
-    title: "Custom Functionality",
+    title: "Features that work",
     description:
-      "Need a booking form, a product catalog, or a contact system? I build the features your business actually needs — not just a pretty brochure.",
+      "I build exactly what you need. From custom booking systems to full shops, I make sure everything works perfectly.",
   },
   {
     id: 3,
-    icon: "mdi:cellphone-link",
-    title: "Fully Responsive",
+    title: "Pixel-perfect on every screen",
     description:
-      "Your site will look and work perfectly on every device — phone, tablet, and desktop. No pinching, no broken layouts.",
+      "Your site will look great on everything from an iPhone to a 5K monitor. No broken layouts, just a smooth experience.",
   },
   {
     id: 4,
-    icon: "mdi:lightning-bolt-outline",
-    title: "Optimized Performance",
+    title: "Built for speed and SEO",
     description:
-      "Fast load times, clean code, and proper SEO foundations so you rank better and don't lose visitors before the page even loads.",
+      "I focus on performance so your site loads instantly. I also handle the SEO basics to help you get found online.",
   },
   {
     id: 5,
-    icon: "mdi:shield-check-outline",
-    title: "Secure & Reliable",
+    title: "Security from day one",
     description:
-      "SSL setup, secure forms, and best practices from day one — so you and your customers can trust what's running under the hood.",
+      "Security isn’t an afterthought. I set up SSL and secure forms from the start so your data stays safe.",
   },
   {
     id: 6,
-    icon: "mdi:rocket-launch-outline",
-    title: "Launch Ready",
+    title: "Start to finish",
     description:
-      "From domain connection to final deployment, I handle the whole process so your site goes live without you having to figure anything out.",
+      "I handle the tech from start to finish. Domains, hosting, launch—you get a live site without lifting a finger.",
   },
 ];
 
 export const whyMe = [
   {
     id: 1,
-    stat: "100%",
-    label: "Custom Builds",
-    note: "No cookie-cutter templates",
+    stat: "Direct",
+    label: "Access",
+    note: "I am your only contact",
   },
   {
     id: 2,
-    stat: "1:1",
-    label: "Direct Communication",
-    note: "You talk to me, not an account manager",
+    stat: "Full",
+    label: "Dedication",
+    note: "I care about every detail",
   },
   {
     id: 3,
-    stat: "∞",
-    label: "Revisions During Build",
-    note: "Until it feels exactly right",
+    stat: "Modern",
+    label: "Standards",
+    note: "Built for the future",
   },
 ];
+

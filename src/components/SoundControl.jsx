@@ -78,3 +78,4 @@ function SoundControl() {
 }
 
 export default SoundControl;
+

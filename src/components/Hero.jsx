@@ -16,13 +16,13 @@ const Hero = () => {
         window.addEventListener('scroll', handleScroll, { passive: true });
         handleScroll();
 
-        // Intersection Observer for active section highlighting
+        
         const sectionIds = ['home-services', 'home-projects', 'home-about'];
         const observers = [];
 
         const observerOptions = {
             root: null,
-            rootMargin: '-40% 0px -40% 0px', // Trigger when section is in middle of screen
+            rootMargin: '-40% 0px -40% 0px', 
             threshold: 0
         };
 
@@ -112,3 +112,4 @@ const Hero = () => {
 };
 
 export default Hero;
+

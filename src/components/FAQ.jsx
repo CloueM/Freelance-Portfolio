@@ -15,7 +15,7 @@ const FAQ = () => {
     const [askedQuestions, setAskedQuestions] = useState(new Set());
     const [isAutoPassing, setIsAutoPassing] = useState(false);
     
-    // Control visibility of end call button in video feed
+    
     const [showVideoControls, setShowVideoControls] = useState(false);
 
     const [lastInactivityIndex, setLastInactivityIndex] = useState(-1);
@@ -23,12 +23,12 @@ const FAQ = () => {
     const [interactedInSession, setInteractedInSession] = useState(new Set());
     const [glowQuestion, setGlowQuestion] = useState(null);
 
-    // Draggable PIP State
+    
     const [pipPos, setPipPos] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
     const dragStartRef = useRef({ x: 0, y: 0 });
     
-    // Inactivity State
+    
     const [consecutiveInactivityCount, setConsecutiveInactivityCount] = useState(0);
 
     const messagesEndRef = useRef(null);
@@ -166,7 +166,7 @@ const FAQ = () => {
         return () => { if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current); };
     }, [messages, isOpen, isTyping, isConnecting, isEndingCall, isAutoPassing, consecutiveInactivityCount]);
 
-    // Initial greeting and persistence logic
+    
     useEffect(() => {
         if (isOpen && !isEndingCall) {
             const hasInteracted = interactedInSession.has(activePersona.id);
@@ -186,7 +186,7 @@ const FAQ = () => {
                 greetingText = greetings[Math.floor(Math.random() * greetings.length)];
             }
 
-            // Mark as interacted for next time in THIS session
+            
             if (!hasInteracted) {
                 setInteractedInSession(prev => new Set(prev).add(activePersona.id));
             }
@@ -197,7 +197,7 @@ const FAQ = () => {
             } else {
                 setIsTyping(true);
 
-                // Allow re-asking questions on fresh calls to Tanjiro
+                
                 if (activePersona.id === 'tanjiro') {
                     setAskedQuestions(new Set());
                 }
@@ -265,7 +265,7 @@ const FAQ = () => {
                 responseText = "I'm not entirely sure about that specific detail. Let me check my notes...";
             }
 
-            // Scroll to the bottom of the question options so they see the transfer button
+            
             setGlowQuestion('transfer');
             setTimeout(() => setGlowQuestion(null), 3000);
 
@@ -414,7 +414,7 @@ const FAQ = () => {
                                         </div>
                                     </div>
                                     
-                                    {/* Close Button Inside Video Feed */}
+                                    {}
                                     <button 
                                         className="support-call-trigger active"
                                         onClick={(e) => { e.stopPropagation(); toggleChat(); }}
@@ -501,3 +501,4 @@ const FAQ = () => {
 };
 
 export default FAQ;
+
