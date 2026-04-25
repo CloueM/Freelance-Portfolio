@@ -1,114 +1,172 @@
 .coffee-cta-section {
+    position: relative;
     width: 100%;
-    padding: 8rem var(--layout-margin);
-    background: linear-gradient(135deg, rgba(58, 55, 51, 0.7), rgba(58, 55, 51, 0.4));
-    backdrop-filter: blur(12px);
-    -webkit-backdrop-filter: blur(12px);
+    padding: 10rem var(--layout-margin);
+    background-color: rgba(30, 30, 30, 0.4);
+    backdrop-filter: blur(40px);
+    -webkit-backdrop-filter: blur(40px);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    box-sizing: border-box;
-}
-.coffee-cta-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 80px 1fr;
-    grid-template-areas:
-        "image title"
-        "desc desc"
-        "btn btn";
-    gap: 1.5rem 1rem;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
     align-items: center;
 }
-.coffee-cta-header,
-.coffee-cta-content {
-    display: contents;
+
+.coffee-cta-background {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+    pointer-events: none;
 }
-.coffee-cta-image-wrapper {
-    grid-area: image;
+
+.coffee-cta-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60%;
+    height: 60%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
+    opacity: 0.5;
+}
+
+.coffee-cta-container {
+    position: relative;
+    z-index: 1;
+    max-width: 1200px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+@media (min-width: 992px) {
+    .coffee-cta-container {
+        grid-template-columns: 0.8fr 1.2fr;
+        gap: 6rem;
+    }
+}
+
+.coffee-cta-visual {
     display: flex;
-    justify-content: flex-start;
+    justify-content: center;
+    align-items: center;
 }
+
+.coffee-cta-image-wrapper {
+    width: 280px;
+    height: 280px;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 2rem;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.3),
+        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+}
+
 .coffee-cta-image {
     width: 100%;
     height: auto;
-    object-fit: contain;
+    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
 }
-.coffee-cta-title {
-    grid-area: title;
-    font-size: clamp(1.4rem, 5vw, 1.8rem);
-    font-weight: 700;
-    color: var(--color-off-white);
-    margin: 0;
-    line-height: 1.1;
-    text-align: left;
+
+.coffee-cta-text {
+    display: flex;
+    flex-direction: column;
 }
-.coffee-cta-description {
-    grid-area: desc;
-    font-size: 1rem;
-    color: var(--color-off-white);
-    opacity: 0.9;
-    line-height: 1.4;
-    margin: 0;
-}
-.coffee-cta-btn {
-    grid-area: btn;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    gap: 0.75rem;
-    padding: 1.25rem 2.5rem;
-    background-color: #fff;
-    color: var(--color-charcoal);
-    text-decoration: none;
-    border-radius: 9999px;
-    font-size: 0.9rem;
+
+.coffee-cta-eyebrow {
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
     font-weight: 600;
-    transition: all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
-    width: 100%;
-    max-width: 340px;
-    margin: 1rem auto 0 auto;
+    color: var(--color-neutral);
+    letter-spacing: 0.2em;
+    display: block;
+    margin-bottom: 1.5rem;
     text-transform: uppercase;
 }
-.coffee-cta-btn svg {
+
+.coffee-cta-title {
+    font-family: var(--font-primary);
+    font-size: clamp(2.5rem, 6vw, 5rem);
+    font-weight: 700;
+    color: var(--color-off-white);
+    line-height: 0.95;
+    letter-spacing: -0.04em;
+    margin: 0 0 2rem;
+    text-transform: uppercase;
+}
+
+.coffee-cta-description {
+    font-family: var(--font-primary);
+    font-size: clamp(1rem, 1.2vw, 1.15rem);
+    color: var(--color-off-white);
+    line-height: 1.7;
+    opacity: 0.6;
+    max-width: 540px;
+    margin: 0 0 3rem;
+}
+
+.coffee-cta-footer {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.coffee-cta-btn {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.25rem 3rem;
+    background: var(--color-off-white);
+    color: var(--color-charcoal);
+    border-radius: 100px;
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-decoration: none;
+    transition: background 0.3s ease;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.coffee-cta-btn:hover {
+    background: #fff;
+}
+
+.coffee-cta-btn .iconify {
+    font-size: 1.2rem;
     transition: transform 0.3s ease;
 }
-.coffee-cta-btn:hover {
-    background-color: #fff;
-    transform: translateY(-2px);
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+
+.coffee-cta-btn:hover .iconify {
+    transform: translateX(5px);
 }
-.coffee-cta-btn:hover svg {
-    transform: translate(2px, -2px);
-}
-@media (min-width: 768px) {
+
+@media (max-width: 991px) {
     .coffee-cta-section {
-        padding: 16rem var(--layout-margin);
+        padding: 8rem var(--layout-margin);
     }
-    .coffee-cta-container {
-        grid-template-columns: minmax(300px, 1fr) 1.5fr;
-        grid-template-areas:
-            "image title"
-            "image desc"
-            "image btn";
-        gap: 0.5rem 6rem;
+    
+    .coffee-cta-text {
+        text-align: center;
         align-items: center;
     }
-    .coffee-cta-image-wrapper {
+    
+    .coffee-cta-footer {
         justify-content: center;
     }
-    .coffee-cta-title {
-        font-size: clamp(2.5rem, 5vw, 4rem);
-        align-self: flex-end;
-    }
+    
     .coffee-cta-description {
-        font-size: 1.1rem;
-        max-width: 500px;
-    }
-    .coffee-cta-btn {
-        margin: 1rem 0 0 0;
-        width: auto;
-        padding: 1.25rem 3rem;
+        margin-left: auto;
+        margin-right: auto;
     }
 }
