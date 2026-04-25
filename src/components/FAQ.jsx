@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import assistantPersonas, { predefinedQuestions } from '../data/support.js';
+import assistantPersonas from '../data/support.js';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import '../styles/FAQ.css';
 
@@ -35,7 +35,16 @@ const FAQ = () => {
     const messagesAreaRef = useRef(null);
     const questionOptionsRef = useRef(null);
     const zenitsuTimerRef = useRef(null);
+    const greetingTimerRef = useRef(null);
     const inactivityTimerRef = useRef(null);
+
+    useEffect(() => {
+        const handleOpenCall = () => {
+            if (!isOpen) toggleChat();
+        };
+        window.addEventListener('open-support-call', handleOpenCall);
+        return () => window.removeEventListener('open-support-call', handleOpenCall);
+    }, [isOpen]);
 
     const scrollToBottom = () => {
         messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -187,38 +196,62 @@ const FAQ = () => {
             }
 
             
-            if (!hasInteracted) {
-                setInteractedInSession(prev => new Set(prev).add(activePersona.id));
-            }
+            const shouldGreet = messages.length === 0 || !hasInteracted || isOpen;
 
-            if (activePersona.id === 'zenitsu') {
-                setMessages([{ id: Date.now(), type: 'bot', text: greetingText, personaId: activePersona.id }]);
-                zenitsuTimerRef.current = setTimeout(() => handleEndCallAuto('mitsuri'), 3000);
-            } else {
-                setIsTyping(true);
-
-                
-                if (activePersona.id === 'tanjiro') {
-                    setAskedQuestions(new Set());
+            if (shouldGreet) {
+                if (!hasInteracted) {
+                    setInteractedInSession(prev => new Set(prev).add(activePersona.id));
                 }
 
-                const delay = calculateDelay(greetingText, activePersona.id);
-                setTimeout(() => {
-                    setIsTyping(false);
+                if (activePersona.id === 'zenitsu' && messages.length === 0) {
                     setMessages([{ id: Date.now(), type: 'bot', text: greetingText, personaId: activePersona.id }]);
-                    setConsecutiveInactivityCount(0); 
-                }, delay);
+                    zenitsuTimerRef.current = setTimeout(() => handleEndCallAuto('mitsuri'), 3500);
+                } else {
+                    
+                    if (messages.length > 0 && messages[messages.length - 1].text === greetingText) return;
+
+                    setIsTyping(true);
+                    if (activePersona.id === 'tanjiro') {
+                        setAskedQuestions(new Set());
+                    }
+                    const delay = Math.min(2000, calculateDelay(greetingText, activePersona.id));
+                    greetingTimerRef.current = setTimeout(() => {
+                        setIsTyping(false);
+                        setMessages(prev => [...prev, { id: Date.now(), type: 'bot', text: greetingText, personaId: activePersona.id }]);
+                        setConsecutiveInactivityCount(0);
+                        
+                        
+                        if (activePersona.id === 'zenitsu') {
+                            zenitsuTimerRef.current = setTimeout(() => handleEndCallAuto('mitsuri'), 3000);
+                        }
+                    }, delay);
+                }
             }
         }
-        return () => { if (zenitsuTimerRef.current) clearTimeout(zenitsuTimerRef.current); };
+        return () => { 
+            if (zenitsuTimerRef.current) clearTimeout(zenitsuTimerRef.current); 
+            if (greetingTimerRef.current) clearTimeout(greetingTimerRef.current);
+        };
     }, [isOpen, activePersona, isEndingCall]);
 
     const handleEndCallAuto = (nextId) => {
         setIsAutoPassing(false);
         setIsEndingCall(true);
-        setMessages([]);
-        setFailRedirect(null);
+        
         const nextPersona = assistantPersonas.find(p => p.id === nextId);
+        let transferMsg = "";
+        
+        if (activePersona.id === 'zenitsu') {
+            transferMsg = "ZENITSU IS NOT RESPONDING. REDIRECTING SIGNAL TO INTERN...";
+        } else if (activePersona.id === 'mitsuri') {
+            transferMsg = "ESCALATING CALL TO SENIOR DEVELOPER...";
+        } else if (activePersona.id === 'giyu') {
+            transferMsg = "ROUTING TO PROJECT MANAGEMENT CORE...";
+        } else {
+            transferMsg = `TRANSFERRING CALL TO ${nextPersona.name.toUpperCase()}...`;
+        }
+        
+        setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: transferMsg }]);
         
         setTimeout(() => {
             setActivePersona(nextPersona);
@@ -227,19 +260,23 @@ const FAQ = () => {
             setAskedQuestions(new Set());
             setConsecutiveInactivityCount(0);
             setLastInactivityIndex(-1);
+            
+            setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "STABLE CONNECTION ESTABLISHED." }]);
+            
             setTimeout(() => {
                 setIsConnecting(false);
-            }, 600);
+            }, 800);
         }, 1500);
     };
 
     const handleQuestionClick = (question) => {
         if (isTyping || isConnecting || isEndingCall || activePersona.id === 'zenitsu' || isAutoPassing) return;
 
+        if (greetingTimerRef.current) clearTimeout(greetingTimerRef.current);
+        
         playSelectSound();
         setConsecutiveInactivityCount(0); 
         setLastInactivityIndex(-1);
-        setFailRedirect(null);
         
         const userMsg = { id: Date.now(), type: 'user', text: question.text };
         setMessages(prev => [...prev, userMsg]);
@@ -249,35 +286,16 @@ const FAQ = () => {
         setAskedQuestions(newAsked);
 
         let responseText = "";
-        let isSpecialFail = false;
 
         if (activePersona.responses[question.id]) {
             const pool = activePersona.responses[question.id];
             responseText = Array.isArray(pool) 
                 ? pool[Math.floor(Math.random() * pool.length)] 
                 : pool;
-        } else {
-            isSpecialFail = true;
-            if (activePersona.failResponses) {
-                const pool = activePersona.failResponses;
-                responseText = pool[Math.floor(Math.random() * pool.length)];
-            } else {
-                responseText = "I'm not entirely sure about that specific detail. Let me check my notes...";
-            }
+        }
 
             
-            setGlowQuestion('transfer');
-            setTimeout(() => setGlowQuestion(null), 3000);
 
-            setTimeout(() => {
-                if (questionOptionsRef.current) {
-                    questionOptionsRef.current.scrollTo({
-                        top: questionOptionsRef.current.scrollHeight,
-                        behavior: 'smooth'
-                    });
-                }
-            }, 600);
-        }
 
         setIsTyping(true);
         const delay = calculateDelay(responseText, activePersona.id);
@@ -299,7 +317,7 @@ const FAQ = () => {
                     if (activePersona.id === 'mitsuri' || activePersona.id === 'giyu') triggerAutoPass();
                     else if (activePersona.id === 'tanjiro') triggerPersonaOutro();
                 }, 1000);
-            } else if (newAsked.size === predefinedQuestions.length) {
+            } else if (newAsked.size === (activePersona.questions || []).length) {
                 setTimeout(() => triggerPersonaOutro(), 1000);
             }
         }, delay);
@@ -328,10 +346,17 @@ const FAQ = () => {
                         setIsTyping(false);
                         setMessages(prev => [...prev, { id: Date.now() + 3, type: 'bot', text: finalMsg2, personaId: 'tanjiro' }]);
                         setTimeout(() => {
-                            sessionStorage.setItem('faq_unlocked_tanjiro', 'true');
-                            setIsTanjiroUnlocked(true);
-                            setIsOpen(false);
-                        }, 5000);
+                                sessionStorage.setItem('faq_unlocked_tanjiro', 'true');
+                                setIsTanjiroUnlocked(true);
+                                setIsOpen(false);
+                                
+                                setTimeout(() => {
+                                    setActivePersona(assistantPersonas[0]);
+                                    setMessages([]);
+                                    setInteractedInSession(new Set());
+                                    setAskedQuestions(new Set());
+                                }, 500);
+                            }, 5000);
                     }, calculateDelay(finalMsg2, 'tanjiro'));
                 }, 2000);
             }, calculateDelay(finalMsg1, 'tanjiro'));
@@ -350,12 +375,19 @@ const FAQ = () => {
 
     const toggleChat = () => {
         playSelectSound();
-        setIsOpen(!isOpen);
-        if (!isOpen) {
+        const nextState = !isOpen;
+        setIsOpen(nextState);
+        
+        if (!nextState) {
+            
+            setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "CALL ENDED BY USER." }]);
             setPipPos({ x: 0, y: 0 });
             setConsecutiveInactivityCount(0);
             setLastInactivityIndex(-1);
             setShowVideoControls(false);
+        } else {
+            
+            setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "RESUMING CONNECTION..." }]);
         }
     };
 
@@ -454,15 +486,30 @@ const FAQ = () => {
                         </div>
 
                         <div className="chat-messages-area" ref={messagesAreaRef}>
-                            {messages.map((msg) => (
-                                <div key={msg.id} className={`chat-message ${msg.type}`}>
-                                    {msg.type === 'bot' && <div className="message-avatar">{activePersona.name[0]}</div>}
-                                    <div className="message-content"><div className="message-text">{msg.text}</div></div>
-                                </div>
-                            ))}
+                            {messages.map((msg) => {
+                                const msgPersona = assistantPersonas.find(p => p.id === msg.personaId);
+                                return (
+                                    <div key={msg.id} className={`chat-message ${msg.type}`}>
+                                        {msg.type === 'bot' && (
+                                            <div className="message-avatar">
+                                                <img src={msgPersona?.video} alt={msgPersona?.name} />
+                                            </div>
+                                        )}
+                                        {msg.type === 'user' && (
+                                            <div className="message-avatar user-avatar">
+                                                <div className="user-icon">YOU</div>
+                                            </div>
+                                        )}
+                                        {msg.type === 'system' && <div className="message-system-icon"></div>}
+                                        <div className="message-content"><div className="message-text">{msg.text}</div></div>
+                                    </div>
+                                );
+                            })}
                             {isTyping && (
                                 <div className="chat-message bot typing">
-                                    <div className="message-avatar">{activePersona.name[0]}</div>
+                                    <div className="message-avatar">
+                                        <img src={activePersona.video} alt={activePersona.name} />
+                                    </div>
                                     <div className="message-content"><div className="typing-dots"><span></span><span></span><span></span></div></div>
                                 </div>
                             )}
@@ -480,7 +527,7 @@ const FAQ = () => {
                                 {activePersona.id === 'zenitsu' ? 'System restricted...' : isAutoPassing ? 'Rerouting...' : 'Select a question:'}
                             </p>
                             <div className="question-options" ref={questionOptionsRef}>
-                                {predefinedQuestions.map((q) => (
+                                {(activePersona.questions || []).map((q) => (
                                     <button
                                         key={q.id}
                                         className={`question-btn ${askedQuestions.has(q.id) ? 'asked' : ''} ${glowQuestion === q.id ? 'glow' : ''}`}

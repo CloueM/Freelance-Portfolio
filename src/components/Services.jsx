@@ -245,7 +245,10 @@ const Services = () => {
                                     if (info.offset.x >= 180) {
                                         setIsSlid(true);
                                         controls.start({ x: 215 });
-                                        window.location.href = "mailto:hello@kurowii.com";
+                                        
+                                        
+                                        window.dispatchEvent(new CustomEvent('open-support-call'));
+                                        
                                         setTimeout(() => {
                                             setIsSlid(false);
                                             controls.start({ x: 0 });
@@ -265,7 +268,7 @@ const Services = () => {
                                 <Icon icon={isSlid ? "ph:check-bold" : "ph:arrow-right-bold"} />
                             </motion.div>
                             <span className="slide-text">
-                                {isSlid ? "OPENING EMAIL..." : "SLIDE TO TALK"}
+                                {isSlid ? "CONNECTING..." : "SLIDE TO TALK"}
                             </span>
                         </div>
                     </div>

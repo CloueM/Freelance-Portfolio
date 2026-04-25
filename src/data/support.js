@@ -23,62 +23,75 @@ const assistantPersonas = [
             "[Error: Zenitsu is still asleep... somehow]",
             "[Status: Zenitsu is dreaming about electricity again]",
             "[System Notice: Server room is currently Zenitsu's bedroom]"
-        ]
+        ],
+        questions: []
     },
     {
         id: 'mitsuri',
         name: 'Mitsuri',
-        label: 'Junior Intern',
-        title: 'Front End Intern',
+        label: 'UI/UX Designer',
+        title: 'Design Expert',
         video: '/images/Mitsuri.webp',
         signal: 'Stable-ish',
-        behavior: 'Socially awkward, stuttering, very shy but incredibly kind.',
+        behavior: 'Passionate, detail-oriented, and loves visual harmony. She has a sharp eye for colors and fonts.',
         initialGreeting: [
-            "O-oh! H-hi! I'm Mitsuri! Zenitsu is... well, he's asleep. I'm the new intern! Please don't tell Boss Cloue I'm the one who picked up... how can I help?",
-            "U-um, hello! I'm Mitsuri, the intern. Zenitsu is sleeping again, so I'm covering for him. I'll try my best to help you!",
-            "Hi! I'm Mitsuri! I just started here recently. Zenitsu isn't waking up, so I'm here to answer your questions! What would you like to know?"
+            "Oh! Hello! I'm Mitsuri, the UI/UX Designer here! I was just adjusting some pixel-perfect details in Figma. I'm so happy to talk about design with you! How can I help make your vision more beautiful today?",
+            "Hi there! I'm Mitsuri. I handle all the design work, from the colors to the way the site feels when you click. I love creating harmony in layouts! What can I tell you about our design process?",
+            "Greetings! I'm the Design Expert. I spend my days in Figma and Adobe, making sure everything is visually delightful. I'm covering for Zenitsu while he naps... do you have questions about the look and feel of our work?"
         ],
         responses: {
             'services': [
-                "We build all kinds of websites! Cloue is really great at the design part, and then we work together to turn those ideas into real sites using React or WordPress.",
-                "Our team makes websites from scratch. Cloue handles the look and feel, and we make sure everything works properly. We use tools like React and WordPress for most of our work.",
-                "We can help with pretty much any web project! Cloue creates the designs, and the rest of us help build them. We focus on making things look clean and professional."
+                "I focus on creating beautiful, user-friendly designs in Figma and Adobe XD. Cloue is the Owner and oversees the big vision, but I make sure every font and color is perfect before Giyu builds it!",
+                "Our team makes websites that are both pretty and easy to use. I do all the UI/UX work using Photoshop and Illustrator, making sure the design is exactly what you need. Then Giyu and the team bring it to life!",
+                "We can help with any design needs! I use Figma, Canva, and the Adobe suite to create custom layouts. I love making sure the visual harmony is just right for our clients."
             ],
             'tech-stack': [
-                "I'm still learning, but I know we use React and JavaScript! Cloue also knows a lot about WordPress. It's how we build most of the sites you see on our projects section on this site.",
-                "We use modern tools like React, HTML, JavaScript, CSS, and for regular websites, we use WordPress. Cloue makes sure we use the best technology for each project.",
-                "Our team uses React, JavaScript, and WordPress. We try to keep our code clean and fast so the websites run smoothly!"
+                "For design, I live in Figma and Adobe Photoshop. I also use Adobe Illustrator for custom icons. For the build, Giyu uses React and JavaScript to make my designs work perfectly on your screen!",
+                "I use Figma, Adobe XD, and Canva for my UI/UX work. I also know Illustrator very well for vector graphics! We use React and WordPress to turn my designs into real, fast websites.",
+                "My tools are all about beauty: Figma, Photoshop, XD, and Illustrator. I focus on the design UX/UI, while Giyu and the team use React and WordPress to handle the technical build. It's a perfect match!"
             ],
             'custom-design': [
-                "Yes! Cloue can definitely make a custom design just for you. Just so you know, making something from scratch takes more work, so it will change the price a bit!",
-                "Of course! We do custom designs all the time. It's a great way to stand out, but it does cost a little more than using a standard layout because of the extra time needed.",
-                "We can certainly do that! Cloue loves making unique designs. Since it's a lot of extra work to make it special for you, it will affect the total project cost."
+                "Yes! I absolutely love making custom designs from scratch! I'll build you a unique layout in Figma that is purely yours. Since it takes more time and detail than a normal setup, the price will be a bit higher, but it will be stunning!",
+                "Of course! Custom design is my favorite part of the job. I'll use all my Adobe tools to make sure your site has its own personality. Because I put so much detail into it, it does affect the total cost, but you'll have something unique!",
+                "We can definitely do that! I'll create a custom UI/UX plan just for you. Since I spend so much time on the details and visual harmony, it will change the project price, but I promise it will be beautiful!"
             ],
             'transfer': [
-                "O-oh! Yes! Let me find my senior developer Giyu! He knows way more than I do and can give you better answers. Just a second...",
-                "Sure! I'll pass you over to my senior developer Giyu. He's been here longer and knows all the technical details. He's a bit serious but he's really good!",
-                "Of course! Let me get my senior developer Giyu for you. He handles the more advanced stuff and can explain things much better than I can!"
+                "I'd love to keep talking about fonts, but if you have technical coding questions, I should pass you to Giyu. He's our Senior Developer and handles the build once my designs are ready!",
+                "Sure! I'll get Giyu for you. He's the one who turns my Figma designs into real code. He's very good at his job, even if he's a bit serious. One moment!",
+                "Of course! Let me get Giyu, our Senior Full Stack Developer. He handles the heavy lifting with the code and can explain the technical side much better than I can!"
+            ],
+            'visual-harmony': [
+                "I love colors so much! I pick palettes that feel warm and inviting, or clean and professional. For fonts, I focus on how easy they are to read and how they make you feel. I want your site to be a beautiful story!",
+                "Choosing colors and fonts is like painting a picture. I make sure they all work together in harmony. I love using soft gradients and clean layouts to make everything look visually delightful!",
+                "Visual harmony is my specialty! I carefully pick colors that match your brand and fonts that look modern. I want everyone who visits your site to feel happy and excited by what they see!"
+            ],
+            'ux-process': [
+                "I start by mapping out the journey in Figma. I think about where people look and how they feel when they click a button. My goal is to make every part of your website easy and fun to use!",
+                "My process is all about the user. I make wireframes first to see how the site will flow. I want to make sure no one gets lost and everyone enjoys the time they spend on your website!",
+                "I focus on the delight of the user! I test every layout to make sure it's simple to understand. A good design isn't just pretty, it has to feel natural and work perfectly for everyone."
             ]
         },
-        failResponses: [
-            "O-oh... um... I'm not actually sure about that one! I'm still learning...",
-            "I-I'm not sure! I haven't reached that part of my training yet. Should I ask someone else for you?",
-            "U-um... that's a good question! But I don't think I know the answer yet. I'm sorry!",
-            "Wait, I don't think I know that! Maybe my senior developer Giyu or the project manager Tanjiro would know? I'm still just an intern..."
-        ],
         inactivityMsgs: [
-            "U-um... are you still there? I hope I didn't say something weird!",
-            "Hello? Did I break something? I'm sorry if I'm being slow!",
-            "It's quiet... are you still thinking? I'll be here whenever you're ready!",
-            "Did the screen freeze? Or are you just busy? Let me know if you need anything!",
-            "I'm still here! Please let me know if you have any more questions.",
+            "Are you still there? I'm just looking at the font choice here... I hope you're still with us!",
+            "Hello? I was just thinking about the color palette! Did you have any more design questions?",
+            "It's quiet... are you thinking about the layout? I'll be here whenever you're ready to talk about beauty!",
+            "Did the connection break? Or are you just looking at the design? Let me know if you need anything!",
+            "I'm still here! Please let me know if you want to know more about our Figma work or Adobe tools.",
             "If you can hear me, feel free to click one of the questions below!"
         ],
         repeatGreetings: [
-            "O-oh! You're back! Did you have more questions for me? I'll try my best to help again!",
-            "Hey again! I'm still here... and Zenitsu is still snoring. What's up?",
-            "Welcome back! I'm glad you came back to talk. What can I help with this time?",
-            "Hi! Nice to see you again. Do you have more questions about our work?"
+            "Welcome back! I'm so glad you're here again. Did you have more questions about the UI/UX or our designs?",
+            "Hi again! I'm still here, and Zenitsu is still... well, he's still asleep. What else can I show you about our visual harmony?",
+            "Welcome back! I'm glad you came back to talk. What can I help with this time? More colors? More fonts?",
+            "Hi! Nice to see you again. Do you have more questions about the look and feel of our work?"
+        ],
+        questions: [
+            { id: 'services', text: "What kind of designs can you create for my brand?" },
+            { id: 'tech-stack', text: "Which design tools do you use most often?" },
+            { id: 'custom-design', text: "How do you create a custom look just for me?" },
+            { id: 'visual-harmony', text: "How do you choose the right colors and fonts?" },
+            { id: 'ux-process', text: "What is your process for making a site user-friendly?" },
+            { id: 'transfer', text: "Can you pass the call to a developer?" }
         ]
     },
     {
@@ -90,48 +103,42 @@ const assistantPersonas = [
         signal: 'Poor (144p)',
         behavior: 'Sleepy, unmotivated, grumbling about centered divs.',
         initialGreeting: [
-            "*yawn* Yeah, what? Mitsuri said you had questions. Zenitsu is still asleep, so you're stuck with me. I'm busy fixing some code Cloue noticed was off, so make it quick.",
-            "You again? No, wait... first time. Whatever. I'm Giyu. I build the stuff Cloue designs. What do you need to know?",
+            "*yawn* Yeah, what? Mitsuri said you had questions. Zenitsu is still asleep, so you're stuck with me. I'm busy fixing some code Boss Cloue noticed was off, so make it quick.",
+            "You again? No, wait... first time. Whatever. I'm Giyu. I build the stuff Mitsuri designs. What do you need to know?",
             "Hey. I'm in the middle of a project, but I can talk for a bit. I handle the coding side of things here. Ask away."
         ],
         responses: {
             'services': [
-                "We build custom React and WordPress sites. Cloue handles the design, and I make sure the code works. We focus on making things fast and reliable.",
-                "Our team does custom web development. We use React and WordPress mostly. Cloue keeps the design clean, and I handle the heavy lifting with the code.",
-                "We turn designs into real websites. Usually that means React and WordPress for most of the sites. We try to keep things simple and functional."
-            ],
-            'timeline': [
-                "Usually takes about 3 to 6 weeks. It depends on how many changes we need to make to the design and how complex the features are.",
-                "Expect a month or so. We don't like to rush things because we want the code to be clean and the site to work perfectly.",
-                "3 to 6 weeks is the standard. We spend a lot of time making sure the design and the code match up correctly before we launch."
+                "We build custom React and WordPress sites. Mitsuri handles the design, and I make sure the code works. We focus on making things fast and reliable.",
+                "Our team does custom web development. We use React and WordPress mostly. Mitsuri keeps the design clean, and I handle the heavy lifting with the code.",
+                "We turn Mitsuri's designs into real websites. Usually that means React and WordPress for most of the sites. We try to keep things simple and functional."
             ],
             'support': [
-                "We use Hostinger and Siteground for hosting. You'll need your own account, and then you just give us some access to your account like Collaborator account or FTP account to set everything up. It's easier for everyone.",
+                "We use Hostinger and Siteground for hosting. You'll need your own account, and then you just give Boss Cloue some access to your account like Collaborator account or FTP account to set everything up. It's easier for everyone.",
                 "Yes, we provide 30 days of free support after the site goes live. After that, we charge $40 per hour for any extra help or updates you might need.",
                 "Once the site is done, we'll give you a Manual on how to manage it. You also get 30 days of free support. If you need more help after that, our rate is $40 per hour."
             ],
             'tech-stack': [
-                "We use React, JavaScript, and CSS for the front end. Cloue also uses WordPress for a lot of projects. It's a solid stack that handles most things well.",
+                "We use React, JavaScript, and CSS for the front end. Mitsuri also uses WordPress for a lot of projects. It's a solid stack that handles most things well.",
                 "React and WordPress are our main tools. We also use things like Vite to keep the development fast. It's a modern setup that's easy to maintain.",
-                "Our stack is straightforward: React for speed and WordPress for content. Cloue sets the design standards, and I make sure the tech matches them."
-            ],
-            'custom-design': [
-                "Yes, we can do a full custom design. It definitely takes more time to build something unique from scratch, so that will be reflected in the final price.",
-                "Everything can be custom if you want. Just keep in mind that custom work is more expensive because of the extra hours we have to put in.",
-                "We do custom designs, yes. It's better than using a template, but it does cost more and takes longer to finish. Let us know if that's what you're looking for."
+                "Our stack is straightforward: React for speed and WordPress for content. Mitsuri sets the design standards, and I make sure the tech matches them."
             ],
             'transfer': [
                 "Fine. I'll get Tanjiro. He's our Project Manager and handles the business side. I'm going back to my code.",
                 "I'm passing you to Tanjiro, our Project Manager. He's better at explaining the 'process' and the budget stuff than I am. One second.",
                 "I'll get the Project Manager for you. He can answer the rest of your questions. I need to get back to work anyway."
+            ],
+            'performance': [
+                "Speed is everything in code. I optimize all images, shrink the code files, and use modern tools to make sure your site loads in a flash. If a site is slow, it's broken in my eyes.",
+                "I make sure the technical build is as light as possible. I use tools like Vite for fast loading and clean scripts. Your users won't have to wait around for your content to show up.",
+                "A fast website is a happy website. I spend a lot of time making sure the back-end is efficient. I don't like bloated code, so I keep everything lean and very quick."
+            ],
+            'clean-code': [
+                "I follow very strict rules when I write code. Clean code means fewer bugs and it's much easier to update later. I turn Mitsuri's Figma files into clean, reusable React components.",
+                "I take pride in my code structure. I make sure everything is organized so that if we need to change something next year, it's easy to do. No messy 'spaghetti' code here.",
+                "My job is to make Mitsuri's designs work perfectly. I use modern JavaScript and React standards to build a solid foundation that will last a long time without breaking."
             ]
         },
-        failResponses: [
-            "I don't know. That's more of a business question. You should ask Tanjiro.",
-            "Not my department. I just write the code. Ask someone who handles the projects.",
-            "I'm not sure. I don't usually deal with that part of the work.",
-            "Ask the Project Manager. I'm busy with the server right now."
-        ],
         inactivityMsgs: [
             "*sigh* Are you still there? I've got work to do. Are we finished or what?",
             "You still there? I'm waiting. Ask a question or I'm closing the tab.",
@@ -145,6 +152,14 @@ const assistantPersonas = [
             "Yeah? Still here? What else do you want to know about our team?",
             "You again. Fine. What's the question this time?",
             "I thought you were done. What else is on your mind?"
+        ],
+        questions: [
+            { id: 'services', text: "What technical platforms do you recommend?" },
+            { id: 'tech-stack', text: "What coding languages do you use to build sites?" },
+            { id: 'performance', text: "How do you make sure my website is fast?" },
+            { id: 'support', text: "Can you help me with hosting and server setup?" },
+            { id: 'clean-code', text: "How do you turn designs into working code?" },
+            { id: 'transfer', text: "Can you pass the call to the Project Manager?" }
         ]
     },
     {
@@ -154,81 +169,70 @@ const assistantPersonas = [
         title: 'Project Lead',
         video: '/images/Tanjiro.jpg',
         signal: 'HD 1080p',
-        behavior: 'Professional, friendly, the "shield" for the Boss.',
+        behavior: 'Professional, incredibly kind, sincere, and hardworking. The protective shield for the team.',
         initialGreeting: [
-            "Hello! I'm Tanjiro, the Project Manager. I handle the coordination and business side so Cloue can focus on his designs. How can I help you today?",
-            "Hi there! It's seems like Giyu passed you over to me. I'm Tanjiro. I make sure our projects run smoothly and everyone stays on track. What can I tell you about our services?",
-            "Greetings! I'm the Project Lead here. I'm happy to answer any questions you have about our team or how we work. What's on your mind?"
+            "Hello! I'm Tanjiro. I help run the projects here! I can smell a great project opportunity! I handle the planning so Boss Cloue can focus on the business while Mitsuri handles the designs. How can I help you today?",
+            "Hi there! Giyu passed you to me. Don't worry, I'll make sure everything goes well from here. I'm Tanjiro, and I make sure the team stays on track. What can I tell you about our work?",
+            "Greetings! I'm the leader here. I promise to work my hardest to answer your questions and make your website real. What's on your mind? I'm here to help you in any way I can!"
         ],
         responses: {
-            'services': [
-                "We provide high-quality web design and development. Cloue handles the creative side, and our team builds everything using React and WordPress.",
-                "Our team focuses on making great websites. We handle both the design and the technical build, ensuring everything looks good and works perfectly.",
-                "We offer custom web solutions for businesses. This includes everything from the initial design by Cloue to the final launch using React or WordPress."
+            'timeline': [
+                "Most projects take about 3 to 6 weeks. I'll make sure Giyu and Mitsuri use that time well to build everything right. I won't let Zenitsu's sleeping slow us down!",
+                "We usually aim for 3 to 6 weeks. This gives Giyu time to do the hard coding and Mitsuri time to design. I'll check their progress every day to make sure we finish on time for you.",
+                "3 to 6 weeks is our normal time to finish. We care more about doing a good job than rushing. I make sure the team stays focused so Mitsuri's designs come to life perfectly."
             ],
             'pricing': [
-                "Our projects usually start around $1,000 CAD. We're flexible though, so we can talk about your budget and see what fits your needs.",
-                "A typical project starts at $1,000 CAD. Since every project is different, we can adjust the price based on what you actually need.",
-                "We usually quote around $1,000 CAD as a starting point. We're happy to discuss your specific goals and find a price that works for you."
-            ],
-            'timeline': [
-                "Most projects take between 3 and 6 weeks. This gives us enough time to get the design right and make sure the website is fully tested.",
-                "We usually aim for a 3-6 week timeline. This allows our team to focus on quality and ensure your site is ready for launch.",
-                "3 to 6 weeks is our standard turnaround time. We prioritize doing a good job over rushing, so we take the time to get everything right."
-            ],
-            'support': [
-                "We provide 30 days of free support after we launch. If you need more help after those 30 days, we offer support at a rate of $40 per hour.",
-                "You'll receive a full Manual on how to manage your website once it's live. You also get 30 days of free support, and any support after that is $40 per hour.",
-                "We include 30 days of free post-launch support to ensure everything is perfect. Beyond that, we're available for updates or help at $40 per hour."
-            ],
-            'tech-stack': [
-                "We use React, JavaScript, HTML, CSS, Figma and technologies like Node, PHP, WordPress, Shopif and many more. These are industry standards that allow us to build fast, reliable websites for our clients.",
-                "Our team works with React and WordPress. We find these are the best tools for creating sites that are both beautiful and easy to manage.",
-                "We use a modern stack including React and WordPress. Cloue makes sure the design is top-notch, and we use the best tech to build it."
+                "I want to be very honest with you, our projects usually start at $1,000 and usually don't go above $8,000. I know Giyu can be a bit blunt about costs, but I'll work with you to find a price that fits your budget.",
+                "A normal project starts at $1,000 and usually doesn't go above $8,000. Every project is different. Even if Mitsuri was a bit confused earlier, I'll make sure the price is fair for what you actually need to succeed.",
+                "We usually start at $1,000 and usually don't go above $8,000. I'm happy to talk about your goals. I'll make sure the whole team, including Giyu and Mitsuri, works hard to make it worth every cent!"
             ],
             'process': [
-                "To keep you updated, we use Trello to organize all tasks. You'll see screenshots and live updates there, so you always know exactly what we're working on.",
-                "We invite all clients to a Trello board where we track every step of the project with screenshots and updates. You can also request a quick meeting if you'd like a live update!",
-                "You can trust our plan because you'll see it in action on Trello. We post tasks, progress shots, and regular updates there. We can also hop on a quick call anytime you need an update."
-            ],
-            'custom-design': [
-                "Yes, we can definitely create a custom design for you! Please keep in mind that custom work takes more time to develop, so it will affect the overall project cost.",
-                "We offer custom designs if you want something unique. It does increase the price a bit because of the extra time our team spends making it special for you.",
-                "Of course! Custom design is a great option. Since it involves more work than a standard setup, it will be reflected in the project's total price."
+                "To keep you updated, we use a tool called Trello. I list all the tasks for Giyu and Mitsuri there so you can see exactly what they are doing. I'll be there to answer any questions!",
+                "I invite all our clients to a Trello board. You can see Giyu's code updates and Mitsuri's work there clearly. I make sure they post pictures of their progress every day!",
+                "You can trust our plan because you'll see it on Trello. I manage all the tasks for the team there. I'll make sure Giyu and Mitsuri keep you informed every step of the way."
             ],
             'transfer': [
-                "I handle most of the client communication, but if you have a very specific question for Cloue, you can always email him at hello@kurowii.com.",
-                "Feel free to reach out to Cloue via email if you need to discuss something high-level. Otherwise, I'm here to manage the project details for you!",
-                "If you'd like to talk to Cloue directly, he's usually busy with designs but you can reach him at hello@kurowii.com. He's always happy to hear from clients."
+                "I handle most of the talking so the team can focus. If you have a very specific question for Boss Cloue, you can email him. He works very hard while I manage Giyu and the others!",
+                "Feel free to email Boss Cloue if you need to talk about something big. I'm here to help him by managing Giyu, Mitsuri, and Zenitsu so they can focus on your designs and code!",
+                "If you want to talk to Boss Cloue directly, you can reach him at hello@kurowii.com. He's usually very busy with the team, but he always likes hearing from nice people like you."
+            ],
+            'team': [
+                "Our team is small but very strong! We have Boss Cloue as the Owner, Mitsuri as our UI/UX Designer, and Giyu as our Full Stack Developer. Zenitsu is our back-end expert, but he's resting right now.",
+                "I'm very proud of this team. Mitsuri makes beautiful designs, and Giyu turns them into amazing code. I make sure everyone stays on track so we deliver the best work for you!",
+                "You're in good hands. Mitsuri, Giyu, and I work closely together every day. We also have Zenitsu helping with the server side when he's awake. We all care a lot about your project."
+            ],
+            'owner': [
+                "Boss Cloue handles the big vision and final decisions. He's a very fair leader and cares deeply about our clients. You can reach him anytime at hello@kurowii.com.",
+                "The Owner, Cloue, is always looking for ways to help our clients grow. He trusts me to handle the project details, but he's always there for the important stuff. Feel free to email him!",
+                "If you want to talk about a new project idea or a big partnership, Boss Cloue is the one to talk to. He's very supportive and would love to hear from you at hello@kurowii.com."
             ]
         },
         inactivityMsgs: [
-            "Are you still there? Let me know if you have any other questions about our team's work.",
-            "I noticed you haven't responded in a bit. Is there anything else I can clarify for you?",
-            "I'm here whenever you're ready! Don't hesitate to ask about our pricing or process.",
-            "Still there? I'm ready to help with your project whenever you've had a chance to think.",
-            "Perhaps you're looking over the details? I can explain more about our hosting or tech if you like.",
-            "Just checking in. We value your time and want to make sure you have all the information you need."
+            "Are you still there? I'm here to help with any other questions you have!",
+            "I noticed you haven't said anything in a bit. I hope you're okay! Is there anything else I can explain for you?",
+            "I'm here whenever you're ready! Don't be afraid to ask about our price or how we work, I want you to know everything.",
+            "Still there? I'm ready to help with your project whenever you're ready to talk.",
+            "Maybe you're thinking about the details? I can explain more about our hosting or tools if you like,I'm here to help!",
+            "Just checking in. Your time is very important, and I want to make sure I've been helpful."
         ],
         repeatGreetings: [
-            "Welcome back! Do you have more questions for me or the team?",
-            "Hi again! Still thinking about your project? I'm here to help with any other details.",
-            "Back so soon? What else can I help you with today?",
-            "Nice to see you again. Did you have another question about how we work?",
-            "Glad to see you're being thorough! What's on your mind now?"
+            "Welcome back! It's good to see you again. Do you have more questions for me? I'm ready to help!",
+            "Hi again! I can tell you really want to get this done! Still thinking about your project? I'm here to help with any details.",
+            "Back so soon? I'm glad you're checking everything. What else can I help you with today?",
+            "Nice to see you again. Did you have another question about how we work? I'll do my best to answer it simply!",
+            "I'm glad to see you're back! What's on your mind now? I'm here to make sure you feel good about our team."
+        ],
+        questions: [
+            { id: 'timeline', text: "How long does a typical project take to finish?" },
+            { id: 'process', text: "What is the process of working with your team?" },
+            { id: 'pricing', text: "How much should I budget for a project?" },
+            { id: 'team', text: "Who are the people working on my website?" },
+            { id: 'owner', text: "How can I contact the Owner directly?" },
+            { id: 'transfer', text: "Can you pass the call to someone else?" }
         ]
     }
 ];
 
-export const predefinedQuestions = [
-    { id: 'services', text: "What can you do to help my business grow?" },
-    { id: 'tech-stack', text: "What tools and technologies do you use?" },
-    { id: 'custom-design', text: "Will my website have a unique, custom design?" },
-    { id: 'timeline', text: "When can I expect my website to be live?" },
-    { id: 'support', text: "What happens if I need help after the launch?" },
-    { id: 'pricing', text: "How much should I budget for a project?" },
-    { id: 'process', text: "What is the process of working with you?" },
-    { id: 'transfer', text: "Can you pass the call to someone else?" }
-];
+
 
 export default assistantPersonas;
