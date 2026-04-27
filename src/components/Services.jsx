@@ -3,6 +3,7 @@ import { motion, useMotionValue, useTransform, useAnimation, useSpring } from 'f
 import { Icon } from '@iconify/react';
 import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../data/services';
 import Process from './Process';
+import { playSelectSound, playServiceHoverSfx, playButtonHoverSfx } from '../utils/sound';
 import '../styles/Services.css';
 
 const Services = () => {
@@ -41,7 +42,6 @@ const Services = () => {
             currentIdx = (currentIdx + 1) % flatExamples.length;
         };
 
-        
         triggerHighlight();
         const interval = setInterval(triggerHighlight, 2000); 
 
@@ -124,7 +124,11 @@ const Services = () => {
                 <div className="services-intro-right">
                     <motion.button 
                         className="services-process-cta" 
-                        onClick={() => document.getElementById('services-process').scrollIntoView({ behavior: 'smooth' })}
+                        onClick={() => {
+                            playSelectSound();
+                            document.getElementById('services-process').scrollIntoView({ behavior: 'smooth' });
+                        }}
+                        onMouseEnter={playButtonHoverSfx}
                         onMouseMove={handleMagneticMove}
                         onMouseLeave={handleMagneticReset}
                         style={{ x: mouseXSpring, y: mouseYSpring }}
@@ -241,12 +245,12 @@ const Services = () => {
                                 drag="x"
                                 dragConstraints={{ left: 0, right: 215 }}
                                 dragElastic={0}
+                                onDragStart={playSelectSound}
                                 onDragEnd={(e, info) => {
                                     if (info.offset.x >= 180) {
                                         setIsSlid(true);
                                         controls.start({ x: 215 });
-                                        
-                                        
+
                                         window.dispatchEvent(new CustomEvent('open-support-call'));
                                         
                                         setTimeout(() => {

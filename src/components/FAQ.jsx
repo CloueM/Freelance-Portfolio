@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import assistantPersonas from '../data/support.js';
-import { playHoverSound, playSelectSound } from '../utils/sound';
+import { playHoverSound, playSelectSound, playSupportRepliedSfx, playCallEndedSfx, playTypingSfx, stopTypingSfx } from '../utils/sound';
 import '../styles/FAQ.css';
 
 const FAQ = () => {
@@ -14,8 +14,8 @@ const FAQ = () => {
     const [isEndingCall, setIsEndingCall] = useState(false);
     const [askedQuestions, setAskedQuestions] = useState(new Set());
     const [isAutoPassing, setIsAutoPassing] = useState(false);
-    
-    
+    const [hasOpenedOnce, setHasOpenedOnce] = useState(sessionStorage.getItem('support_opened_once') === 'true');
+
     const [showVideoControls, setShowVideoControls] = useState(false);
 
     const [lastInactivityIndex, setLastInactivityIndex] = useState(-1);
@@ -23,12 +23,10 @@ const FAQ = () => {
     const [interactedInSession, setInteractedInSession] = useState(new Set());
     const [glowQuestion, setGlowQuestion] = useState(null);
 
-    
     const [pipPos, setPipPos] = useState({ x: 0, y: 0 });
     const [isDragging, setIsDragging] = useState(false);
     const dragStartRef = useRef({ x: 0, y: 0 });
-    
-    
+
     const [consecutiveInactivityCount, setConsecutiveInactivityCount] = useState(0);
 
     const messagesEndRef = useRef(null);
@@ -37,6 +35,14 @@ const FAQ = () => {
     const zenitsuTimerRef = useRef(null);
     const greetingTimerRef = useRef(null);
     const inactivityTimerRef = useRef(null);
+
+    useEffect(() => {
+        if (isTyping) {
+            playTypingSfx();
+        } else {
+            stopTypingSfx();
+        }
+    }, [isTyping]);
 
     useEffect(() => {
         const handleOpenCall = () => {
@@ -164,6 +170,7 @@ const FAQ = () => {
             setIsTyping(true);
             setTimeout(() => {
                 setIsTyping(false);
+                playSupportRepliedSfx();
                 setConsecutiveInactivityCount(prev => prev + 1);
                 setMessages(prev => [...prev, { id: Date.now(), type: 'bot', text, personaId: activePersona.id, isInactivity: true }]);
             }, calculateDelay(text, activePersona.id));
@@ -175,7 +182,6 @@ const FAQ = () => {
         return () => { if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current); };
     }, [messages, isOpen, isTyping, isConnecting, isEndingCall, isAutoPassing, consecutiveInactivityCount]);
 
-    
     useEffect(() => {
         if (isOpen && !isEndingCall) {
             const hasInteracted = interactedInSession.has(activePersona.id);
@@ -195,7 +201,6 @@ const FAQ = () => {
                 greetingText = greetings[Math.floor(Math.random() * greetings.length)];
             }
 
-            
             const shouldGreet = messages.length === 0 || !hasInteracted || isOpen;
 
             if (shouldGreet) {
@@ -217,10 +222,10 @@ const FAQ = () => {
                     const delay = Math.min(2000, calculateDelay(greetingText, activePersona.id));
                     greetingTimerRef.current = setTimeout(() => {
                         setIsTyping(false);
+                        playSupportRepliedSfx();
                         setMessages(prev => [...prev, { id: Date.now(), type: 'bot', text: greetingText, personaId: activePersona.id }]);
                         setConsecutiveInactivityCount(0);
-                        
-                        
+
                         if (activePersona.id === 'zenitsu') {
                             zenitsuTimerRef.current = setTimeout(() => handleEndCallAuto('mitsuri'), 3000);
                         }
@@ -294,14 +299,12 @@ const FAQ = () => {
                 : pool;
         }
 
-            
-
-
         setIsTyping(true);
         const delay = calculateDelay(responseText, activePersona.id);
 
         setTimeout(() => {
             setIsTyping(false);
+            playSupportRepliedSfx();
             
             let finalResponse = responseText;
             const callCount = parseInt(sessionStorage.getItem('tanjiro_call_count') || '0');
@@ -338,17 +341,20 @@ const FAQ = () => {
             setIsTyping(true);
             setTimeout(() => {
                 setIsTyping(false);
+                playSupportRepliedSfx();
                 setMessages(prev => [...prev, { id: Date.now() + 2, type: 'bot', text: finalMsg1, personaId: 'tanjiro' }]);
                 setTimeout(() => {
                     const finalMsg2 = "I'll have to end the call now as the Boss has another client waiting for a consultation. Goodbye!";
                     setIsTyping(true);
                     setTimeout(() => {
                         setIsTyping(false);
+                        playSupportRepliedSfx();
                         setMessages(prev => [...prev, { id: Date.now() + 3, type: 'bot', text: finalMsg2, personaId: 'tanjiro' }]);
                         setTimeout(() => {
                                 sessionStorage.setItem('faq_unlocked_tanjiro', 'true');
                                 setIsTanjiroUnlocked(true);
                                 setIsOpen(false);
+                                playCallEndedSfx();
                                 
                                 setTimeout(() => {
                                     setActivePersona(assistantPersonas[0]);
@@ -367,6 +373,7 @@ const FAQ = () => {
             setIsTyping(true);
             setTimeout(() => {
                 setIsTyping(false);
+                playSupportRepliedSfx();
                 setMessages(prev => [...prev, { id: Date.now() + 5, type: 'bot', text: outroText, personaId: activePersona.id }]);
                 triggerAutoPass();
             }, calculateDelay(outroText, activePersona.id));
@@ -379,14 +386,17 @@ const FAQ = () => {
         setIsOpen(nextState);
         
         if (!nextState) {
-            
+            playCallEndedSfx();
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "CALL ENDED BY USER." }]);
             setPipPos({ x: 0, y: 0 });
             setConsecutiveInactivityCount(0);
             setLastInactivityIndex(-1);
             setShowVideoControls(false);
         } else {
-            
+            if (!hasOpenedOnce) {
+                setHasOpenedOnce(true);
+                sessionStorage.setItem('support_opened_once', 'true');
+            }
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "RESUMING CONNECTION..." }]);
         }
     };
@@ -400,7 +410,7 @@ const FAQ = () => {
     return (
         <>
             {!isOpen && (
-                <button className="support-call-trigger" onClick={toggleChat} onMouseEnter={playHoverSound} aria-label="Open Support Call">
+                <button className={`support-call-trigger ${hasOpenedOnce ? 'no-intro' : ''}`} onClick={toggleChat} onMouseEnter={playHoverSound} aria-label="Open Support Call">
                     <div className="trigger-icon-wrapper">
                         <svg viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" strokeWidth="2.5">
                             <path d="M23 7l-7 5 7 5V7z"></path>

@@ -8,11 +8,30 @@ import SoundControl from './components/SoundControl'
 import SplashScreen from './components/SplashScreen'
 import SmoothFollower from './components/SmoothFollower'
 import Aurora from './components/Aurora'
+import SmoothScroll from './components/SmoothScroll'
 import './App.css'
 
 function App() {
   const [hasStarted, setHasStarted] = useState(false);
+  const [bgMusicStarted, setBgMusicStarted] = useState(false);
   const location = useLocation();
+
+  const handleIntroEnd = () => {
+    setBgMusicStarted(true);
+  };
+
+  const handleAudioInit = (audio) => {
+    if (!audio) return;
+    
+    const checkTime = () => {
+      if (audio.currentTime >= 12.87) {
+        setBgMusicStarted(true);
+        audio.removeEventListener('timeupdate', checkTime);
+      }
+    };
+    
+    audio.addEventListener('timeupdate', checkTime);
+  };
 
   return (
     <>
@@ -26,35 +45,41 @@ function App() {
       </div>
       <div className="global-overlay"></div>
       <SmoothFollower />
-      <AnimatePresence mode="wait">
-        {!hasStarted ? (
-          <motion.div
-            key="splash"
-            initial={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 1 }}
-          >
-            <SplashScreen onStart={() => setHasStarted(true)} />
-          </motion.div>
-        ) : (
-          <motion.div
-            key="main-content"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 1 }}
-            style={{ width: '100%' }}
-          >
-            <AnimatePresence mode="wait">
-              <Routes location={location} key={location.pathname}>
-                <Route path="/" element={<Home />} />
-              </Routes>
-            </AnimatePresence>
-            <Footer />
-            <SoundControl />
-            <ScrollCTA />
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <SmoothScroll>
+        <AnimatePresence mode="wait">
+          {!hasStarted ? (
+            <motion.div
+              key="splash"
+              initial={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+            >
+              <SplashScreen 
+                onStart={() => setHasStarted(true)} 
+                onIntroEnd={handleIntroEnd}
+                onAudioInit={handleAudioInit}
+              />
+            </motion.div>
+          ) : (
+            <motion.div
+              key="main-content"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              style={{ width: '100%' }}
+            >
+              <AnimatePresence mode="wait">
+                <Routes location={location} key={location.pathname}>
+                  <Route path="/" element={<Home />} />
+                </Routes>
+              </AnimatePresence>
+              <Footer />
+              <SoundControl isVisible={bgMusicStarted} />
+              <ScrollCTA />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </SmoothScroll>
     </>
   );
 }

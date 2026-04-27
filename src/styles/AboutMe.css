@@ -176,7 +176,6 @@
     height: 20px;
 }
 
-
 .map-location-card-floating {
     position: absolute;
     bottom: 4rem;
@@ -381,7 +380,12 @@
     border-radius: 50%;
     opacity: 0.3;
     animation: markerPing 2.5s cubic-bezier(0, 0, 0.2, 1) infinite;
+    animation-play-state: paused;
     z-index: 1;
+}
+
+.section-visible .marker-ping {
+    animation-play-state: running;
 }
 
 @keyframes markerPing {

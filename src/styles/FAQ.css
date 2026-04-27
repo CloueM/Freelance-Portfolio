@@ -16,6 +16,13 @@
     justify-content: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
+    animation: uiReveal 1s ease forwards 7.7s;
+    opacity: 0;
+}
+
+.support-call-trigger.no-intro {
+    animation: none;
+    opacity: 1;
 }
 
 .support-call-trigger.active {
@@ -55,7 +62,6 @@
     100% { transform: scale(1.6); opacity: 0; }
 }
 
-
 .support-call-modal {
     position: fixed;
     bottom: 105px;
@@ -88,7 +94,6 @@
     display: flex;
     height: 100%;
 }
-
 
 .video-feed-section {
     flex: 1.5;
@@ -239,7 +244,6 @@
     box-shadow: 0 12px 25px rgba(255, 59, 48, 0.4);
 }
 
-
 .persona-switcher {
     padding: 0 10px;
 }
@@ -291,7 +295,6 @@
 .persona-thumb.active img {
     opacity: 1;
 }
-
 
 .chat-sidebar-section {
     flex: 1;
@@ -454,7 +457,6 @@
     display: none;
 }
 
-
 .typing-dots {
     display: flex;
     gap: 4px;
@@ -476,7 +478,6 @@
     0%, 100% { transform: translateY(0); }
     50% { transform: translateY(-5px); }
 }
-
 
 .chat-input-area {
     padding: 20px;
@@ -552,7 +553,6 @@
     100% { transform: scale(1); box-shadow: 0 0 10px rgba(74, 222, 128, 0.3); border-color: rgba(74, 222, 128, 0.5); }
 }
 
-
 .video-connecting, .video-ending {
     display: flex;
     flex-direction: column;
@@ -608,7 +608,6 @@
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
-
 
 .system-status-msg {
     display: flex;
@@ -675,11 +674,11 @@
     to { opacity: 1; transform: translateY(0); }
 }
 
-
 .video-viewport .support-call-trigger.active {
     position: absolute;
     bottom: 24px;
     left: 50%;
+    right: auto;
     width: 52px;
     height: 52px;
     background: #ff3b30;
@@ -706,7 +705,7 @@
 
 .video-viewport .support-call-trigger.active:hover {
     background: #e02b20;
-    transform: translateX(-50%) scale(1.1) !important;
+    transform: translateX(-50%) scale(1.1);
     box-shadow: 0 0 30px rgba(255, 59, 48, 0.6);
 }
 
@@ -724,7 +723,6 @@
     color: white;
     transform: rotate(135deg);
 }
-
 
 .chat-subtitle {
     color: rgba(255, 255, 255, 0.4);
@@ -744,7 +742,6 @@
         transform: translateX(-50%) scale(0.9);
         background: #ff3b30;
     }
-
 
     .support-call-modal {
         width: calc(100vw - 40px);
@@ -893,7 +890,6 @@
     }
 }
 
-
 @media (max-height: 500px) and (max-width: 900px) {
     .video-feed-section {
         width: 100px;
@@ -905,7 +901,6 @@
         max-height: 120px;
     }
 }
-
 
 @media (max-height: 600px) and (max-width: 900px) {
     .call-container {

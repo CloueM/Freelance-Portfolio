@@ -1,9 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../assets/favicon.svg';
-import { playHoverSound, playSelectSound, playStartSound } from '../utils/sound';
+import { playHoverSound, playSelectSound, playStartSound, playIntroSound } from '../utils/sound';
 import '../styles/SplashScreen.css';
-
-
 
 const lon2tile = (lon, zoom) => Math.floor((lon + 180) / 360 * Math.pow(2, zoom));
 
@@ -14,7 +12,6 @@ const lat2tile = (lat, zoom) => Math.floor(
 
 const TILE_URL = 'https://{s}.basemaps.cartocdn.com/dark_nolabels/{z}/{x}/{y}.png';
 const SUBDOMAINS = ['a', 'b', 'c', 'd'];
-
 
 const prefetchRegion = (minLat, maxLat, minLon, maxLon, zoom) => {
     const xMin = lon2tile(minLon, zoom);
@@ -38,19 +35,17 @@ const prefetchAllTiles = () => {
     
     prefetchRegion(49.0, 49.5, -123.4, -122.8, 11);
 
-    
     prefetchRegion(4.0, 22.0, 114.0, 128.0, 6);
     
     prefetchRegion(15.5, 17.5, 120.0, 122.5, 9);
 };
 
-const SplashScreen = ({ onStart }) => {
+const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
     const [isClosing, setIsClosing] = useState(false);
     const [progress, setProgress] = useState(0);
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        
         prefetchAllTiles();
 
         let startTime = null;
@@ -68,15 +63,21 @@ const SplashScreen = ({ onStart }) => {
             if (runtime < duration) {
                 requestAnimationFrame(animateLoading);
             } else {
-                setTimeout(() => setIsLoaded(true), 400);
+                setTimeout(() => {
+                    setIsLoaded(true);
+                }, 400);
             }
         };
 
         requestAnimationFrame(animateLoading);
+
+        return () => {};
     }, []);
 
     const handleStartClick = () => {
         playStartSound();
+        const introAudio = playIntroSound(onIntroEnd);
+        if (onAudioInit) onAudioInit(introAudio);
         setIsClosing(true);
         setTimeout(() => {
             onStart();
@@ -110,6 +111,14 @@ const SplashScreen = ({ onStart }) => {
                 </div>
 
                 <div className={`bottom-area ${isLoaded ? 'fade-in-slow' : ''}`}>
+                    <div className="sound-reminder">
+                        <svg className="sound-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
+                            <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                            <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                        </svg>
+                        <span>Sound recommended for the best experience</span>
+                    </div>
                     <button 
                         className="start-button" 
                         onClick={handleStartClick}
@@ -117,7 +126,7 @@ const SplashScreen = ({ onStart }) => {
                         onFocus={playHoverSound}
                         onMouseDown={playSelectSound}
                     >
-                        START
+                        START EXPERIENCE
                     </button>
                 </div>
             </div>

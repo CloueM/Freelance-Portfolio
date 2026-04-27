@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react';
 import '../styles/ProjectItem.css';
-import { playHoverSound, playSelectSound, playProjectsHoverSound } from '../utils/sound';
+import { playSelectSound, playButtonHoverSfx } from '../utils/sound';
 
 const ProjectItem = ({ project, index }) => {
   const { title, year, image, liveLink, description, tags } = project;
@@ -20,7 +20,6 @@ const ProjectItem = ({ project, index }) => {
       { threshold: 0.08 }
     );
 
-    
     const detailsObserver = new IntersectionObserver(
       ([entry]) => {
         setIsDetailsVisible(entry.isIntersecting);
@@ -45,7 +44,6 @@ const ProjectItem = ({ project, index }) => {
 
   const handleMouseEnter = () => {
     setIsRevealed(true);
-    playProjectsHoverSound();
   };
 
   const handleMouseLeave = () => {
@@ -53,6 +51,7 @@ const ProjectItem = ({ project, index }) => {
   };
 
   const handleImageClick = () => {
+    playSelectSound();
     setIsRevealed((prev) => !prev);
   };
 
@@ -109,7 +108,7 @@ const ProjectItem = ({ project, index }) => {
               target="_blank"
               rel="noopener noreferrer"
               className="project-cta"
-              onMouseEnter={playHoverSound}
+              onMouseEnter={playButtonHoverSfx}
               onMouseDown={playSelectSound}
             >
               Visit website

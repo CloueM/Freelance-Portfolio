@@ -2,10 +2,11 @@ import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { processData } from '../data/process';
+import { playProcessChat, playProcessDesign, playProcessBuild, playProcessLaunch } from '../utils/sound';
 import '../styles/Process.css';
 
 const Process = () => {
-    const [activeStep, setActiveStep] = useState(0);
+    const [activeStep, setActiveStep] = useState(-1);
     const [lineOffsets, setLineOffsets] = useState({ top: 0, bottom: 0 });
     const containerRef = useRef(null);
     const firstRowRef = useRef(null);
@@ -18,16 +19,25 @@ const Process = () => {
 
     useMotionValueEvent(scrollYProgress, "change", (latest) => {
         const stepCount = processData.length;
+
+        if (latest <= 0 || latest >= 1) {
+            setActiveStep(-1);
+            return;
+        }
+
         const currentStep = Math.min(
             Math.floor(latest * stepCount),
             stepCount - 1
         );
         
-        if (latest > 0) {
-            setActiveStep(currentStep);
-        } else {
-            setActiveStep(0);
+        if (currentStep !== activeStep) {
+            
+            if (currentStep === 0) playProcessChat();
+            else if (currentStep === 1) playProcessDesign();
+            else if (currentStep === 2) playProcessBuild();
+            else if (currentStep === 3) playProcessLaunch();
         }
+        setActiveStep(currentStep);
     });
 
     useEffect(() => {
@@ -45,7 +55,7 @@ const Process = () => {
         return () => window.removeEventListener('resize', updateOffsets);
     }, []);
 
-    const scaleYTarget = activeStep / (processData.length - 1);
+    const scaleYTarget = activeStep === -1 ? 0 : activeStep / (processData.length - 1);
 
     return (
         <section className="process-wrapper">

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { playHoverSound, playSelectSound } from '../utils/sound';
+import { playHoverSound, playSelectSound, playPulseSfx, playUnhoverSound } from '../utils/sound';
 import '../styles/AboutMe.css';
 
 const customIcon = new L.divIcon({
@@ -87,7 +87,6 @@ const DynamicMapController = ({ activeLoc }) => {
         const offsetX = isDesktop ? -size.x * 0.25 : 0;
         const offsetY = !isDesktop ? -size.y * 0.17 : 0;
 
-        
         const finalPoint = L.point(
             Math.round(targetPoint.x + offsetX),
             Math.round(targetPoint.y + offsetY)
@@ -115,7 +114,6 @@ const DynamicMapController = ({ activeLoc }) => {
         }
     }, [map, getInitialPosition]);
 
-    
     useEffect(() => {
         const { center, zoom } = getInitialPosition();
         map.flyTo(center, zoom, {
@@ -124,7 +122,6 @@ const DynamicMapController = ({ activeLoc }) => {
         });
     }, [activeLoc, getInitialPosition]); 
 
-    
     useEffect(() => {
         const startTimer = () => {
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
@@ -162,10 +159,36 @@ const DynamicMapController = ({ activeLoc }) => {
 const AboutMe = () => {
     const [activeLoc, setActiveLoc] = useState('vancouver');
     const [time, setTime] = useState(new Date());
+    const [sectionVisible, setSectionVisible] = useState(false);
 
     useEffect(() => {
         const timer = setInterval(() => setTime(new Date()), 1000);
-        return () => clearInterval(timer);
+
+        const section = document.getElementById('home-about');
+        let pulseInterval;
+
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setSectionVisible(true);
+                
+                playPulseSfx();
+                
+                pulseInterval = setInterval(() => {
+                    playPulseSfx();
+                }, 2500);
+            } else {
+                setSectionVisible(false);
+                if (pulseInterval) clearInterval(pulseInterval);
+            }
+        }, { threshold: 0.3 });
+
+        if (section) observer.observe(section);
+
+        return () => {
+            clearInterval(timer);
+            if (pulseInterval) clearInterval(pulseInterval);
+            if (section) observer.unobserve(section);
+        };
     }, []);
 
     const localTime = new Intl.DateTimeFormat('en-US', {
@@ -184,7 +207,7 @@ const AboutMe = () => {
     }).format(time);
 
     return (
-        <section className="about-me-section" id="home-about">
+        <section className={`about-me-section ${sectionVisible ? 'section-visible' : ''}`} id="home-about">
             <div className="about-me-immersive-container">
 
                 {}
@@ -238,7 +261,7 @@ const AboutMe = () => {
                             <div className="about-detail-item">
                                 <span className="detail-label">Education</span>
                                 <div className="edu-list">
-                                    <div className="edu-row">
+                                    <div className="edu-row" onMouseEnter={playHoverSound}>
                                         <div className="edu-logo-wrapper">
                                             <img src="/images/BCIT-Logo.webp" alt="BCIT" className="edu-logo" />
                                         </div>
@@ -249,7 +272,7 @@ const AboutMe = () => {
                                             </div>
                                         </div>
                                     </div>
-                                    <div className="edu-row">
+                                    <div className="edu-row" onMouseEnter={playHoverSound}>
                                         <div className="edu-logo-wrapper">
                                             <img src="/images/BCIT-Logo.webp" alt="BCIT" className="edu-logo" />
                                         </div>
@@ -266,10 +289,10 @@ const AboutMe = () => {
 
                         <div className="about-footer">
                             <div className="social-links-minimal">
-                                <a href="https://www.linkedin.com/in/cloue-macadangdang" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} aria-label="LinkedIn">
+                                <a href="https://www.linkedin.com/in/cloue-macadangdang" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} onMouseLeave={playUnhoverSound} aria-label="LinkedIn">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/></svg>
                                 </a>
-                                <a href="mailto:hello@kurowii.com" onMouseEnter={playHoverSound} aria-label="Email">
+                                <a href="mailto:hello@kurowii.com" onMouseEnter={playHoverSound} onMouseLeave={playUnhoverSound} aria-label="Email">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4l-8 5l-8-5V6l8 5l8-5z"/></svg>
                                 </a>
                             </div>
@@ -284,12 +307,14 @@ const AboutMe = () => {
                             <button
                                 className={`location-toggle-btn ${activeLoc === 'vancouver' ? 'active' : ''}`}
                                 onClick={() => { setActiveLoc('vancouver'); playSelectSound(); }}
+                                onMouseEnter={playHoverSound}
                             >
                                 Base
                             </button>
                             <button
                                 className={`location-toggle-btn ${activeLoc === 'philippines' ? 'active' : ''}`}
                                 onClick={() => { setActiveLoc('philippines'); playSelectSound(); }}
+                                onMouseEnter={playHoverSound}
                             >
                                 Origins
                             </button>

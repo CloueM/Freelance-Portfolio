@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import logo from '../assets/favicon.svg';
 import '../styles/Footer.css';
 import { scrollToSection } from '../utils/scroll';
-import { playSelectSound } from '../utils/sound';
+import { playSelectSound, playHoverSound } from '../utils/sound';
 import { Icon } from '@iconify/react';
 
 const Footer = () => {
@@ -31,21 +31,21 @@ const Footer = () => {
                         <div className="footer-nav">
                             <div className="footer-nav-group">
                                 <h3 className="footer-label">SITEMAP</h3>
-                                <a href="#home-about" className="footer-link" onClick={(e) => handleLinkClick(e, 'home-about')}>ABOUT</a>
-                                <a href="#home-projects" className="footer-link" onClick={(e) => handleLinkClick(e, 'home-projects')}>PROJECTS</a>
-                                <a href="#home-services" className="footer-link" onClick={(e) => handleLinkClick(e, 'home-services')}>SERVICES</a>
+                                <a href="#home-about" className="footer-link" onMouseEnter={playHoverSound} onClick={(e) => handleLinkClick(e, 'home-about')}>ABOUT</a>
+                                <a href="#home-projects" className="footer-link" onMouseEnter={playHoverSound} onClick={(e) => handleLinkClick(e, 'home-projects')}>PROJECTS</a>
+                                <a href="#home-services" className="footer-link" onMouseEnter={playHoverSound} onClick={(e) => handleLinkClick(e, 'home-services')}>SERVICES</a>
                             </div>
                             
                             <div className="footer-nav-group">
                                 <h3 className="footer-label">SOCIALS</h3>
-                                <a href="https://www.linkedin.com/in/cloue-macadangdang" target="_blank" rel="noopener noreferrer" className="footer-link">LINKEDIN</a>
-                                <a href="https://github.com/CloueM" target="_blank" rel="noopener noreferrer" className="footer-link">GITHUB</a>
-                                <a href="https://www.instagram.com/clo.mcz/" target="_blank" rel="noopener noreferrer" className="footer-link">INSTAGRAM</a>
+                                <a href="https://www.linkedin.com/in/cloue-macadangdang" target="_blank" rel="noopener noreferrer" className="footer-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>LINKEDIN</a>
+                                <a href="https://github.com/CloueM" target="_blank" rel="noopener noreferrer" className="footer-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>GITHUB</a>
+                                <a href="https://www.instagram.com/clo.mcz/" target="_blank" rel="noopener noreferrer" className="footer-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>INSTAGRAM</a>
                             </div>
 
                             <div className="footer-nav-group">
                                 <h3 className="footer-label">CONTACT</h3>
-                                <a href="mailto:hello@kurowii.com" className="footer-link">HELLO@KUROWII.COM</a>
+                                <a href="mailto:hello@kurowii.com" className="footer-link" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>HELLO@KUROWII.COM</a>
                                 <span className="footer-location">VANCOUVER, BC</span>
                             </div>
                         </div>
