@@ -15,7 +15,7 @@ const SUBDOMAINS = ['a', 'b', 'c', 'd'];
 const prefetchRegion = (minLat, maxLat, minLon, maxLon, zoom) => {
     const xMin = lon2tile(minLon, zoom);
     const xMax = lon2tile(maxLon, zoom);
-    const yMin = lat2tile(maxLat, zoom); 
+    const yMin = lat2tile(maxLat, zoom);
     const yMax = lat2tile(minLat, zoom);
 
     for (let x = xMin; x <= xMax; x++) {
@@ -29,13 +29,13 @@ const prefetchRegion = (minLat, maxLat, minLon, maxLon, zoom) => {
 };
 
 const prefetchAllTiles = () => {
-    
+
     prefetchRegion(48.9, 49.6, -123.6, -122.6, 10);
-    
+
     prefetchRegion(49.0, 49.5, -123.4, -122.8, 11);
 
     prefetchRegion(4.0, 22.0, 114.0, 128.0, 6);
-    
+
     prefetchRegion(15.5, 17.5, 120.0, 122.5, 9);
 };
 
@@ -45,7 +45,7 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
     const [isLoaded, setIsLoaded] = useState(false);
 
     useEffect(() => {
-        prefetchAllTiles();
+        const prefetchTimeout = setTimeout(prefetchAllTiles, 3500);
 
         let startTime = null;
         const duration = 2500;
@@ -53,7 +53,7 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
         const animateLoading = (timestamp) => {
             if (!startTime) startTime = timestamp;
             const runtime = timestamp - startTime;
-            
+
             const rawProgress = Math.min((runtime / duration) * 100, 100);
             const easedProgress = rawProgress === 100 ? 100 : 100 * (1 - Math.pow(1 - rawProgress / 100, 3));
 
@@ -70,7 +70,7 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
 
         requestAnimationFrame(animateLoading);
 
-        return () => {};
+        return () => clearTimeout(prefetchTimeout);
     }, []);
 
     const handleStartClick = () => {
@@ -95,17 +95,17 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
 
                 <div className="center-area">
                     <svg className={`loading-circle-svg ${isLoaded ? 'morph-out' : ''}`} width="140" height="140" viewBox="0 0 140 140">
-                        <circle 
-                            className="loading-circle-bg" 
-                            cx="70" cy="70" r="50" 
+                        <circle
+                            className="loading-circle-bg"
+                            cx="70" cy="70" r="50"
                         />
-                        <circle 
-                            className="loading-circle-progress" 
+                        <circle
+                            className="loading-circle-progress"
                             cx="70" cy="70" r="50"
                             style={{ strokeDashoffset, strokeDasharray: circumference }}
                         />
                     </svg>
-                    
+
                     <img src="/favicon.svg" alt="Cloue Mac Logo" fetchpriority="high" className={`splash-logo-morph ${isLoaded ? 'visible' : ''}`} />
                 </div>
 
@@ -118,8 +118,8 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
                         </svg>
                         <span>Sound recommended for the best experience</span>
                     </div>
-                    <button 
-                        className="start-button" 
+                    <button
+                        className="start-button"
                         onClick={handleStartClick}
                         onMouseEnter={playHoverSound}
                         onFocus={playHoverSound}

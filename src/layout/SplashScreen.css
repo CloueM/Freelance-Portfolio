@@ -11,17 +11,20 @@
     align-items: center;
     z-index: 9999;
 }
+
 .splash-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 40px;
 }
+
 .splash-logo {
     width: 100px;
     height: 100px;
     animation: pulse 2s infinite ease-in-out;
 }
+
 /* --- Start Button --- */
 .start-button {
     background-color: rgba(255, 255, 255, 0.03);
@@ -47,21 +50,41 @@
     box-shadow: 0 10px 40px rgba(255, 255, 255, 0.15);
     border-color: var(--color-off-white);
 }
+
 /* --- Animations --- */
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
 }
+
 @keyframes pulse {
-    0% { transform: scale(1); opacity: 0.8; }
-    50% { transform: scale(1.05); opacity: 1; }
-    100% { transform: scale(1); opacity: 0.8; }
+    0% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 1;
+    }
+
+    100% {
+        transform: scale(1);
+        opacity: 0.8;
+    }
 }
+
 .splash-screen.fade-out {
     opacity: 0;
     visibility: hidden;
     transition: opacity 1s ease-out, visibility 1s ease-out;
 }
+
 /* --- Unified Splash Content --- */
 .splash-content-unified {
     display: flex;
@@ -69,6 +92,7 @@
     align-items: center;
     position: relative;
 }
+
 .top-area {
     height: 60px;
     display: flex;
@@ -76,10 +100,12 @@
     margin-bottom: 20px;
     transition: opacity 1s ease;
 }
+
 .top-area.fade-out-slow {
     opacity: 0;
     pointer-events: none;
 }
+
 .loading-text {
     font-family: var(--font-primary);
     font-size: var(--text-h2);
@@ -87,6 +113,7 @@
     color: var(--color-dust);
     letter-spacing: 0.1em;
 }
+
 .center-area {
     position: relative;
     width: 140px;
@@ -95,21 +122,25 @@
     justify-content: center;
     align-items: center;
 }
+
 .loading-circle-svg {
     position: absolute;
     transform: rotate(-90deg) scale(1);
     opacity: 1;
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s ease;
 }
+
 .loading-circle-svg.morph-out {
     opacity: 0;
     transform: rotate(-90deg) scale(0.6);
 }
+
 .loading-circle-bg {
     fill: none;
     stroke: rgba(255, 255, 255, 0.1);
     stroke-width: 4;
 }
+
 .loading-circle-progress {
     fill: none;
     stroke: var(--color-off-white);
@@ -117,19 +148,22 @@
     stroke-linecap: round;
     transition: stroke-dashoffset 0.1s linear;
 }
+
 .splash-logo-morph {
     position: absolute;
     width: 100px;
     height: 100px;
-    opacity: 0;
+    opacity: 0.1;
     transform: scale(0.6);
     transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1), opacity 1s ease 0.2s;
-    animation: none; 
+    animation: none;
 }
+
 .splash-logo-morph.visible {
     opacity: 1;
     transform: scale(1);
 }
+
 /* --- Bottom Area & Sound Reminder --- */
 .bottom-area {
     display: flex;
@@ -167,8 +201,15 @@
 }
 
 @keyframes fadeInOut {
-    0%, 100% { opacity: 0.4; }
-    50% { opacity: 0.8; }
+
+    0%,
+    100% {
+        opacity: 0.4;
+    }
+
+    50% {
+        opacity: 0.8;
+    }
 }
 
 /* --- Loading Elements --- */
