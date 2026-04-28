@@ -2,14 +2,15 @@ import React, { useState, useEffect, Suspense } from 'react'
 import { useDynamicTitle } from './hooks/useDynamicTitle';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import Home from './features/Home'
 import Footer from './layout/Footer'
 import ScrollCTA from './layout/ScrollCTA'
 import SoundControl from './layout/SoundControl'
 import SplashScreen from './layout/SplashScreen'
 import SmoothFollower from './layout/SmoothFollower'
-import Aurora from './components/Aurora'
 import SmoothScroll from './layout/SmoothScroll'
+
+const Home = React.lazy(() => import('./features/Home'));
+const Aurora = React.lazy(() => import('./components/Aurora'));
 import './App.css'
 
 function App() {
@@ -28,6 +29,14 @@ function App() {
     }
   }, [hasStarted]);
 
+  useEffect(() => {
+
+    const preloadTimer = setTimeout(() => {
+      import('./features/Home');
+    }, 1000);
+    return () => clearTimeout(preloadTimer);
+  }, []);
+
   useDynamicTitle("Kurowii | Creative Developer", "Come back! 👋");
 
   const handleIntroEnd = () => {
@@ -36,26 +45,28 @@ function App() {
 
   const handleAudioInit = (audio) => {
     if (!audio) return;
-    
+
     const checkTime = () => {
       if (audio.currentTime >= 12.87) {
         setBgMusicStarted(true);
         audio.removeEventListener('timeupdate', checkTime);
       }
     };
-    
+
     audio.addEventListener('timeupdate', checkTime);
   };
 
   return (
     <>
       <div className="global-aurora-bg">
-        <Aurora
-          colorStops={["#DCD6CC","#A99F96","#6F6860"]}
-          blend={1}
-          amplitude={1.0}
-          speed={0.8}
-        />
+        <Suspense fallback={null}>
+          <Aurora
+            colorStops={["#DCD6CC", "#A99F96", "#6F6860"]}
+            blend={1}
+            amplitude={1.0}
+            speed={0.8}
+          />
+        </Suspense>
       </div>
       <div className="global-overlay"></div>
       <SmoothFollower />
@@ -68,14 +79,14 @@ function App() {
               exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
             >
-              <SplashScreen 
-                onStart={() => setHasStarted(true)} 
+              <SplashScreen
+                onStart={() => setHasStarted(true)}
                 onIntroEnd={handleIntroEnd}
                 onAudioInit={handleAudioInit}
               />
             </motion.div>
           ) : (
-            <>
+            <Suspense fallback={null}>
               <motion.div
                 key="main-content"
                 initial={{ opacity: 0 }}
@@ -84,17 +95,15 @@ function App() {
                 style={{ width: '100%', position: 'relative' }}
               >
                 <AnimatePresence mode="wait">
-                  <Suspense fallback={null}>
-                    <Routes location={location} key={location.pathname}>
-                      <Route path="/" element={<Home />} />
-                    </Routes>
-                  </Suspense>
+                  <Routes location={location} key={location.pathname}>
+                    <Route path="/" element={<Home />} />
+                  </Routes>
                 </AnimatePresence>
                 <Footer />
                 <SoundControl isVisible={bgMusicStarted} />
               </motion.div>
               <ScrollCTA />
-            </>
+            </Suspense>
           )}
         </AnimatePresence>
       </SmoothScroll>

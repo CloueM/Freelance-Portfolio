@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from './Hero';
-import Process from './Process';
 import ProjectItem from '../components/ProjectItem';
 const Services = React.lazy(() => import('./Services'));
 const AboutMe = React.lazy(() => import('./AboutMe'));

@@ -39,63 +39,57 @@ const playSound = (url, volume = 1) => {
 };
 
 export const playSelectSound = () => {
-    selectAudio.currentTime = 0;
-    selectAudio.play().catch(err => {
+    const audio = getSelectAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Select playback failed:", err);
     });
 };
 export const playStartSound = () => playSound(startSoundUrl);
 
-// Pre-instantiate signature sounds to reduce latency
-const swooshAudio = new Audio(swooshUrl);
-swooshAudio.volume = 0.6;
+// Pre-instantiate signature sounds lazily to reduce latency
+let _swooshAudio, _swooshMapAudio, _pulseAudio, _hoverAudio, _selectAudio, _serviceHoverAudio, _typingAudio, _callEndedAudio, _buttonHoverAudio, _supportRepliedAudio;
 
-const swooshMapAudio = new Audio(swooshMapUrl);
-swooshMapAudio.volume = 0.6;
+const getSwooshAudio = () => { if (!_swooshAudio) { _swooshAudio = new Audio(swooshUrl); _swooshAudio.volume = 0.6; } return _swooshAudio; };
+const getSwooshMapAudio = () => { if (!_swooshMapAudio) { _swooshMapAudio = new Audio(swooshMapUrl); _swooshMapAudio.volume = 0.6; } return _swooshMapAudio; };
+const getPulseAudio = () => { if (!_pulseAudio) { _pulseAudio = new Audio(pulseUrl); _pulseAudio.volume = 0.5; } return _pulseAudio; };
+const getHoverAudio = () => { if (!_hoverAudio) { _hoverAudio = new Audio(hoverUrl); _hoverAudio.volume = 0.4; } return _hoverAudio; };
+const getSelectAudio = () => { if (!_selectAudio) { _selectAudio = new Audio(selectUrl); _selectAudio.volume = 0.6; } return _selectAudio; };
+const getServiceHoverAudio = () => { if (!_serviceHoverAudio) { _serviceHoverAudio = new Audio(serviceHoverUrl); _serviceHoverAudio.volume = 0.4; } return _serviceHoverAudio; };
+const getTypingAudio = () => { if (!_typingAudio) { _typingAudio = new Audio(typingUrl); _typingAudio.volume = 0.5; _typingAudio.loop = true; } return _typingAudio; };
+const getCallEndedAudio = () => { if (!_callEndedAudio) { _callEndedAudio = new Audio(callEndedUrl); _callEndedAudio.volume = 0.7; } return _callEndedAudio; };
+const getButtonHoverAudio = () => { if (!_buttonHoverAudio) { _buttonHoverAudio = new Audio(buttonHoverUrl); _buttonHoverAudio.volume = 0.5; } return _buttonHoverAudio; };
+const getSupportRepliedAudio = () => { if (!_supportRepliedAudio) { _supportRepliedAudio = new Audio(supportRepliedUrl); _supportRepliedAudio.volume = 0.8; } return _supportRepliedAudio; };
 
-const pulseAudio = new Audio(pulseUrl);
-pulseAudio.volume = 0.5;
+export const initSounds = () => {
+    getSwooshAudio(); getSwooshMapAudio(); getPulseAudio(); getHoverAudio(); getSelectAudio();
+    getServiceHoverAudio(); getTypingAudio(); getCallEndedAudio(); getButtonHoverAudio(); getSupportRepliedAudio();
+};
 
-const hoverAudio = new Audio(hoverUrl);
-hoverAudio.volume = 0.4;
-
-const selectAudio = new Audio(selectUrl);
-selectAudio.volume = 0.6;
-
-const serviceHoverAudio = new Audio(serviceHoverUrl);
-serviceHoverAudio.volume = 0.4;
-
-const typingAudio = new Audio(typingUrl);
-typingAudio.volume = 0.5;
-typingAudio.loop = true;
-
-const callEndedAudio = new Audio(callEndedUrl);
-callEndedAudio.volume = 0.7;
-
-const buttonHoverAudio = new Audio(buttonHoverUrl);
-buttonHoverAudio.volume = 0.5;
-
-const supportRepliedAudio = new Audio(supportRepliedUrl);
-supportRepliedAudio.volume = 0.8;
+if (typeof window !== 'undefined') {
+    window.addEventListener('load', () => {
+        setTimeout(initSounds, 1000);
+    });
+}
 
 // Nav SFX
 export const playNavHoverAbout = () => playHoverSound();
 export const playNavHoverProjects = () => playHoverSound();
 export const playNavHoverServices = () => playHoverSound();
 export const playNavClickSwoosh = () => {
-    // Play select sound alongside swoosh for tactile feedback
     playSelectSound();
-    // Attempt to skip potential tiny silence at start of compressed audio
-    swooshAudio.currentTime = 0.03;
-    swooshAudio.play().catch(err => {
+    const audio = getSwooshAudio();
+    audio.currentTime = 0.03;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Swoosh playback failed:", err);
     });
 };
 
 // Map SFX
 export const playMapSwoosh = () => {
-    swooshMapAudio.currentTime = 0;
-    swooshMapAudio.play().catch(err => {
+    const audio = getSwooshMapAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Map swoosh failed:", err);
     });
 };
@@ -111,56 +105,64 @@ let lastSupportReplyTime = 0;
 export const playSupportRepliedSfx = () => {
     const now = Date.now();
     if (now - lastSupportReplyTime > 1000) {
-        supportRepliedAudio.currentTime = 0;
-        supportRepliedAudio.play().catch(err => {
+        const audio = getSupportRepliedAudio();
+        audio.currentTime = 0;
+        audio.play().catch(err => {
             if (err.name !== 'NotAllowedError') console.warn("Support replied playback failed:", err);
         });
         lastSupportReplyTime = now;
     }
 };
 export const playCallEndedSfx = () => {
-    callEndedAudio.currentTime = 0;
-    callEndedAudio.play().catch(err => {
+    const audio = getCallEndedAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Call ended playback failed:", err);
     });
 };
 export const playTypingSfx = () => {
-    typingAudio.currentTime = 0;
-    typingAudio.play().catch(err => {
+    const audio = getTypingAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Typing playback failed:", err);
     });
 };
 export const stopTypingSfx = () => {
-    typingAudio.pause();
-    typingAudio.currentTime = 0;
+    const audio = getTypingAudio();
+    audio.pause();
+    audio.currentTime = 0;
 };
 
 // Service SFX
 export const playServiceHoverSfx = () => {
-    serviceHoverAudio.currentTime = 0.02; // skip tiny compression silence
-    serviceHoverAudio.play().catch(err => {
+    const audio = getServiceHoverAudio();
+    audio.currentTime = 0.02; // skip tiny compression silence
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Service hover playback failed:", err);
     });
 };
 
 // General SFX
 export const playHoverSound = () => {
-    hoverAudio.currentTime = 0;
-    hoverAudio.play().catch(err => {
+    const audio = getHoverAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Hover playback failed:", err);
     });
 };
 export const playButtonHoverSfx = () => {
-    buttonHoverAudio.currentTime = 0;
-    buttonHoverAudio.play().catch(err => {
+    const audio = getButtonHoverAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Button hover playback failed:", err);
     });
 };
 export const playUnhoverSound = () => { };
 export const playPulseSfx = () => {
     // Adjusted to 0.05s as a middle ground for perfect sync
-    pulseAudio.currentTime = 0.11;
-    pulseAudio.play().catch(err => {
+    const audio = getPulseAudio();
+    audio.currentTime = 0.11;
+    audio.play().catch(err => {
         if (err.name !== 'NotAllowedError') console.warn("Pulse playback failed:", err);
     });
 };

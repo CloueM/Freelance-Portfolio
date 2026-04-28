@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import Logo from '../assets/favicon.svg';
 import { playHoverSound, playSelectSound, playStartSound, playIntroSound } from '../utils/sound';
 import './SplashScreen.css';
 
@@ -107,7 +106,7 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
                         />
                     </svg>
                     
-                    <img src={Logo} alt="Cloue Mac Logo" className={`splash-logo-morph ${isLoaded ? 'visible' : ''}`} />
+                    <img src="/favicon.svg" alt="Cloue Mac Logo" fetchpriority="high" className={`splash-logo-morph ${isLoaded ? 'visible' : ''}`} />
                 </div>
 
                 <div className={`bottom-area ${isLoaded ? 'fade-in-slow' : ''}`}>
