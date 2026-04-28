@@ -403,15 +403,15 @@
 }
 
 .hero-web {
-    animation-delay: -0.65s, 12s;
+    animation-delay: -0.5s, 12s;
 }
 
 .hero-designer {
-    animation-delay: -0.65s, 12s;
+    animation-delay: -0.5s, 12s;
 }
 
 .hero-developer {
-    animation-delay: -0.65s, 12s;
+    animation-delay: -0.5s, 12s;
 }
 
 /* --- Hero Animations --- */
