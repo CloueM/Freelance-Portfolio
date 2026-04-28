@@ -179,7 +179,7 @@ const assistantPersonas = [
         name: 'Tanjiro',
         label: 'Project Manager',
         title: 'Project Lead',
-        video: '/images/Tanjiro.jpg',
+        video: '/images/Tanjiro.webp',
         signal: 'HD 1080p',
         behavior: 'Professional, incredibly kind, sincere, and hardworking. The protective shield for the team.',
         initialGreeting: [
