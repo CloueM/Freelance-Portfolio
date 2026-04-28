@@ -23,7 +23,7 @@
     display: flex;
     align-items: center;
     gap: 1.25rem;
-    animation: uiReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both 8.7s;
+    animation: uiReveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) both 7.8s;
     opacity: 0;
 }
 
@@ -62,8 +62,8 @@
     display: block;
     transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     background: rgba(255, 255, 255, 0.03);
-    backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
     box-shadow: 0 0 15px rgba(74, 222, 128, 0.1);
 }
 
@@ -106,11 +106,11 @@
     padding: 0 1rem;
     border-radius: 100px;
     box-sizing: border-box;
-    backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    animation: uiReveal 1.2s cubic-bezier(0.16, 1, 0.3, 1) both 8.2s;
+    animation: uiReveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) both 8.0s;
     opacity: 0;
 }
 
@@ -261,26 +261,26 @@
     display: flex;
     align-items: center;
     height: 44px;
-    background-color: rgba(10, 10, 10, 0.45);
-    border: 1px solid rgba(255, 255, 255, 0.08);
+    background-color: rgba(10, 10, 10, 0.1);
+    border: 1px solid rgba(10, 10, 10, 0.1);
     border-radius: 2rem;
     padding: 0 0.35rem;
     gap: 0.15rem;
-    -webkit-backdrop-filter: blur(25px);
-    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(40px);
+    backdrop-filter: blur(40px);
     box-shadow: 
         0 8px 32px rgba(0, 0, 0, 0.4),
         inset 0 1px 0 rgba(255, 255, 255, 0.08);
     box-sizing: border-box;
-    animation: uiReveal 1s cubic-bezier(0.16, 1, 0.3, 1) both 6.5s;
+    animation: uiReveal 2.5s cubic-bezier(0.16, 1, 0.3, 1) both 7.6s;
     opacity: 0;
     width: fit-content;
     max-width: 100%;
 }
 
-.nav-link:nth-child(1) { animation: uiReveal 0.8s ease forwards 7.1s; } 
-.nav-link:nth-child(2) { animation: uiReveal 0.8s ease forwards 6.9s; } 
-.nav-link:nth-child(3) { animation: uiReveal 0.8s ease forwards 6.7s; } 
+.nav-link:nth-child(1) { animation: uiReveal 2.5s ease forwards 8.0s; } 
+.nav-link:nth-child(2) { animation: uiReveal 2.5s ease forwards 7.9s; } 
+.nav-link:nth-child(3) { animation: uiReveal 2.5s ease forwards 7.8s; } 
 
 .nav-link::before {
     content: '';
@@ -358,41 +358,33 @@
     0% {
         opacity: 0;
         transform: translateY(20px) scale(0.98);
-        filter: blur(25px) brightness(0.7);
+        filter: blur(15px) brightness(1);
         text-shadow: none;
     }
-    5% { opacity: 0.02; filter: blur(22px); transform: translateY(18px) scale(0.985); text-shadow: none; }
-    10% { opacity: 0.05; filter: blur(20px); transform: translateY(16px) scale(0.99); text-shadow: none; }
-    15% { opacity: 0.08; filter: blur(18px); transform: translateY(14px) scale(0.995); text-shadow: none; }
-    20% { opacity: 0.15; filter: blur(15px); transform: translateY(12px) scale(1.0); text-shadow: none; }
-    25% { opacity: 0.25; filter: blur(11px); transform: translateY(8px) scale(1.01); text-shadow: none; }
-    30% { opacity: 0.45; filter: blur(7px); transform: translateY(5px) scale(1.02); text-shadow: none; }
-    34% { opacity: 0.65; filter: blur(4px); transform: translateY(3px) scale(1.03); text-shadow: none; }
-    36.5% { opacity: 0.85; filter: blur(1.5px); transform: translateY(1.5px) scale(1.04); text-shadow: none; }
-    38% { opacity: 0.95; filter: blur(0.3px); transform: translateY(0.5px) scale(1.048); text-shadow: none; }
-    38.75% {
-        
-        opacity: 1;
-        transform: translateY(0) scale(1.05);
-        filter: blur(0) brightness(3) contrast(1.3);
-        text-shadow: 
-            0 0 30px #fff, 
-            0 0 60px var(--color-dust), 
-            0 0 100px var(--color-dust),
-            0 0 150px rgba(74, 222, 128, 0.8);
+    35% {
+        opacity: 0.6;
+        filter: blur(8px) brightness(1);
+        transform: translateY(5px) scale(1.01);
+        text-shadow: none;
     }
-    42% {
+    38.75% {
         opacity: 1;
-        transform: translateY(0) scale(1.05);
-        filter: blur(0) brightness(3) contrast(1.3);
+        transform: translateY(0) scale(1.04);
+        filter: blur(0) brightness(1.8) contrast(1.1);
         text-shadow: 
-            0 0 30px #fff, 
-            0 0 60px var(--color-dust), 
-            0 0 100px var(--color-dust),
-            0 0 150px rgba(74, 222, 128, 0.8);
+            0 0 20px rgba(255, 255, 255, 0.8), 
+            0 0 40px var(--color-dust), 
+            0 0 80px rgba(74, 222, 128, 0.4);
+    }
+    45% {
+        opacity: 1;
+        transform: translateY(0) scale(1.02);
+        filter: blur(0) brightness(1.4) contrast(1.05);
+        text-shadow: 
+            0 0 10px rgba(255, 255, 255, 0.4), 
+            0 0 20px var(--color-dust);
     }
     75% {
-        
         opacity: 1;
         transform: translateY(0) scale(1);
         filter: blur(0) brightness(1) contrast(1);

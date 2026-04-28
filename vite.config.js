@@ -8,6 +8,10 @@ export default defineConfig({
     drop: ['console', 'debugger'],
   },
   build: {
-    minify: 'esbuild',
+    rollupOptions: {
+      output: {
+        manualChunks: undefined
+      }
+    }
   }
 })

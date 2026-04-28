@@ -1,11 +1,10 @@
 import React, { useEffect } from 'react';
 import Lenis from 'lenis';
 
-const SmoothScroll = ({ children }) => {
+const SmoothScroll = ({ children, isLocked = false }) => {
     useEffect(() => {
         const lenis = new Lenis({
-            duration: 1.2,
-            easing: (t) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2, 
+            lerp: 0.1,
             orientation: 'vertical',
             gestureOrientation: 'vertical',
             smoothWheel: true,
@@ -15,14 +14,19 @@ const SmoothScroll = ({ children }) => {
             infinite: false,
         });
 
-        window.lenis = lenis;
-
-        function raf(time) {
-            lenis.raf(time);
-            requestAnimationFrame(raf);
+        if (isLocked) {
+            lenis.stop();
+        } else {
+            lenis.start();
         }
 
-        requestAnimationFrame(raf);
+        let rafId;
+        function raf(time) {
+            lenis.raf(time);
+            rafId = requestAnimationFrame(raf);
+        }
+
+        rafId = requestAnimationFrame(raf);
 
         const handleAnchorClick = (e) => {
             const href = e.currentTarget.getAttribute('href');
@@ -33,7 +37,7 @@ const SmoothScroll = ({ children }) => {
                     e.preventDefault();
                     lenis.scrollTo(targetElement, {
                         offset: 0,
-                        duration: 1.5,
+                        duration: 1.2,
                         easing: (t) => t < 0.5 ? 8 * t * t * t * t : 1 - Math.pow(-2 * t + 2, 4) / 2
                     });
                 }
@@ -43,12 +47,15 @@ const SmoothScroll = ({ children }) => {
         const anchors = document.querySelectorAll('a[href^="#"]');
         anchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
 
+        window.lenis = lenis;
+
         return () => {
             lenis.destroy();
             window.lenis = null;
+            cancelAnimationFrame(rafId);
             anchors.forEach(anchor => anchor.removeEventListener('click', handleAnchorClick));
         };
-    }, []);
+    }, [isLocked]);
 
     return <>{children}</>;
 };

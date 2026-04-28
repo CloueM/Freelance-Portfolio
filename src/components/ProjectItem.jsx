@@ -78,7 +78,13 @@ const ProjectItem = ({ project, index }) => {
             onMouseLeave={handleMouseLeave}
             onClick={handleImageClick}
           >
-            <img src={image} alt={title} className="project-img" />
+            <img 
+              src={image} 
+              alt={title} 
+              className="project-img" 
+              loading="lazy" 
+              decoding="async"
+            />
             <div className="project-img-overlay" />
 
             {}

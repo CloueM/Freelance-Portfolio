@@ -3,9 +3,9 @@ import { useLocation } from 'react-router-dom';
 import Hero from './Hero';
 import Process from './Process';
 import ProjectItem from './ProjectItem';
-import Services from './Services';
-import AboutMe from './AboutMe';
-import FAQ from './FAQ';
+const Services = React.lazy(() => import('./Services'));
+const AboutMe = React.lazy(() => import('./AboutMe'));
+const FAQ = React.lazy(() => import('./FAQ'));
 import CoffeeCTA from './CoffeeCTA';
 import Marquee from './Marquee';
 import PageTransition from './PageTransition';
@@ -46,7 +46,9 @@ const Home = () => {
                     <div className="section-header" data-index="01">
                         <h2>Services</h2>
                     </div>
-                    <Services />
+                    <React.Suspense fallback={<div style={{ height: '500px' }} />}>
+                        <Services />
+                    </React.Suspense>
                 </div>
 
                 <div id="home-projects" className="home-projects-section">
@@ -62,11 +64,15 @@ const Home = () => {
                     <div className="section-header" data-index="03">
                         <h2>About me</h2>
                     </div>
-                    <AboutMe />
+                    <React.Suspense fallback={<div style={{ height: '400px' }} />}>
+                        <AboutMe />
+                    </React.Suspense>
                 </div>
 
                 <Marquee />
-                <FAQ />
+                <React.Suspense fallback={null}>
+                    <FAQ />
+                </React.Suspense>
 
                 <CoffeeCTA />
             </main>

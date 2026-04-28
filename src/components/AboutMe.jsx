@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { playHoverSound, playSelectSound, playPulseSfx, playUnhoverSound } from '../utils/sound';
+import { playHoverSound, playSelectSound, playPulseSfx, playUnhoverSound, playMapSwoosh } from '../utils/sound';
 import '../styles/AboutMe.css';
 
 const customIcon = new L.divIcon({
@@ -42,7 +42,7 @@ const CtrlScrollZoom = () => {
 };
 
 const CanadaFlag = () => (
-    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><path fill="#FFFFFF" d="M48 6.6C43.4 3.7 37.9 2 32 2S20.6 3.7 16 6.6v50.7c4.6 2.9 10.1 4.6 16 4.6s11.4-1.7 16-4.6z" /><path fill="#EB2D37" d="M48 6.6v50.7c8.4-5.2 14-14.8 14-25.4s-5.6-20-14-25.3m-32 0C7.6 11.9 2 21.5 2 32s5.6 20.1 14 25.4zm26.9 25c-.4-.2-.5-.6-.4-.8l1-3.6l-3.5.7c-.1 0-.5 0-.6-.7l-.3-1.2l-2.4 2.8s-1.6 1.7-1.1-.9l1-5.5l-1.9 1c-.1 0-.5.1-1-.9L32 19l-1.8 3.3c-.5 1-.9.9-1 .9l-1.9-1l1 5.5c.5 2.6-1.1.9-1.1.9l-2.4-2.8l-.3 1.2c-.2.7-.5.7-.6.7l-3.5-.7l1 3.6c0 .3 0 .6-.4.8l-1 .6s4 3.2 5.3 4.3c.3.2.9.8.7 1.5l-.5 1.4l5.5-.8c.3 0 .9 0 .8.9l-.3 5.7h1l-.3-5.7c0-.9.6-.9.8-.9l5.5.8l-.5-1.4c-.2-.7.4-1.3.7-1.5C40 35.2 44 32 44 32z" /></svg>
+    <svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64"><path fill="#FFFFFF" d="M48 6.6C43.4 3.7 37.9 2 32 2S20.6 3.7 16 6.6v50.7c4.6 2.9 10.1 4.6 16 4.6s11.4-1.7 16-4.6z" /><path fill="#D80621" d="M48 6.6v50.7c8.4-5.2 14-14.8 14-25.4s-5.6-20-14-25.3m-32 0C7.6 11.9 2 21.5 2 32s5.6 20.1 14 25.4zm26.9 25c-.4-.2-.5-.6-.4-.8l1-3.6l-3.5.7c-.1 0-.5 0-.6-.7l-.3-1.2l-2.4 2.8s-1.6 1.7-1.1-.9l1-5.5l-1.9 1c-.1 0-.5.1-1-.9L32 19l-1.8 3.3c-.5 1-.9.9-1 .9l-1.9-1l1 5.5c.5 2.6-1.1.9-1.1.9l-2.4-2.8l-.3 1.2c-.2.7-.5.7-.6.7l-3.5-.7l1 3.6c0 .3 0 .6-.4.8l-1 .6s4 3.2 5.3 4.3c.3.2.9.8.7 1.5l-.5 1.4l5.5-.8c.3 0 .9 0 .8.9l-.3 5.7h1l-.3-5.7c0-.9.6-.9.8-.9l5.5.8l-.5-1.4c-.2-.7.4-1.3.7-1.5C40 35.2 44 32 44 32z" /></svg>
 );
 
 const PhilippinesFlag = () => (
@@ -85,7 +85,7 @@ const DynamicMapController = ({ activeLoc }) => {
 
         const isDesktop = window.innerWidth >= 1024;
         const offsetX = isDesktop ? -size.x * 0.25 : 0;
-        const offsetY = !isDesktop ? -size.y * 0.17 : 0;
+        const offsetY = !isDesktop ? -size.y * 0.24 : 0;
 
         const finalPoint = L.point(
             Math.round(targetPoint.x + offsetX),
@@ -102,11 +102,11 @@ const DynamicMapController = ({ activeLoc }) => {
 
     const resetToInitial = React.useCallback(() => {
         const { center, zoom } = getInitialPosition();
-        
+
         const currentCenter = map.getCenter();
         const dist = map.project(currentCenter, zoom).distanceTo(map.project(center, zoom));
 
-        if (dist > 1) { 
+        if (dist > 1) {
             map.flyTo(center, zoom, {
                 duration: 2.5,
                 easeLinearity: 0.25
@@ -120,7 +120,7 @@ const DynamicMapController = ({ activeLoc }) => {
             duration: 2.5,
             easeLinearity: 0.25
         });
-    }, [activeLoc, getInitialPosition]); 
+    }, [activeLoc, getInitialPosition]);
 
     useEffect(() => {
         const startTimer = () => {
@@ -129,7 +129,7 @@ const DynamicMapController = ({ activeLoc }) => {
         };
 
         const onMoveStart = (e) => {
-            
+
             if (timeoutRef.current) clearTimeout(timeoutRef.current);
         };
 
@@ -160,36 +160,46 @@ const AboutMe = () => {
     const [activeLoc, setActiveLoc] = useState('vancouver');
     const [time, setTime] = useState(new Date());
     const [sectionVisible, setSectionVisible] = useState(false);
+    const sectionRef = React.useRef(null);
+    const pulseIntervalRef = React.useRef(null);
 
     useEffect(() => {
         const timer = setInterval(() => setTime(new Date()), 1000);
 
-        const section = document.getElementById('home-about');
-        let pulseInterval;
-
         const observer = new IntersectionObserver((entries) => {
             if (entries[0].isIntersecting) {
                 setSectionVisible(true);
-                
-                playPulseSfx();
-                
-                pulseInterval = setInterval(() => {
-                    playPulseSfx();
-                }, 2500);
             } else {
                 setSectionVisible(false);
-                if (pulseInterval) clearInterval(pulseInterval);
             }
-        }, { threshold: 0.3 });
+        }, { threshold: 0.05 });
 
-        if (section) observer.observe(section);
+        if (sectionRef.current) observer.observe(sectionRef.current);
 
         return () => {
             clearInterval(timer);
-            if (pulseInterval) clearInterval(pulseInterval);
-            if (section) observer.unobserve(section);
+            if (sectionRef.current) observer.unobserve(sectionRef.current);
         };
     }, []);
+
+    // Synchronize pulse sound with both visibility and location switching
+    useEffect(() => {
+        if (sectionVisible) {
+            // Play immediately on scroll-in or location toggle
+            playPulseSfx();
+
+            if (pulseIntervalRef.current) clearInterval(pulseIntervalRef.current);
+            pulseIntervalRef.current = setInterval(() => {
+                playPulseSfx();
+            }, 2500);
+        } else {
+            if (pulseIntervalRef.current) clearInterval(pulseIntervalRef.current);
+        }
+
+        return () => {
+            if (pulseIntervalRef.current) clearInterval(pulseIntervalRef.current);
+        };
+    }, [sectionVisible, activeLoc]);
 
     const localTime = new Intl.DateTimeFormat('en-US', {
         timeZone: LOCATIONS[activeLoc].tz,
@@ -207,10 +217,13 @@ const AboutMe = () => {
     }).format(time);
 
     return (
-        <section className={`about-me-section ${sectionVisible ? 'section-visible' : ''}`} id="home-about">
+        <section
+            ref={sectionRef}
+            className={`about-me-section ${sectionVisible ? 'section-visible' : ''}`}
+        >
             <div className="about-me-immersive-container">
 
-                {}
+                { }
                 <div className="about-map-bg">
                     <MapContainer
                         center={LOCATIONS['vancouver'].pos}
@@ -231,13 +244,17 @@ const AboutMe = () => {
                             updateWhenIdle={false}
                             updateWhenZooming={false}
                         />
-                        <Marker position={LOCATIONS[activeLoc].pos} icon={customIcon} />
+                        <Marker
+                            key={`${activeLoc}-${sectionVisible}`}
+                            position={LOCATIONS[activeLoc].pos}
+                            icon={customIcon}
+                        />
                         <DynamicMapController activeLoc={activeLoc} />
                         <CtrlScrollZoom />
                     </MapContainer>
                 </div>
 
-                {}
+                { }
                 <div className="about-content-overlay">
                     <div className="about-content-inner">
                         <div className="about-intro-block">
@@ -290,30 +307,30 @@ const AboutMe = () => {
                         <div className="about-footer">
                             <div className="social-links-minimal">
                                 <a href="https://www.linkedin.com/in/cloue-macadangdang" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} onMouseLeave={playUnhoverSound} aria-label="LinkedIn">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.32 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93zM6.88 8.56a1.68 1.68 0 0 0 1.68-1.68c0-.93-.75-1.69-1.68-1.69a1.69 1.69 0 0 0-1.69 1.69c0 .93.76 1.68 1.69 1.68m1.39 9.94v-8.37H5.5v8.37z" /></svg>
                                 </a>
                                 <a href="mailto:hello@kurowii.com" onMouseEnter={playHoverSound} onMouseLeave={playUnhoverSound} aria-label="Email">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4l-8 5l-8-5V6l8 5l8-5z"/></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24"><path fill="currentColor" d="M20 4H4c-1.1 0-1.99.9-1.99 2L2 18c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2m0 4l-8 5l-8-5V6l8 5l8-5z" /></svg>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                {}
+                { }
                 <div className="map-location-card-floating">
                     <div className="location-card-header">
                         <div className="location-toggle-group">
                             <button
                                 className={`location-toggle-btn ${activeLoc === 'vancouver' ? 'active' : ''}`}
-                                onClick={() => { setActiveLoc('vancouver'); playSelectSound(); }}
+                                onClick={() => { setActiveLoc('vancouver'); playMapSwoosh(); }}
                                 onMouseEnter={playHoverSound}
                             >
                                 Base
                             </button>
                             <button
                                 className={`location-toggle-btn ${activeLoc === 'philippines' ? 'active' : ''}`}
-                                onClick={() => { setActiveLoc('philippines'); playSelectSound(); }}
+                                onClick={() => { setActiveLoc('philippines'); playMapSwoosh(); }}
                                 onMouseEnter={playHoverSound}
                             >
                                 Origins
@@ -347,4 +364,3 @@ const AboutMe = () => {
 };
 
 export default AboutMe;
-

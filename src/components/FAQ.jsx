@@ -35,6 +35,7 @@ const FAQ = () => {
     const zenitsuTimerRef = useRef(null);
     const greetingTimerRef = useRef(null);
     const inactivityTimerRef = useRef(null);
+    const responseTimerRef = useRef(null);
 
     useEffect(() => {
         if (isTyping) {
@@ -236,6 +237,7 @@ const FAQ = () => {
         return () => { 
             if (zenitsuTimerRef.current) clearTimeout(zenitsuTimerRef.current); 
             if (greetingTimerRef.current) clearTimeout(greetingTimerRef.current);
+            if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
         };
     }, [isOpen, activePersona, isEndingCall]);
 
@@ -258,7 +260,8 @@ const FAQ = () => {
         
         setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: transferMsg }]);
         
-        setTimeout(() => {
+        if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+        responseTimerRef.current = setTimeout(() => {
             setActivePersona(nextPersona);
             setIsEndingCall(false);
             setIsConnecting(true);
@@ -268,7 +271,7 @@ const FAQ = () => {
             
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "STABLE CONNECTION ESTABLISHED." }]);
             
-            setTimeout(() => {
+            responseTimerRef.current = setTimeout(() => {
                 setIsConnecting(false);
             }, 800);
         }, 1500);
@@ -302,7 +305,8 @@ const FAQ = () => {
         setIsTyping(true);
         const delay = calculateDelay(responseText, activePersona.id);
 
-        setTimeout(() => {
+        if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+        responseTimerRef.current = setTimeout(() => {
             setIsTyping(false);
             playSupportRepliedSfx();
             
@@ -316,12 +320,12 @@ const FAQ = () => {
             setMessages(prev => [...prev, { id: Date.now() + 1, type: 'bot', text: finalResponse, personaId: activePersona.id }]);
 
             if (question.id === 'transfer') {
-                setTimeout(() => {
+                responseTimerRef.current = setTimeout(() => {
                     if (activePersona.id === 'mitsuri' || activePersona.id === 'giyu') triggerAutoPass();
                     else if (activePersona.id === 'tanjiro') triggerPersonaOutro();
                 }, 1000);
             } else if (newAsked.size === (activePersona.questions || []).length) {
-                setTimeout(() => triggerPersonaOutro(), 1000);
+                responseTimerRef.current = setTimeout(() => triggerPersonaOutro(), 1000);
             }
         }, delay);
     };
@@ -329,7 +333,8 @@ const FAQ = () => {
     const triggerAutoPass = () => {
         setIsAutoPassing(true);
         const nextId = activePersona.id === 'mitsuri' ? 'giyu' : 'tanjiro';
-        setTimeout(() => { handleEndCallAuto(nextId); }, 5000);
+        if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+        responseTimerRef.current = setTimeout(() => { handleEndCallAuto(nextId); }, 5000);
     };
 
     const triggerPersonaOutro = () => {
@@ -339,24 +344,25 @@ const FAQ = () => {
         else if (activePersona.id === 'tanjiro') {
             const finalMsg1 = "I hope that covers everything. If you wish to proceed with a project, you can contact the Boss directly here: hello@kurowii.com";
             setIsTyping(true);
-            setTimeout(() => {
+            if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+            responseTimerRef.current = setTimeout(() => {
                 setIsTyping(false);
                 playSupportRepliedSfx();
                 setMessages(prev => [...prev, { id: Date.now() + 2, type: 'bot', text: finalMsg1, personaId: 'tanjiro' }]);
-                setTimeout(() => {
+                responseTimerRef.current = setTimeout(() => {
                     const finalMsg2 = "I'll have to end the call now as the Boss has another client waiting for a consultation. Goodbye!";
                     setIsTyping(true);
-                    setTimeout(() => {
+                    responseTimerRef.current = setTimeout(() => {
                         setIsTyping(false);
                         playSupportRepliedSfx();
                         setMessages(prev => [...prev, { id: Date.now() + 3, type: 'bot', text: finalMsg2, personaId: 'tanjiro' }]);
-                        setTimeout(() => {
+                        responseTimerRef.current = setTimeout(() => {
                                 sessionStorage.setItem('faq_unlocked_tanjiro', 'true');
                                 setIsTanjiroUnlocked(true);
                                 setIsOpen(false);
                                 playCallEndedSfx();
                                 
-                                setTimeout(() => {
+                                responseTimerRef.current = setTimeout(() => {
                                     setActivePersona(assistantPersonas[0]);
                                     setMessages([]);
                                     setInteractedInSession(new Set());
@@ -371,7 +377,8 @@ const FAQ = () => {
 
         if (outroText) {
             setIsTyping(true);
-            setTimeout(() => {
+            if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+            responseTimerRef.current = setTimeout(() => {
                 setIsTyping(false);
                 playSupportRepliedSfx();
                 setMessages(prev => [...prev, { id: Date.now() + 5, type: 'bot', text: outroText, personaId: activePersona.id }]);
@@ -386,7 +393,15 @@ const FAQ = () => {
         setIsOpen(nextState);
         
         if (!nextState) {
+            setIsTyping(false);
+            stopTypingSfx();
             playCallEndedSfx();
+            
+            if (zenitsuTimerRef.current) clearTimeout(zenitsuTimerRef.current);
+            if (greetingTimerRef.current) clearTimeout(greetingTimerRef.current);
+            if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+            if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "CALL ENDED BY USER." }]);
             setPipPos({ x: 0, y: 0 });
             setConsecutiveInactivityCount(0);

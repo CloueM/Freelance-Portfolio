@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect, Suspense } from 'react'
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import Home from './components/Home'
@@ -14,7 +14,18 @@ import './App.css'
 function App() {
   const [hasStarted, setHasStarted] = useState(false);
   const [bgMusicStarted, setBgMusicStarted] = useState(false);
+  const [isLocked, setIsLocked] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    if (hasStarted) {
+      setIsLocked(true);
+      const timer = setTimeout(() => {
+        setIsLocked(false);
+      }, 10500); // 7.8s delay + 2.5s slow reveal = ~10.3s
+      return () => clearTimeout(timer);
+    }
+  }, [hasStarted]);
 
   const handleIntroEnd = () => {
     setBgMusicStarted(true);
@@ -37,15 +48,15 @@ function App() {
     <>
       <div className="global-aurora-bg">
         <Aurora
-          colorStops={["#DCD6CC","#6F6860","#A99F96"]}
-          blend={0.63}
+          colorStops={["#DCD6CC","#A99F96","#6F6860"]}
+          blend={1}
           amplitude={1.0}
-          speed={1}
+          speed={0.8}
         />
       </div>
       <div className="global-overlay"></div>
       <SmoothFollower />
-      <SmoothScroll>
+      <SmoothScroll isLocked={isLocked}>
         <AnimatePresence mode="wait">
           {!hasStarted ? (
             <motion.div
@@ -69,9 +80,11 @@ function App() {
               style={{ width: '100%' }}
             >
               <AnimatePresence mode="wait">
-                <Routes location={location} key={location.pathname}>
-                  <Route path="/" element={<Home />} />
-                </Routes>
+                <Suspense fallback={null}>
+                  <Routes location={location} key={location.pathname}>
+                    <Route path="/" element={<Home />} />
+                  </Routes>
+                </Suspense>
               </AnimatePresence>
               <Footer />
               <SoundControl isVisible={bgMusicStarted} />

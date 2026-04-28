@@ -2,7 +2,8 @@
 import startSoundUrl from '../assets/sounds/start-sfx.mp3';
 import introSoundUrl from '../assets/sounds/intro.mp3';
 
-import swooshUrl from '../assets/sounds/swoosh.m4a';
+import swooshUrl from '../assets/sounds/swoosh-nav-link.mp3';
+import swooshMapUrl from '../assets/sounds/swoosh-map.mp3';
 
 // General SFX
 import pulseUrl from '../assets/sounds/pulse-sfx.mp3';
@@ -24,11 +25,11 @@ const playSound = (url, volume = 1) => {
         return audio;
     } catch (err) {
         console.error("Audio creation failed:", err);
-        return { 
-            play: () => Promise.resolve(), 
-            pause: () => {}, 
-            addEventListener: () => {}, 
-            removeEventListener: () => {},
+        return {
+            play: () => Promise.resolve(),
+            pause: () => { },
+            addEventListener: () => { },
+            removeEventListener: () => { },
             volume: 1,
             currentTime: 0
         };
@@ -44,6 +45,9 @@ export const playStartSound = () => playSound(startSoundUrl);
 // Pre-instantiate signature sounds to reduce latency
 const swooshAudio = new Audio(swooshUrl);
 swooshAudio.volume = 0.6;
+
+const swooshMapAudio = new Audio(swooshMapUrl);
+swooshMapAudio.volume = 0.6;
 
 const pulseAudio = new Audio(pulseUrl);
 pulseAudio.volume = 0.5;
@@ -61,6 +65,9 @@ const typingAudio = new Audio(typingUrl);
 typingAudio.volume = 0.5;
 typingAudio.loop = true;
 
+const callEndedAudio = new Audio(callEndedUrl);
+callEndedAudio.volume = 0.7;
+
 const buttonHoverAudio = new Audio(buttonHoverUrl);
 buttonHoverAudio.volume = 0.5;
 
@@ -72,8 +79,14 @@ export const playNavClickSwoosh = () => {
     // Play select sound alongside swoosh for tactile feedback
     playSelectSound();
     // Attempt to skip potential tiny silence at start of compressed audio
-    swooshAudio.currentTime = 0.03; 
+    swooshAudio.currentTime = 0.03;
     swooshAudio.play().catch(err => console.warn("Swoosh playback failed:", err));
+};
+
+// Map SFX
+export const playMapSwoosh = () => {
+    swooshMapAudio.currentTime = 0;
+    swooshMapAudio.play().catch(err => console.warn("Map swoosh failed:", err));
 };
 
 // Process SFX
@@ -84,7 +97,10 @@ export const playProcessLaunch = () => playSound(processUrl, 0.7);
 
 // Support SFX
 export const playSupportRepliedSfx = () => playSound(supportRepliedUrl, 0.8);
-export const playCallEndedSfx = () => playSound(callEndedUrl, 0.7);
+export const playCallEndedSfx = () => {
+    callEndedAudio.currentTime = 0;
+    callEndedAudio.play().catch(err => console.warn("Call ended playback failed:", err));
+};
 export const playTypingSfx = () => {
     typingAudio.currentTime = 0;
     typingAudio.play().catch(err => console.warn("Typing playback failed:", err));
@@ -109,9 +125,10 @@ export const playButtonHoverSfx = () => {
     buttonHoverAudio.currentTime = 0;
     buttonHoverAudio.play().catch(err => console.warn("Button hover playback failed:", err));
 };
-export const playUnhoverSound = () => {};
+export const playUnhoverSound = () => { };
 export const playPulseSfx = () => {
-    pulseAudio.currentTime = 0.02; // skip tiny compression silence
+    // Adjusted to 0.05s as a middle ground for perfect sync
+    pulseAudio.currentTime = 0.11;
     pulseAudio.play().catch(err => console.warn("Pulse playback failed:", err));
 };
 
@@ -140,5 +157,5 @@ export const playIntroSound = (onEnded) => {
     return audio;
 };
 
-export const playLoadingSound = () => {};
-export const stopLoadingSound = () => {};
+export const playLoadingSound = () => { };
+export const stopLoadingSound = () => { };

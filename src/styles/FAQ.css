@@ -7,7 +7,7 @@
     height: 65px;
     border-radius: 50%;
     background: var(--color-off-white);
-    color: var(--color-bg);
+    color: var(--color-charcoal);
     border: none;
     cursor: pointer;
     z-index: 1000;
@@ -16,7 +16,7 @@
     justify-content: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    animation: uiReveal 1s ease forwards 7.7s;
+    animation: globalReveal 2.5s ease forwards 8.0s;
     opacity: 0;
 }
 
@@ -32,6 +32,7 @@
     width: 40px;
     height: 40px;
     background: rgba(255,255,255,0.1);
+    -webkit-backdrop-filter: blur(10px);
     backdrop-filter: blur(10px);
     color: var(--color-off-white);
     box-shadow: none;
@@ -450,6 +451,7 @@
     border-radius: 0;
     width: 100%;
     text-align: center;
+    -webkit-backdrop-filter: blur(5px);
     backdrop-filter: blur(5px);
 }
 
@@ -846,6 +848,7 @@
     .chat-header {
         width: 100%;
         background: rgba(0,0,0,0.6);
+        -webkit-backdrop-filter: blur(15px);
         backdrop-filter: blur(15px);
         z-index: 101;
         padding: 15px 20px;
@@ -872,6 +875,7 @@
     .chat-input-area {
         width: 100%;
         background: rgba(0,0,0,0.6);
+        -webkit-backdrop-filter: blur(15px);
         backdrop-filter: blur(15px);
         padding: 15px;
         border-top: 1px solid rgba(255,255,255,0.1);

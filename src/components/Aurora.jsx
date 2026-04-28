@@ -70,18 +70,18 @@ struct ColorStop {
   float position;
 };
 
-#define COLOR_RAMP(colors, factor, finalColor) {              \\
-  int index = 0;                                            \\
-  for (int i = 0; i < 2; i++) {                               \\
-     ColorStop currentColor = colors[i];                    \\
-     bool isInBetween = currentColor.position <= factor;    \\
-     index = int(mix(float(index), float(i), float(isInBetween))); \\
-  }                                                         \\
-  ColorStop currentColor = colors[index];                   \\
-  ColorStop nextColor = colors[index + 1];                  \\
-  float range = nextColor.position - currentColor.position; \\
-  float lerpFactor = (factor - currentColor.position) / range; \\
-  finalColor = mix(currentColor.color, nextColor.color, lerpFactor); \\
+#define COLOR_RAMP(colors, factor, finalColor) {              \
+  int index = 0;                                            \
+  for (int i = 0; i < 2; i++) {                               \
+     ColorStop currentColor = colors[i];                    \
+     bool isInBetween = currentColor.position <= factor;    \
+     index = int(mix(float(index), float(i), float(isInBetween))); \
+  }                                                         \
+  ColorStop currentColor = colors[index];                   \
+  ColorStop nextColor = colors[index + 1];                  \
+  float range = nextColor.position - currentColor.position; \
+  float lerpFactor = (factor - currentColor.position) / range; \
+  finalColor = mix(currentColor.color, nextColor.color, lerpFactor); \
 }
 
 void main() {
@@ -96,14 +96,21 @@ void main() {
   vec3 rampColor;
   COLOR_RAMP(colors, uv.x, rampColor);
   
-  float noiseX = uv.x * ratio;
-  float height = snoise(vec2(noiseX * 1.0 + uTime * 0.1, uTime * 0.25)) * 0.5 * uAmplitude;
-  height = exp(height);
-  height = (uv.y * 2.0 - height + 0.2);
-  float intensity = 0.6 * height;
+  // Use fixed pixel-based scaling for noise to prevent shifting/squishing during resize
+  float noiseX = gl_FragCoord.x * 0.001;
+  float n1 = snoise(vec2(noiseX * 0.8 + uTime * 0.02, uTime * 0.05)) * 0.5;
+  float n2 = snoise(vec2(noiseX * 1.5 - uTime * 0.04, uTime * 0.08)) * 0.3;
   
-  float midPoint = 0.20;
-  float auroraAlpha = smoothstep(midPoint - uBlend * 0.5, midPoint + uBlend * 0.5, intensity);
+  float height = (n1 + n2) * uAmplitude;
+  // Using a softer power instead of exp() to avoid sharp peaks
+  height = pow(max(0.0, height + 0.5), 1.2);
+  
+  height = (uv.y * 1.8 - height + 0.3);
+  float intensity = 0.5 * height;
+  
+  float midPoint = 0.15;
+  // Wider blend for smoother transitions
+  float auroraAlpha = smoothstep(midPoint - uBlend, midPoint + uBlend, intensity);
   
   vec3 auroraColor = intensity * rampColor;
   
@@ -197,9 +204,8 @@ export default function Aurora(props) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-    
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [amplitude]);
 
   return <div ref={ctnDom} className="aurora-container" />;
 }
-
