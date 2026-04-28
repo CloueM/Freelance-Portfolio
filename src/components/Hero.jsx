@@ -88,7 +88,7 @@ const Hero = () => {
                 </div>
 
                 <div className="hero-content">
-                    <h1 className="sr-only">Cloue Macadangdang | Front End Web Developer &amp; Designer Portfolio</h1>
+                    <h1 className="sr-only">Kurowii | Creative Developer &amp; UI/UX Designer — High-Performance Website Upgrades, Custom React Development, and Digital Solutions for Businesses &amp; Startups.</h1>
 
                     <div className="hero-left">
                         <div className="hero-web" data-text="WEB">WEB</div>

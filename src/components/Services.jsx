@@ -229,7 +229,7 @@ const Services = () => {
                         I treat your project like it is my own.
                     </h3>
                     <p className="why-body">
-                        I work directly with you from the first call to the final launch to ensure your website looks premium and functions perfectly. I prioritize clear communication and personal dedication to every detail of your project. I use modern frameworks to build efficient sites while focusing my energy on the custom features that actually grow your business.
+                        I work directly with you from the first call to the final launch to ensure your website looks professional and functions perfectly. I prioritize clear communication and personal dedication to every detail of your project. I use modern frameworks to build efficient sites while focusing my energy on the custom features that actually grow your business.
                     </p>
                     <div className="why-cta-wrapper">
                         <div className="slide-track" style={{ background: isSlid ? 'rgba(255, 255, 255, 0.1)' : '' }}>

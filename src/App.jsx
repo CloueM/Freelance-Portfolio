@@ -27,6 +27,21 @@ function App() {
     }
   }, [hasStarted]);
 
+  // Dynamic Tab Title Effect
+  useEffect(() => {
+    const originalTitle = "Kurowii | Creative Developer";
+    const handleVisibilityChange = () => {
+      if (document.hidden) {
+        document.title = "Come back! 👋";
+      } else {
+        document.title = originalTitle;
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleVisibilityChange);
+    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
+  }, []);
+
   const handleIntroEnd = () => {
     setBgMusicStarted(true);
   };
