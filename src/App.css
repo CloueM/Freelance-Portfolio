@@ -129,13 +129,13 @@ body {
 .section-header::before {
     content: attr(data-index);
     font-family: var(--font-primary);
-    font-size: var(--text-caption);
-    font-weight: var(--font-weight-h3);
-    color: var(--color-stone);
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--color-dust);
     margin-right: 1.5rem;
-    letter-spacing: 0.2em;
+    letter-spacing: 0.15em;
     text-transform: uppercase;
-    opacity: 0.8;
+    opacity: 0.9;
 }
 
 .section-header h2 {

@@ -182,10 +182,10 @@ const AboutMe = () => {
         };
     }, []);
 
-    // Synchronize pulse sound with both visibility and location switching
+    
     useEffect(() => {
         if (sectionVisible) {
-            // Play immediately on scroll-in or location toggle
+            
             playPulseSfx();
 
             if (pulseIntervalRef.current) clearInterval(pulseIntervalRef.current);
@@ -223,7 +223,6 @@ const AboutMe = () => {
         >
             <div className="about-me-immersive-container">
 
-                { }
                 <div className="about-map-bg">
                     <MapContainer
                         center={LOCATIONS['vancouver'].pos}
@@ -254,7 +253,6 @@ const AboutMe = () => {
                     </MapContainer>
                 </div>
 
-                { }
                 <div className="about-content-overlay">
                     <div className="about-content-inner">
                         <div className="about-intro-block">
@@ -317,7 +315,6 @@ const AboutMe = () => {
                     </div>
                 </div>
 
-                { }
                 <div className="map-location-card-floating">
                     <div className="location-card-header">
                         <div className="location-toggle-group">

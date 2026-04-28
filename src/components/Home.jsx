@@ -39,7 +39,7 @@ const Home = () => {
 
     return (
         <PageTransition>
-            <main>
+            <main style={{ position: 'relative' }}>
                 <Hero />
 
                 <div id="home-services" className="home-services-section">

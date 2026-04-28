@@ -14,7 +14,7 @@ const FAQ = () => {
     const [isEndingCall, setIsEndingCall] = useState(false);
     const [askedQuestions, setAskedQuestions] = useState(new Set());
     const [isAutoPassing, setIsAutoPassing] = useState(false);
-    const [hasOpenedOnce, setHasOpenedOnce] = useState(sessionStorage.getItem('support_opened_once') === 'true');
+    const [hasOpenedOnce, setHasOpenedOnce] = useState(false);
 
     const [showVideoControls, setShowVideoControls] = useState(false);
 
@@ -36,6 +36,7 @@ const FAQ = () => {
     const greetingTimerRef = useRef(null);
     const inactivityTimerRef = useRef(null);
     const responseTimerRef = useRef(null);
+    const transferTimerRef = useRef(null);
 
     useEffect(() => {
         if (isTyping) {
@@ -99,6 +100,16 @@ const FAQ = () => {
             window.removeEventListener('mouseup', handleMouseUp);
         };
     }, [isDragging]);
+
+    useEffect(() => {
+        return () => {
+            if (zenitsuTimerRef.current) clearTimeout(zenitsuTimerRef.current);
+            if (greetingTimerRef.current) clearTimeout(greetingTimerRef.current);
+            if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
+            if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+            if (transferTimerRef.current) clearTimeout(transferTimerRef.current);
+        };
+    }, []);
 
     const handleTouchStart = (e) => {
         if (!messagesAreaRef.current) return;
@@ -245,7 +256,7 @@ const FAQ = () => {
         setIsAutoPassing(false);
         setIsEndingCall(true);
         
-        const nextPersona = assistantPersonas.find(p => p.id === nextId);
+        const nextPersona = assistantPersonas.find(p => p.id === nextId) || assistantPersonas[1];
         let transferMsg = "";
         
         if (activePersona.id === 'zenitsu') {
@@ -260,18 +271,19 @@ const FAQ = () => {
         
         setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: transferMsg }]);
         
-        if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
-        responseTimerRef.current = setTimeout(() => {
+        if (transferTimerRef.current) clearTimeout(transferTimerRef.current);
+        transferTimerRef.current = setTimeout(() => {
             setActivePersona(nextPersona);
             setIsEndingCall(false);
             setIsConnecting(true);
             setAskedQuestions(new Set());
             setConsecutiveInactivityCount(0);
             setLastInactivityIndex(-1);
+            setGlowQuestion(null);
             
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "STABLE CONNECTION ESTABLISHED." }]);
             
-            responseTimerRef.current = setTimeout(() => {
+            transferTimerRef.current = setTimeout(() => {
                 setIsConnecting(false);
             }, 800);
         }, 1500);
@@ -319,13 +331,19 @@ const FAQ = () => {
 
             setMessages(prev => [...prev, { id: Date.now() + 1, type: 'bot', text: finalResponse, personaId: activePersona.id }]);
 
+            
             if (question.id === 'transfer') {
-                responseTimerRef.current = setTimeout(() => {
+                if (transferTimerRef.current) clearTimeout(transferTimerRef.current);
+                transferTimerRef.current = setTimeout(() => {
                     if (activePersona.id === 'mitsuri' || activePersona.id === 'giyu') triggerAutoPass();
                     else if (activePersona.id === 'tanjiro') triggerPersonaOutro();
                 }, 1000);
             } else if (newAsked.size === (activePersona.questions || []).length) {
-                responseTimerRef.current = setTimeout(() => triggerPersonaOutro(), 1000);
+                if (transferTimerRef.current) clearTimeout(transferTimerRef.current);
+                transferTimerRef.current = setTimeout(() => triggerPersonaOutro(), 1000);
+            } else if (newAsked.size >= 3 && !newAsked.has('transfer') && activePersona.id !== 'tanjiro') {
+                
+                setGlowQuestion('transfer');
             }
         }, delay);
     };
@@ -333,8 +351,8 @@ const FAQ = () => {
     const triggerAutoPass = () => {
         setIsAutoPassing(true);
         const nextId = activePersona.id === 'mitsuri' ? 'giyu' : 'tanjiro';
-        if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
-        responseTimerRef.current = setTimeout(() => { handleEndCallAuto(nextId); }, 5000);
+        if (transferTimerRef.current) clearTimeout(transferTimerRef.current);
+        transferTimerRef.current = setTimeout(() => { handleEndCallAuto(nextId); }, 5000);
     };
 
     const triggerPersonaOutro = () => {
@@ -401,16 +419,21 @@ const FAQ = () => {
             if (greetingTimerRef.current) clearTimeout(greetingTimerRef.current);
             if (inactivityTimerRef.current) clearTimeout(inactivityTimerRef.current);
             if (responseTimerRef.current) clearTimeout(responseTimerRef.current);
+            if (transferTimerRef.current) clearTimeout(transferTimerRef.current);
 
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "CALL ENDED BY USER." }]);
             setPipPos({ x: 0, y: 0 });
             setConsecutiveInactivityCount(0);
             setLastInactivityIndex(-1);
             setShowVideoControls(false);
+
+            
+            if (askedQuestions.size >= (activePersona.questions || []).length) {
+                setAskedQuestions(new Set());
+            }
         } else {
             if (!hasOpenedOnce) {
                 setHasOpenedOnce(true);
-                sessionStorage.setItem('support_opened_once', 'true');
             }
             setMessages(prev => [...prev, { id: Date.now(), type: 'system', text: "RESUMING CONNECTION..." }]);
         }
@@ -558,7 +581,7 @@ const FAQ = () => {
                                         className={`question-btn ${askedQuestions.has(q.id) ? 'asked' : ''} ${glowQuestion === q.id ? 'glow' : ''}`}
                                         onClick={() => handleQuestionClick(q)}
                                         onMouseEnter={playHoverSound}
-                                        disabled={isTyping || isConnecting || isEndingCall || activePersona.id === 'zenitsu' || askedQuestions.has(q.id) || isAutoPassing}
+                                        disabled={isTyping || isConnecting || isEndingCall || activePersona.id === 'zenitsu' || (q.id !== 'transfer' && askedQuestions.has(q.id)) || isAutoPassing}
                                     >
                                         {q.text}
                                     </button>

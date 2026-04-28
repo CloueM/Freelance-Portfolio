@@ -9,7 +9,7 @@
     content: "";
     position: absolute;
     inset: 0;
-    background-image: url("https://grainy-gradients.vercel.app/noise.svg");
+    background-image: url("/noise.svg");
     opacity: 0.03;
     pointer-events: none;
     z-index: 1;
@@ -197,18 +197,6 @@
     position: relative;
     z-index: 1;
 }
-.service-example-item.highlighted {
-    opacity: 1 !important;
-    background: rgba(255, 255, 255, 0.12);
-    border-color: rgba(255, 255, 255, 0.3);
-    transform: translateY(-3px);
-    box-shadow: 
-        0 0 20px rgba(255, 255, 255, 0.08),
-        0 0 40px rgba(255, 255, 255, 0.02);
-    color: #fff;
-    transition: all 1.2s cubic-bezier(0.22, 1, 0.36, 1);
-    animation: pulse-glow 3s infinite ease-in-out;
-}
 .service-example-item {
     display: flex;
     align-items: center;
@@ -218,39 +206,60 @@
     border-radius: 4px;
     font-family: var(--font-primary);
     font-size: 0.75rem;
-    color: var(--color-off-white);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 2s cubic-bezier(0.22, 1, 0.36, 1);
+    color: rgba(247, 245, 242, 0.6);
     white-space: nowrap;
     letter-spacing: 0.02em;
-}
-@keyframes pulse-glow {
-    0%, 100% { box-shadow: 0 0 20px rgba(255, 255, 255, 0.08), 0 0 40px rgba(255, 255, 255, 0.02); }
-    50% { box-shadow: 0 0 30px rgba(255, 255, 255, 0.15), 0 0 60px rgba(255, 255, 255, 0.05); }
-}
-.service-card.visible .service-example-item {
+    position: relative;
+    overflow: visible;
     opacity: 0.5;
+    transition: 
+        background 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+        border-color 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+        transform 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+        opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1),
+        color 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-example-item.highlighted {
+    opacity: 1;
+    transform: translateY(-3px);
+    background: rgba(255, 255, 255, 0.08);
+    border-color: rgba(255, 255, 255, 0.2);
+    color: #fff;
+    z-index: 2;
+}
+
+.service-item-glow {
+    position: absolute;
+    inset: -15px;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.15) 0%, transparent 70%);
+    pointer-events: none;
+    z-index: -1;
+    border-radius: 20px;
+    filter: blur(4px);
+    opacity: 0;
+    transition: opacity 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.service-example-item.highlighted .service-item-glow {
+    opacity: 1;
+    animation: slow-breath 4s infinite ease-in-out;
+}
+
+@keyframes slow-breath {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.7; }
+}
+
+.service-card.visible .service-example-item {
     transform: translateY(0);
 }
+
 .service-example-item:hover {
     opacity: 1 !important;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-}
-.service-example-item.highlighted {
-    opacity: 1 !important;
-    background: rgba(255, 255, 255, 0.08);
-    border-color: rgba(255, 255, 255, 0.15);
-    transform: translateY(-2px);
-    box-shadow: 0 0 15px rgba(255, 255, 255, 0.03);
-}
-.service-example-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-    opacity: 1;
-    transform: translateY(-2px);
-    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.08) !important;
+    border-color: rgba(255, 255, 255, 0.15) !important;
+    transform: translateY(-2px) !important;
 }
 .services-includes-wrapper {
     padding: 6rem var(--layout-margin) 5rem;

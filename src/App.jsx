@@ -72,24 +72,26 @@ function App() {
               />
             </motion.div>
           ) : (
-            <motion.div
-              key="main-content"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              style={{ width: '100%' }}
-            >
-              <AnimatePresence mode="wait">
-                <Suspense fallback={null}>
-                  <Routes location={location} key={location.pathname}>
-                    <Route path="/" element={<Home />} />
-                  </Routes>
-                </Suspense>
-              </AnimatePresence>
-              <Footer />
-              <SoundControl isVisible={bgMusicStarted} />
+            <>
+              <motion.div
+                key="main-content"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 1 }}
+                style={{ width: '100%', position: 'relative' }}
+              >
+                <AnimatePresence mode="wait">
+                  <Suspense fallback={null}>
+                    <Routes location={location} key={location.pathname}>
+                      <Route path="/" element={<Home />} />
+                    </Routes>
+                  </Suspense>
+                </AnimatePresence>
+                <Footer />
+                <SoundControl isVisible={bgMusicStarted} />
+              </motion.div>
               <ScrollCTA />
-            </motion.div>
+            </>
           )}
         </AnimatePresence>
       </SmoothScroll>

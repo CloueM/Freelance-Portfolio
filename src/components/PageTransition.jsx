@@ -8,6 +8,7 @@ const PageTransition = ({ children }) => {
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.5, ease: "easeInOut" }}
+            style={{ position: 'relative', width: '100%' }}
         >
             {children}
         </motion.div>

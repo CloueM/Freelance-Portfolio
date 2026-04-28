@@ -56,7 +56,7 @@ const Footer = () => {
                     <div className="footer-bottom-left">
                         <p className="copyright">© {currentYear} @ CLOUE MACADANGDANG</p>
                         <p className="music-credit">
-                            MUSIC: <a href="https://www.youtube.com/watch?v=laZusNy8QiY" target="_blank" rel="noopener noreferrer">HAGGSTROM BY C418</a>
+                            BACKGROUND MUSIC: MUSIC BY <a href="https://pixabay.com/users/leberch-42823964/?utm_source=link-attribution&utm_medium=referral&utm_campaign=music&utm_content=262608" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>NIKITA KONDRASHEV</a> FROM <a href="https://pixabay.com/music/" target="_blank" rel="noopener noreferrer" onMouseEnter={playHoverSound} onMouseDown={playSelectSound}>PIXABAY</a>
                         </p>
                     </div>
                     <div className="footer-bottom-right">

@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useMotionValue, useTransform, useAnimation, useSpring } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useAnimation, useSpring, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../data/services';
 import Process from './Process';
@@ -13,10 +13,9 @@ const Services = () => {
     const controls = useAnimation();
     const [visibleCards, setVisibleCards] = useState(new Set());
     const [visibleIncludes, setVisibleIncludes] = useState(new Set());
-    const [activeHighlights, setActiveHighlights] = useState(new Set());
+    const [activeHighlightKey, setActiveHighlightKey] = useState(null);
 
     useEffect(() => {
-        
         const flatExamples = [];
         websiteTypes.forEach((card, cardIdx) => {
             card.examples.forEach((_, itemIdx) => {
@@ -26,24 +25,17 @@ const Services = () => {
 
         let currentIdx = 0;
         const triggerHighlight = () => {
+            if (flatExamples.length === 0) return;
+            
             const { cardIdx, itemIdx } = flatExamples[currentIdx];
             const key = `${cardIdx}-${itemIdx}`;
 
-            setActiveHighlights(prev => new Set([...prev, key]));
-
-            setTimeout(() => {
-                setActiveHighlights(prev => {
-                    const next = new Set(prev);
-                    next.delete(key);
-                    return next;
-                });
-            }, 5000); 
-
+            setActiveHighlightKey(key);
             currentIdx = (currentIdx + 1) % flatExamples.length;
         };
 
         triggerHighlight();
-        const interval = setInterval(triggerHighlight, 2000); 
+        const interval = setInterval(triggerHighlight, 4000); 
 
         return () => clearInterval(interval);
     }, []);
@@ -116,7 +108,6 @@ const Services = () => {
 
     return (
         <section className="services-section" id="home-services">
-            {}
             <div className="services-intro">
                 <div className="services-intro-left">
                     <p className="services-intro-text">{servicesIntro.description}</p>
@@ -141,7 +132,6 @@ const Services = () => {
                 </div>
             </div>
 
-            {}
             <div className="services-types-grid">
                 {websiteTypes.map((type, idx) => {
                     const handleMouseMove = (e) => {
@@ -177,15 +167,18 @@ const Services = () => {
                             <p className="service-tagline">{type.tagline}</p>
                             <p className="service-desc">{type.description}</p>
                             <ul className="service-examples">
-                                {type.examples.map((ex, i) => (
-                                    <li 
-                                        key={i} 
-                                        className={`service-example-item ${activeHighlights.has(`${idx}-${i}`) ? 'highlighted' : ''}`}
-                                        style={{ transitionDelay: `${(idx * 80) + (i * 50)}ms` }}
-                                    >
-                                        {ex}
-                                    </li>
-                                ))}
+                                {type.examples.map((ex, i) => {
+                                    const isHighlighted = activeHighlightKey === `${idx}-${i}`;
+                                    return (
+                                        <li 
+                                            key={i} 
+                                            className={`service-example-item ${isHighlighted ? 'highlighted' : ''}`}
+                                        >
+                                            {ex}
+                                            <div className="service-item-glow" />
+                                        </li>
+                                    );
+                                })}
                             </ul>
                         </motion.div>
                     );

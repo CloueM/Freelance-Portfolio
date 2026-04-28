@@ -96,20 +96,20 @@ void main() {
   vec3 rampColor;
   COLOR_RAMP(colors, uv.x, rampColor);
   
-  // Use fixed pixel-based scaling for noise to prevent shifting/squishing during resize
+  
   float noiseX = gl_FragCoord.x * 0.001;
   float n1 = snoise(vec2(noiseX * 0.8 + uTime * 0.02, uTime * 0.05)) * 0.5;
   float n2 = snoise(vec2(noiseX * 1.5 - uTime * 0.04, uTime * 0.08)) * 0.3;
   
   float height = (n1 + n2) * uAmplitude;
-  // Using a softer power instead of exp() to avoid sharp peaks
+  
   height = pow(max(0.0, height + 0.5), 1.2);
   
   height = (uv.y * 1.8 - height + 0.3);
   float intensity = 0.5 * height;
   
   float midPoint = 0.15;
-  // Wider blend for smoother transitions
+  
   float auroraAlpha = smoothstep(midPoint - uBlend, midPoint + uBlend, intensity);
   
   vec3 auroraColor = intensity * rampColor;
@@ -204,7 +204,7 @@ export default function Aurora(props) {
       }
       gl.getExtension('WEBGL_lose_context')?.loseContext();
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    
   }, [amplitude]);
 
   return <div ref={ctnDom} className="aurora-container" />;

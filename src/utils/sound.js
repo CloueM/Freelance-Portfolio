@@ -71,6 +71,9 @@ callEndedAudio.volume = 0.7;
 const buttonHoverAudio = new Audio(buttonHoverUrl);
 buttonHoverAudio.volume = 0.5;
 
+const supportRepliedAudio = new Audio(supportRepliedUrl);
+supportRepliedAudio.volume = 0.8;
+
 // Nav SFX
 export const playNavHoverAbout = () => playHoverSound();
 export const playNavHoverProjects = () => playHoverSound();
@@ -96,7 +99,15 @@ export const playProcessBuild = () => playSound(processUrl, 0.7);
 export const playProcessLaunch = () => playSound(processUrl, 0.7);
 
 // Support SFX
-export const playSupportRepliedSfx = () => playSound(supportRepliedUrl, 0.8);
+let lastSupportReplyTime = 0;
+export const playSupportRepliedSfx = () => {
+    const now = Date.now();
+    if (now - lastSupportReplyTime > 1000) {
+        supportRepliedAudio.currentTime = 0;
+        supportRepliedAudio.play().catch(err => console.warn("Support replied playback failed:", err));
+        lastSupportReplyTime = now;
+    }
+};
 export const playCallEndedSfx = () => {
     callEndedAudio.currentTime = 0;
     callEndedAudio.play().catch(err => console.warn("Call ended playback failed:", err));

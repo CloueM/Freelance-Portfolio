@@ -16,13 +16,18 @@
     justify-content: center;
     box-shadow: 0 10px 30px rgba(0,0,0,0.3);
     transition: all 0.5s cubic-bezier(0.165, 0.84, 0.44, 1);
-    animation: globalReveal 2.5s ease forwards 8.0s;
+    animation: globalReveal 2.5s ease forwards 7.6s;
     opacity: 0;
 }
 
 .support-call-trigger.no-intro {
-    animation: none;
-    opacity: 1;
+    animation: fadeInQuick 0.8s ease forwards 0.2s;
+    opacity: 0;
+}
+
+@keyframes fadeInQuick {
+    from { opacity: 0; transform: translateY(15px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
 .support-call-trigger.active {
