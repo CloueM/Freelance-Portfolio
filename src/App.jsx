@@ -14,7 +14,11 @@ const Aurora = React.lazy(() => import('./components/Aurora'));
 import './App.css'
 
 function App() {
-  const [hasStarted, setHasStarted] = useState(false);
+  const [hasStarted, setHasStarted] = useState(() => {
+    if (typeof navigator === 'undefined') return false;
+    const botPattern = /bot|googlebot|crawler|spider|robot|crawling|perplexity|gptbot|claudebot|oai-searchbot/i;
+    return botPattern.test(navigator.userAgent);
+  });
   const [bgMusicStarted, setBgMusicStarted] = useState(false);
   const [isLocked, setIsLocked] = useState(false);
   const location = useLocation();

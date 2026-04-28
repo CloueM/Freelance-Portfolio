@@ -1,0 +1,31 @@
+# Kurowii | Creative Developer & UI/UX Designer
+
+> Cloue Macadangdang (Kurowii) is a Freelance Creative Developer specializing in high-performance website upgrades and custom React development.
+
+## Identity
+- **Name:** Cloue Macadangdang
+- **Brand:** Kurowii
+- **Role:** Creative Developer & UI/UX Designer
+- **Location:** Vancouver, BC (Worldwide Services)
+- **Website:** https://freelance.kurowii.com/
+
+## Core Expertise
+- **Custom React Development:** Building scalable, fast, and interactive web applications.
+- **Website Modernization:** Transforming legacy sites into modern, high-converting digital assets.
+- **UI/UX Design:** User-centric design solutions focused on accessibility and conversion.
+- **Performance Optimization:** Ensuring websites are lightning-fast and SEO-friendly.
+
+## Services
+- **E-commerce Solutions:** Custom online stores with modern payment integrations.
+- **Business Websites:** Professional digital presence for startups and established brands.
+- **Portfolio Design:** Unique, interactive portfolios for creatives and professionals.
+
+## Key Projects
+- **Personal Portfolio:** Modern, fast, and accessible portfolio showcase.
+- **Cloudy Toy Co:** Full-featured e-commerce store with newsletter and payment systems.
+- **LUMIX:** Movie discovery platform using global film databases.
+
+## Contact
+- **Email:** hello@kurowii.com
+- **LinkedIn:** https://www.linkedin.com/in/cloue-macadangdang
+- **GitHub:** https://github.com/CloueM
