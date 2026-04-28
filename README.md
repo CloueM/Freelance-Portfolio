@@ -10,7 +10,7 @@ Hi! I'm **Cloue Macadangdang**, a Front-End Web Developer and Designer specializ
 ---
 
 ## Connect with Me
-- **Portfolio Website:** [kurowii.com](https://kurowii.com/)
+- **Freelance Portfolio Website:** [freelance.kurowii.com](https://freelance.kurowii.com/)
 - **LinkedIn:** [Cloue Macadangdang](https://www.linkedin.com/in/cloue-macadangdang)
 - **Email:** [hello@kurowii.com](mailto:hello@kurowii.com)
 
