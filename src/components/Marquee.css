@@ -1,3 +1,4 @@
+/* --- Main Wrapper --- */
 .marquee-wrapper {
     width: 100%;
     overflow: hidden;
@@ -10,6 +11,7 @@
     align-items: center;
 }
 
+/* --- Content & Typography --- */
 .marquee-content {
     display: flex;
     animation: marqueeScroll 200s linear infinite;
@@ -29,6 +31,7 @@
     opacity: 0.4;
 }
 
+/* --- Animations --- */
 @keyframes marqueeScroll {
     0% {
         transform: translateX(0);
@@ -39,6 +42,7 @@
     }
 }
 
+/* --- Responsive Styles --- */
 @media (max-width: 768px) {
     .marquee-wrapper {
         padding: 2.5rem 0;

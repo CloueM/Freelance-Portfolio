@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import bgMusic from '../assets/sounds/background-music.mp3';
-import '../styles/SoundControl.css';
+import './SoundControl.css';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 
 function SoundControl({ isVisible }) {

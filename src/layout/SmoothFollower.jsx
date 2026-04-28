@@ -1,6 +1,6 @@
 'use client';
 import { useState, useEffect, useRef } from 'react';
-import '../styles/SmoothFollower.css';
+import './SmoothFollower.css';
 
 export default function SmoothFollower() {
   const mousePosition = useRef({ x: 0, y: 0 });

@@ -1,16 +1,41 @@
+# Disable server signature (hides Apache version)
+ServerSignature Off
+
+# Security Headers
+<IfModule mod_headers.c>
+    # Prevent MIME type sniffing
+    Header set X-Content-Type-Options "nosniff"
+    # Prevent clickjacking (only allow framing on the same origin)
+    Header always set X-Frame-Options "SAMEORIGIN"
+    # Enforce strict HTTPS
+    Header always set Strict-Transport-Security "max-age=31536000; includeSubDomains"
+    # Prevent referrer leakage
+    Header always set Referrer-Policy "strict-origin-when-cross-origin"
+</IfModule>
+
 # Disable directory browsing
 Options -Indexes
 
 # Prevent viewing of .htaccess file
 <Files .htaccess>
-    Order allow,deny
-    Deny from all
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </Files>
 
 # Prevent viewing of sensitive files
-<FilesMatch "^(package|package-lock|vite\.config|ai\.txt|README\.md)$">
-    Order allow,deny
-    Deny from all
+<FilesMatch "^(package|package-lock|vite\.config|ai\.txt|README\.md|\.env.*)$">
+    <IfModule mod_authz_core.c>
+        Require all denied
+    </IfModule>
+    <IfModule !mod_authz_core.c>
+        Order allow,deny
+        Deny from all
+    </IfModule>
 </FilesMatch>
 
 # Block access to hidden files and folders (e.g., .git)

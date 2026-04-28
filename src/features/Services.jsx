@@ -1,10 +1,10 @@
 import React, { useRef, useEffect, useState } from 'react';
 import { motion, useMotionValue, useTransform, useAnimation, useSpring, AnimatePresence } from 'framer-motion';
 import { Icon } from '@iconify/react';
-import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../data/services';
+import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../services/services';
 import Process from './Process';
 import { playSelectSound, playServiceHoverSfx, playButtonHoverSfx } from '../utils/sound';
-import '../styles/Services.css';
+import './Services.css';
 
 const Services = () => {
     const cardRefs = useRef([]);

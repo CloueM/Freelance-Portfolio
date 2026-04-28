@@ -3,7 +3,7 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { playHoverSound, playSelectSound, playPulseSfx, playUnhoverSound, playMapSwoosh } from '../utils/sound';
-import '../styles/AboutMe.css';
+import './AboutMe.css';
 
 const customIcon = new L.divIcon({
     className: 'custom-map-marker',

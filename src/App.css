@@ -1,13 +1,15 @@
+/* --- Fonts --- */
 @font-face {
     font-family: 'Chillax';
-    src: url('./fonts/Chillax-Variable.woff2') format('woff2'),
-        url('./fonts/Chillax-Variable.woff') format('woff'),
-        url('./fonts/Chillax-Variable.ttf') format('truetype');
+    src: url('./assets/fonts/Chillax-Variable.woff2') format('woff2'),
+        url('./assets/fonts/Chillax-Variable.woff') format('woff'),
+        url('./assets/fonts/Chillax-Variable.ttf') format('truetype');
     font-weight: 200 700;
     font-style: normal;
     font-display: swap;
 }
 
+/* --- Theme Variables --- */
 :root {
     --color-off-white: #F7F5F2;
     --color-dust: #DCD6CC;
@@ -50,6 +52,7 @@
     }
 }
 
+/* --- Global Reset & Base --- */
 body {
     font-family: var(--font-primary);
     margin: 0;
@@ -64,6 +67,7 @@ body {
 }
 
 
+/* --- Global Backgrounds --- */
 .global-aurora-bg {
     position: fixed;
     top: 0;
@@ -90,6 +94,7 @@ body {
 }
 
 
+/* --- Accessibility Utilities --- */
 .sr-only {
     position: absolute;
     width: 1px;
@@ -102,6 +107,7 @@ body {
     border-width: 0;
 }
 
+/* --- Layout Components --- */
 .section-header {
     position: sticky;
     top: 0;
@@ -155,6 +161,7 @@ body {
     animation: textShimmer 6s linear infinite;
 }
 
+/* --- Global Animations --- */
 @keyframes textShimmer {
     to {
         background-position: 200% center;
@@ -179,7 +186,7 @@ body {
     50% { filter: drop-shadow(0 0 30px rgba(74, 222, 128, 0.5)) brightness(1.2); transform: scale(1.05); }
 }
 
-/* Lenis Smooth Scroll Utilities */
+/* --- Scroll Utilities --- */
 html.lenis,
 html.lenis body {
   height: auto;

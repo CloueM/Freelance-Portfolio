@@ -2,14 +2,14 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from './Hero';
 import Process from './Process';
-import ProjectItem from './ProjectItem';
+import ProjectItem from '../components/ProjectItem';
 const Services = React.lazy(() => import('./Services'));
 const AboutMe = React.lazy(() => import('./AboutMe'));
 const FAQ = React.lazy(() => import('./FAQ'));
 import CoffeeCTA from './CoffeeCTA';
-import Marquee from './Marquee';
-import PageTransition from './PageTransition';
-import { projectsData } from '../data/projects';
+import Marquee from '../components/Marquee';
+import PageTransition from '../layout/PageTransition';
+import { projectsData } from '../services/projects';
 import { scrollToSection } from '../utils/scroll';
 
 const Home = () => {

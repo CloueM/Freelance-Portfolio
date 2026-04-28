@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import logo from '../assets/favicon.svg';
-import '../styles/Footer.css';
+import './Footer.css';
 import { scrollToSection } from '../utils/scroll';
 import { playSelectSound, playHoverSound } from '../utils/sound';
 import { Icon } from '@iconify/react';

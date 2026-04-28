@@ -1,3 +1,4 @@
+/* --- Process Wrapper --- */
 .process-wrapper {
     padding: 0;
     width: 100%;
@@ -56,6 +57,7 @@
     max-width: 680px;
 }
 
+/* --- Process Timeline Container --- */
 .process-container {
     width: 100%;
     display: flex;
@@ -111,6 +113,7 @@
     opacity: 0.3;
 }
 
+/* --- Process Checkpoints --- */
 .process-checkpoint {
     position: absolute;
     left: calc(var(--layout-margin) + 4rem);
@@ -172,6 +175,7 @@
     opacity: 0.3;
 }
 
+/* --- Process Content --- */
 .process-row-left {
     display: flex;
     align-items: center;
@@ -268,6 +272,7 @@
     transform: translateY(-50%) translateX(-2%);
 }
 
+/* --- Responsive Styles --- */
 @media (max-width: 1024px) {
     .process-row-right {
         max-width: 320px;

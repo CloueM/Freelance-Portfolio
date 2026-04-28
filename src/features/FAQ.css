@@ -1,4 +1,4 @@
-
+/* --- Support Call Trigger --- */
 .support-call-trigger {
     position: fixed;
     bottom: 30px;
@@ -68,6 +68,7 @@
     100% { transform: scale(1.6); opacity: 0; }
 }
 
+/* --- Support Call Modal --- */
 .support-call-modal {
     position: fixed;
     bottom: 105px;
@@ -101,6 +102,7 @@
     height: 100%;
 }
 
+/* --- Video Feed Section --- */
 .video-feed-section {
     flex: 1.5;
     background: #000;
@@ -302,6 +304,7 @@
     opacity: 1;
 }
 
+/* --- Chat Sidebar Section --- */
 .chat-sidebar-section {
     flex: 1;
     display: flex;
@@ -486,6 +489,7 @@
     50% { transform: translateY(-5px); }
 }
 
+/* --- Chat Input Area --- */
 .chat-input-area {
     padding: 20px;
     border-top: 1px solid rgba(255,255,255,0.1);
@@ -738,6 +742,7 @@
     font-weight: 500;
 }
 
+/* --- Responsive Styles --- */
 @media (max-width: 1024px) {
     .video-viewport .support-call-trigger.active {
         width: 48px;

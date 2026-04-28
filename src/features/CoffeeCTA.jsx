@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { motion, useScroll, useTransform, useSpring } from 'framer-motion';
 import catInMug from '../assets/cat-in-mug.png';
-import '../styles/CoffeeCTA.css';
+import './CoffeeCTA.css';
 import { playHoverSound, playSelectSound } from '../utils/sound';
 import { scrollToSection } from '../utils/scroll';
 import { Icon } from '@iconify/react';
@@ -31,7 +31,7 @@ const CoffeeCTA = () => {
     };
 
     return (
-        <section className="coffee-cta-section" ref={containerRef}>
+        <section className="coffee-cta-section" ref={containerRef} style={{ position: 'relative' }}>
             <div className="coffee-cta-background">
                 <div className="coffee-cta-glow" />
             </div>

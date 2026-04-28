@@ -1,3 +1,4 @@
+/* --- Main Item Container --- */
 .project-item {
   width: 100%;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
@@ -37,6 +38,7 @@
   align-items: start;
   padding: 3.5rem var(--layout-margin);
 }
+/* --- Left Column - Meta & Image --- */
 .project-col-left {
   display: flex;
   flex-direction: column;
@@ -118,6 +120,7 @@
   pointer-events: none;
   transform: translate(-50%, -50%) scale(0.8);
 }
+/* --- Right Column - Content --- */
 .project-col-right {
   display: flex;
   flex-direction: column;
@@ -218,6 +221,7 @@
 .project-cta:hover::before {
   transform: translateY(0);
 }
+/* --- Responsive Styles --- */
 @media (max-width: 1024px) {
   .project-item-inner {
     grid-template-columns: 1fr;

@@ -1,9 +1,9 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
 import { Icon } from '@iconify/react';
-import { processData } from '../data/process';
+import { processData } from '../services/process';
 import { playProcessChat, playProcessDesign, playProcessBuild, playProcessLaunch } from '../utils/sound';
-import '../styles/Process.css';
+import './Process.css';
 
 const Process = () => {
     const [activeStep, setActiveStep] = useState(-1);
@@ -66,7 +66,7 @@ const Process = () => {
                     I keep things simple and transparent. No corporate jargon or hidden steps. Just a clear path from our first call to your new website being live.
                 </p>
             </div>
-            <div className="process-container" ref={containerRef}>
+            <div className="process-container" ref={containerRef} style={{ position: 'relative' }}>
                 <div 
                     className="process-progress-line"
                     style={{ 

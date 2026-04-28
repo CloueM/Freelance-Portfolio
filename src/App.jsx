@@ -1,14 +1,15 @@
 import React, { useState, useEffect, Suspense } from 'react'
+import { useDynamicTitle } from './hooks/useDynamicTitle';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
-import Home from './components/Home'
-import Footer from './components/Footer'
-import ScrollCTA from './components/ScrollCTA'
-import SoundControl from './components/SoundControl'
-import SplashScreen from './components/SplashScreen'
-import SmoothFollower from './components/SmoothFollower'
+import Home from './features/Home'
+import Footer from './layout/Footer'
+import ScrollCTA from './layout/ScrollCTA'
+import SoundControl from './layout/SoundControl'
+import SplashScreen from './layout/SplashScreen'
+import SmoothFollower from './layout/SmoothFollower'
 import Aurora from './components/Aurora'
-import SmoothScroll from './components/SmoothScroll'
+import SmoothScroll from './layout/SmoothScroll'
 import './App.css'
 
 function App() {
@@ -27,20 +28,7 @@ function App() {
     }
   }, [hasStarted]);
 
-  // Dynamic Tab Title Effect
-  useEffect(() => {
-    const originalTitle = "Kurowii | Creative Developer";
-    const handleVisibilityChange = () => {
-      if (document.hidden) {
-        document.title = "Come back! 👋";
-      } else {
-        document.title = originalTitle;
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleVisibilityChange);
-    return () => document.removeEventListener("visibilitychange", handleVisibilityChange);
-  }, []);
+  useDynamicTitle("Kurowii | Creative Developer", "Come back! 👋");
 
   const handleIntroEnd = () => {
     setBgMusicStarted(true);

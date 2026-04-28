@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import assistantPersonas from '../data/support.js';
+import assistantPersonas from '../services/support.js';
 import { playHoverSound, playSelectSound, playSupportRepliedSfx, playCallEndedSfx, playTypingSfx, stopTypingSfx } from '../utils/sound';
-import '../styles/FAQ.css';
+import { useDraggablePip } from '../hooks/useDraggablePip';
+import './FAQ.css';
 
 const FAQ = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -23,14 +24,12 @@ const FAQ = () => {
     const [interactedInSession, setInteractedInSession] = useState(new Set());
     const [glowQuestion, setGlowQuestion] = useState(null);
 
-    const [pipPos, setPipPos] = useState({ x: 0, y: 0 });
-    const [isDragging, setIsDragging] = useState(false);
-    const dragStartRef = useRef({ x: 0, y: 0 });
+    const messagesAreaRef = useRef(null);
+    const { pipPos, setPipPos, isDragging, dragHandlers } = useDraggablePip(messagesAreaRef);
 
     const [consecutiveInactivityCount, setConsecutiveInactivityCount] = useState(0);
 
     const messagesEndRef = useRef(null);
-    const messagesAreaRef = useRef(null);
     const questionOptionsRef = useRef(null);
     const zenitsuTimerRef = useRef(null);
     const greetingTimerRef = useRef(null);
@@ -62,44 +61,7 @@ const FAQ = () => {
         scrollToBottom();
     }, [messages, isTyping, isAutoPassing]);
 
-    useEffect(() => {
-        const handleMouseMove = (e) => {
-            if (!isDragging || window.innerWidth > 768) return;
-            
-            let rawX = e.clientX - dragStartRef.current.x;
-            let rawY = e.clientY - dragStartRef.current.y;
 
-            const areaRect = messagesAreaRef.current.getBoundingClientRect();
-            const pipWidth = 120;
-            const pipHeight = 160;
-
-            const initialX = window.innerWidth - 15 - pipWidth;
-            const initialY = 80;
-
-            const currentViewportX = initialX + rawX;
-            const currentViewportY = initialY + rawY;
-
-            const clampedViewportX = Math.max(areaRect.left, Math.min(currentViewportX, areaRect.right - pipWidth));
-            const clampedViewportY = Math.max(areaRect.top, Math.min(currentViewportY, areaRect.bottom - pipHeight));
-
-            setPipPos({
-                x: clampedViewportX - initialX,
-                y: clampedViewportY - initialY
-            });
-        };
-
-        const handleMouseUp = () => setIsDragging(false);
-
-        if (isDragging) {
-            window.addEventListener('mousemove', handleMouseMove);
-            window.addEventListener('mouseup', handleMouseUp);
-        }
-
-        return () => {
-            window.removeEventListener('mousemove', handleMouseMove);
-            window.removeEventListener('mouseup', handleMouseUp);
-        };
-    }, [isDragging]);
 
     useEffect(() => {
         return () => {
@@ -111,45 +73,7 @@ const FAQ = () => {
         };
     }, []);
 
-    const handleTouchStart = (e) => {
-        if (!messagesAreaRef.current) return;
-        const touch = e.touches[0];
-        setIsDragging(true);
-        dragStartRef.current = {
-            x: touch.clientX - pipPos.x,
-            y: touch.clientY - pipPos.y
-        };
-    };
 
-    const handleTouchMove = (e) => {
-        if (!isDragging || !messagesAreaRef.current) return;
-        const touch = e.touches[0];
-        
-        let rawX = touch.clientX - dragStartRef.current.x;
-        let rawY = touch.clientY - dragStartRef.current.y;
-
-        const areaRect = messagesAreaRef.current.getBoundingClientRect();
-        const pipWidth = 120;
-        const pipHeight = 160;
-
-        const initialX = window.innerWidth - 15 - pipWidth;
-        const initialY = 80;
-
-        const currentViewportX = initialX + rawX;
-        const currentViewportY = initialY + rawY;
-
-        const clampedViewportX = Math.max(areaRect.left, Math.min(currentViewportX, areaRect.right - pipWidth));
-        const clampedViewportY = Math.max(areaRect.top, Math.min(currentViewportY, areaRect.bottom - pipHeight));
-
-        setPipPos({
-            x: clampedViewportX - initialX,
-            y: clampedViewportY - initialY
-        });
-    };
-
-    const handleTouchEnd = () => {
-        setIsDragging(false);
-    };
 
     const calculateDelay = (text, personaId) => {
         let multiplier = 30; 
@@ -465,9 +389,7 @@ const FAQ = () => {
                         className={`video-feed-section ${isDragging ? 'dragging' : ''} ${showVideoControls ? 'controls-active' : ''}`}
                         onClick={handleVideoClick}
                         style={{ transform: window.innerWidth <= 768 ? `translate(${pipPos.x}px, ${pipPos.y}px)` : 'none' }}
-                        onTouchStart={handleTouchStart}
-                        onTouchMove={handleTouchMove}
-                        onTouchEnd={handleTouchEnd}
+                        {...dragHandlers}
                     >
                         <div className="video-viewport">
                             {isEndingCall ? (
@@ -533,7 +455,7 @@ const FAQ = () => {
                             </div>
                         </div>
 
-                        <div className="chat-messages-area" ref={messagesAreaRef}>
+                        <div className="chat-messages-area" ref={messagesAreaRef} data-lenis-prevent>
                             {messages.map((msg) => {
                                 const msgPersona = assistantPersonas.find(p => p.id === msg.personaId);
                                 return (
@@ -574,7 +496,7 @@ const FAQ = () => {
                             <p className="input-label">
                                 {activePersona.id === 'zenitsu' ? 'System restricted...' : isAutoPassing ? 'Rerouting...' : 'Select a question:'}
                             </p>
-                            <div className="question-options" ref={questionOptionsRef}>
+                            <div className="question-options" ref={questionOptionsRef} data-lenis-prevent>
                                 {(activePersona.questions || []).map((q) => (
                                     <button
                                         key={q.id}

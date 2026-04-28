@@ -21,7 +21,9 @@ const playSound = (url, volume = 1) => {
     try {
         const audio = new Audio(url);
         audio.volume = volume;
-        audio.play().catch(err => console.warn("Audio playback failed:", err));
+        audio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Audio playback failed:", err);
+    });
         return audio;
     } catch (err) {
         console.error("Audio creation failed:", err);
@@ -38,7 +40,9 @@ const playSound = (url, volume = 1) => {
 
 export const playSelectSound = () => {
     selectAudio.currentTime = 0;
-    selectAudio.play().catch(err => console.warn("Select playback failed:", err));
+    selectAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Select playback failed:", err);
+    });
 };
 export const playStartSound = () => playSound(startSoundUrl);
 
@@ -83,13 +87,17 @@ export const playNavClickSwoosh = () => {
     playSelectSound();
     // Attempt to skip potential tiny silence at start of compressed audio
     swooshAudio.currentTime = 0.03;
-    swooshAudio.play().catch(err => console.warn("Swoosh playback failed:", err));
+    swooshAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Swoosh playback failed:", err);
+    });
 };
 
 // Map SFX
 export const playMapSwoosh = () => {
     swooshMapAudio.currentTime = 0;
-    swooshMapAudio.play().catch(err => console.warn("Map swoosh failed:", err));
+    swooshMapAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Map swoosh failed:", err);
+    });
 };
 
 // Process SFX
@@ -104,17 +112,23 @@ export const playSupportRepliedSfx = () => {
     const now = Date.now();
     if (now - lastSupportReplyTime > 1000) {
         supportRepliedAudio.currentTime = 0;
-        supportRepliedAudio.play().catch(err => console.warn("Support replied playback failed:", err));
+        supportRepliedAudio.play().catch(err => {
+            if (err.name !== 'NotAllowedError') console.warn("Support replied playback failed:", err);
+        });
         lastSupportReplyTime = now;
     }
 };
 export const playCallEndedSfx = () => {
     callEndedAudio.currentTime = 0;
-    callEndedAudio.play().catch(err => console.warn("Call ended playback failed:", err));
+    callEndedAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Call ended playback failed:", err);
+    });
 };
 export const playTypingSfx = () => {
     typingAudio.currentTime = 0;
-    typingAudio.play().catch(err => console.warn("Typing playback failed:", err));
+    typingAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Typing playback failed:", err);
+    });
 };
 export const stopTypingSfx = () => {
     typingAudio.pause();
@@ -124,29 +138,39 @@ export const stopTypingSfx = () => {
 // Service SFX
 export const playServiceHoverSfx = () => {
     serviceHoverAudio.currentTime = 0.02; // skip tiny compression silence
-    serviceHoverAudio.play().catch(err => console.warn("Service hover playback failed:", err));
+    serviceHoverAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Service hover playback failed:", err);
+    });
 };
 
 // General SFX
 export const playHoverSound = () => {
     hoverAudio.currentTime = 0;
-    hoverAudio.play().catch(err => console.warn("Hover playback failed:", err));
+    hoverAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Hover playback failed:", err);
+    });
 };
 export const playButtonHoverSfx = () => {
     buttonHoverAudio.currentTime = 0;
-    buttonHoverAudio.play().catch(err => console.warn("Button hover playback failed:", err));
+    buttonHoverAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Button hover playback failed:", err);
+    });
 };
 export const playUnhoverSound = () => { };
 export const playPulseSfx = () => {
     // Adjusted to 0.05s as a middle ground for perfect sync
     pulseAudio.currentTime = 0.11;
-    pulseAudio.play().catch(err => console.warn("Pulse playback failed:", err));
+    pulseAudio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Pulse playback failed:", err);
+    });
 };
 
 export const playIntroSound = (onEnded) => {
     const audio = new Audio(introSoundUrl);
     audio.volume = 0;
-    audio.play().catch(err => console.warn("Audio playback failed:", err));
+    audio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Audio playback failed:", err);
+    });
 
     if (onEnded) {
         audio.onended = onEnded;

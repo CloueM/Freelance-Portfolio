@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import '../styles/ProjectItem.css';
+import './ProjectItem.css';
 import { playSelectSound, playButtonHoverSfx } from '../utils/sound';
 
 const ProjectItem = ({ project, index }) => {

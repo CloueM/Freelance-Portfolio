@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import '../styles/Hero.css';
+import './Hero.css';
 import Logo from '../assets/favicon.svg';
 import { playNavHoverAbout, playNavHoverProjects, playNavHoverServices, playNavClickSwoosh, playSelectSound, playHoverSound } from '../utils/sound';
 import { scrollToSection } from '../utils/scroll';

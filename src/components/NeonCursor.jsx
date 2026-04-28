@@ -1,7 +1,7 @@
 'use client';
 import React, { useState, useEffect, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import '../styles/NeonCursor.css';
+import './NeonCursor.css';
 
 const NeonCursor = () => {
   const [position, setPosition] = useState({ x: 0, y: 0 });

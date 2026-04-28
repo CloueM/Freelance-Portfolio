@@ -1,3 +1,4 @@
+/* --- Main Container --- */
 .sound-control-container {
   position: fixed;
   bottom: 30px;
@@ -19,6 +20,7 @@
   transform: translateY(0);
 }
 
+/* --- Volume Slider --- */
 .volume-slider-wrapper {
   width: 40px;
   height: 120px;
@@ -83,6 +85,7 @@
   box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
 
+/* --- Sound Button --- */
 .sound-btn {
   display: flex;
   align-items: center;
@@ -116,6 +119,7 @@
 .sound-btn.scrolled:hover {
   background-color: rgba(255, 255, 255, 0.15);
 }
+/* --- Responsive --- */
 @media (max-width: 768px) {
   .sound-control-container {
     bottom: 20px;

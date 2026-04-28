@@ -1,3 +1,4 @@
+/* --- Main Container --- */
 .neon-cursor-container {
   position: fixed;
   top: 0;
@@ -8,6 +9,7 @@
   z-index: 999999; 
 }
 
+/* --- Cursor Elements --- */
 .cursor-main {
   position: absolute;
   top: 0;
@@ -42,6 +44,7 @@
   pointer-events: none;
 }
 
+/* --- Responsive Styles --- */
 @media (max-width: 768px) {
   .neon-cursor-container {
     display: none;

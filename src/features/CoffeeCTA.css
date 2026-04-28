@@ -1,3 +1,4 @@
+/* --- CTA Main Section --- */
 .coffee-cta-section {
     position: relative;
     width: 100%;
@@ -49,6 +50,7 @@
     }
 }
 
+/* --- CTA Visuals --- */
 .coffee-cta-visual {
     display: flex;
     justify-content: center;
@@ -78,6 +80,7 @@
     filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
 }
 
+/* --- CTA Text Content --- */
 .coffee-cta-text {
     display: flex;
     flex-direction: column;
@@ -115,6 +118,7 @@
     margin: 0 0 3rem;
 }
 
+/* --- CTA Footer & Button --- */
 .coffee-cta-footer {
     display: flex;
     justify-content: flex-start;
@@ -151,6 +155,7 @@
     transform: translateX(5px);
 }
 
+/* --- Responsive Styles --- */
 @media (max-width: 991px) {
     .coffee-cta-section {
         padding: 8rem var(--layout-margin);

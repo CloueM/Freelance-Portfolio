@@ -1,3 +1,4 @@
+/* --- Main Footer Container --- */
 .site-footer {
     position: relative;
     width: 100%;
@@ -80,6 +81,7 @@
     100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
 }
 
+/* --- Footer Navigation --- */
 .footer-nav {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -134,6 +136,7 @@
     letter-spacing: 0.05em;
 }
 
+/* --- Footer Middle Section --- */
 .footer-middle {
     margin: 2rem 0;
     width: 100%;
@@ -154,6 +157,7 @@
     pointer-events: none;
 }
 
+/* --- Footer Bottom Area --- */
 .footer-bottom {
     display: flex;
     flex-direction: column;

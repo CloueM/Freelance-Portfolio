@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { playHoverSound, playSelectSound } from '../utils/sound';
-import '../styles/ScrollCTA.css';
+import './ScrollCTA.css';
 
 const ScrollCTA = () => {
   const [isScrolled, setIsScrolled] = useState(false);

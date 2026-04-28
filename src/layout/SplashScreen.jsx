@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import Logo from '../assets/favicon.svg';
 import { playHoverSound, playSelectSound, playStartSound, playIntroSound } from '../utils/sound';
-import '../styles/SplashScreen.css';
+import './SplashScreen.css';
 
 const lon2tile = (lon, zoom) => Math.floor((lon + 180) / 360 * Math.pow(2, zoom));
 

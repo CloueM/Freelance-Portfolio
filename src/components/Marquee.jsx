@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/Marquee.css';
+import './Marquee.css';
 
 const Marquee = () => {
     const text = "Let's talk · Let's collaborate · Say hello · Work with me · ";

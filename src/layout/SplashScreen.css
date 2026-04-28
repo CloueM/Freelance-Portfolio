@@ -1,3 +1,4 @@
+/* --- Main Splash Container --- */
 .splash-screen {
     position: fixed;
     top: 0;
@@ -21,6 +22,7 @@
     height: 100px;
     animation: pulse 2s infinite ease-in-out;
 }
+/* --- Start Button --- */
 .start-button {
     background-color: rgba(255, 255, 255, 0.03);
     color: var(--color-off-white);
@@ -45,6 +47,7 @@
     box-shadow: 0 10px 40px rgba(255, 255, 255, 0.15);
     border-color: var(--color-off-white);
 }
+/* --- Animations --- */
 @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
@@ -59,6 +62,7 @@
     visibility: hidden;
     transition: opacity 1s ease-out, visibility 1s ease-out;
 }
+/* --- Unified Splash Content --- */
 .splash-content-unified {
     display: flex;
     flex-direction: column;
@@ -126,6 +130,7 @@
     opacity: 1;
     transform: scale(1);
 }
+/* --- Bottom Area & Sound Reminder --- */
 .bottom-area {
     display: flex;
     flex-direction: column;
@@ -166,6 +171,7 @@
     50% { opacity: 0.8; }
 }
 
+/* --- Loading Elements --- */
 .loading-circle-bg {
     fill: none;
     stroke: rgba(255, 255, 255, 0.03);
