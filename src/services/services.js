@@ -1,7 +1,7 @@
 export const servicesIntro = {
   heading: "SERVICES",
   description:
-    "I build high-end websites for businesses that need to scale. Whether you’re selling products or booking clients, I make sure your site looks high-end and actually gets results.",
+    "I build custom websites tailored to your business. Whether you need a simple landing page or a site you can update yourself without touching code, I'll make sure it looks exactly how you want and performs perfectly.",
 };
 
 export const websiteTypes = [

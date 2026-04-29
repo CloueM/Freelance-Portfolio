@@ -258,7 +258,7 @@ const AboutMe = () => {
                         <div className="about-intro-block">
                             <h2 className="about-greeting">Hi, I'm Cloue.</h2>
                             <p className="about-main-desc">
-                                I'm a designer and developer based in Vancouver. I build websites that look great and actually work. My focus is on making sure your site is fast, easy to use, and helps your business get noticed.
+                                I'm a designer and developer based in Vancouver. I build websites that don't just look great—they actually work. Whether you need a simple static site or a custom build you can maintain yourself, I can bring whatever design you have in mind to life.
                             </p>
                         </div>
 
