@@ -418,76 +418,7 @@
     opacity: 0.7;
     margin: 0;
 }
-.why-cta-wrapper {
-    margin-top: 1rem;
-    align-self: flex-start;
-}
-/* --- Interactive Slide Track --- */
-.slide-track {
-    width: 280px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    -webkit-backdrop-filter: blur(10px);
-    backdrop-filter: blur(10px);
-    border-radius: 100px;
-    display: flex;
-    align-items: center;
-    padding: 5px;
-    position: relative;
-    overflow: hidden;
-    cursor: default;
-    transition: all 0.3s ease;
-}
-.slide-track:hover {
-    background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.15);
-}
-.slide-handle {
-    width: 50px;
-    height: 50px;
-    background: var(--color-off-white);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: grab;
-    z-index: 2;
-    box-shadow: 0 4px 15px rgba(255, 255, 255, 0.1);
-    transition: box-shadow 0.3s ease;
-}
-.slide-handle:active {
-    cursor: grabbing;
-    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-}
-.slide-handle .iconify {
-    color: var(--color-charcoal);
-    font-size: 1.2rem;
-}
-.slide-text {
-    position: absolute;
-    width: 100%;
-    text-align: center;
-    left: 0;
-    font-family: var(--font-primary);
-    font-size: 0.75rem;
-    font-weight: var(--font-weight-h2);
-    letter-spacing: 0.25em;
-    color: rgba(255, 255, 255, 0.3);
-    pointer-events: none;
-    text-transform: uppercase;
-    user-select: none;
-    padding-left: 30px;
-    background: linear-gradient(90deg, rgba(255,255,255,0.3) 0%, rgba(255,255,255,0.8) 50%, rgba(255,255,255,0.3) 100%);
-    background-size: 200% 100%;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    animation: shimmer 3s infinite linear;
-}
-@keyframes shimmer {
-    0% { background-position: 150% 0; }
-    100% { background-position: -150% 0; }
-}
+
 .services-why-right {
     display: flex;
     flex-direction: column;

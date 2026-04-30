@@ -4,7 +4,7 @@ import Hero from './Hero';
 import ProjectItem from '../components/ProjectItem';
 const Services = React.lazy(() => import('./Services'));
 const AboutMe = React.lazy(() => import('./AboutMe'));
-const FAQ = React.lazy(() => import('./FAQ'));
+
 import CoffeeCTA from './CoffeeCTA';
 import Marquee from '../components/Marquee';
 import PageTransition from '../layout/PageTransition';
@@ -69,9 +69,7 @@ const Home = () => {
                 </div>
 
                 <Marquee />
-                <React.Suspense fallback={null}>
-                    <FAQ />
-                </React.Suspense>
+
 
                 <CoffeeCTA />
             </main>

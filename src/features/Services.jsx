@@ -9,7 +9,7 @@ import './Services.css';
 const Services = () => {
     const cardRefs = useRef([]);
     const includeRefs = useRef([]);
-    const [isSlid, setIsSlid] = useState(false);
+
     const controls = useAnimation();
     const [visibleCards, setVisibleCards] = useState(new Set());
     const [visibleIncludes, setVisibleIncludes] = useState(new Set());
@@ -231,44 +231,7 @@ const Services = () => {
                     <p className="why-body">
                         I work directly with you from the first call to the final launch to ensure your website looks professional and functions perfectly. I prioritize clear communication and personal dedication to every detail of your project. I use modern frameworks to build efficient sites while focusing my energy on the custom features that actually grow your business.
                     </p>
-                    <div className="why-cta-wrapper">
-                        <div className="slide-track" style={{ background: isSlid ? 'rgba(255, 255, 255, 0.1)' : '' }}>
-                            <motion.div 
-                                className="slide-handle"
-                                drag="x"
-                                dragConstraints={{ left: 0, right: 215 }}
-                                dragElastic={0}
-                                onDragStart={playSelectSound}
-                                onDragEnd={(e, info) => {
-                                    if (info.offset.x >= 180) {
-                                        setIsSlid(true);
-                                        controls.start({ x: 215 });
 
-                                        window.dispatchEvent(new CustomEvent('open-support-call'));
-                                        
-                                        setTimeout(() => {
-                                            setIsSlid(false);
-                                            controls.start({ x: 0 });
-                                        }, 3000);
-                                    } else {
-                                        setTimeout(() => {
-                                            controls.start({ x: 0 });
-                                        }, 1000);
-                                    }
-                                }}
-                                animate={controls}
-                                initial={{ x: 0 }}
-                                transition={{ type: "spring", stiffness: 300, damping: 30 }}
-                                whileHover={{ scale: 1.05 }}
-                                whileTap={{ scale: 0.95 }}
-                            >
-                                <Icon icon={isSlid ? "ph:check-bold" : "ph:arrow-right-bold"} />
-                            </motion.div>
-                            <span className="slide-text">
-                                {isSlid ? "CONNECTING..." : "SLIDE TO TALK"}
-                            </span>
-                        </div>
-                    </div>
                 </div>
                 <div className="services-why-right">
                     {whyMe.map((item) => (
