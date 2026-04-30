@@ -1,19 +1,13 @@
-/* --- Services Main Section --- */
 .services-section {
     padding: 8rem 0;
-    background: var(--color-background);
+    background-color: var(--color-charcoal);
+    background-image: 
+        radial-gradient(circle at 20% 30%, rgba(255, 255, 255, 0.03) 0%, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(255, 255, 255, 0.02) 0%, transparent 40%),
+        radial-gradient(circle at 50% 10%, rgba(255, 255, 255, 0.015) 0%, transparent 30%);
     color: var(--color-off-white);
     position: relative;
     overflow: hidden;
-}
-.services-section::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    background-image: url("/noise.svg");
-    opacity: 0.03;
-    pointer-events: none;
-    z-index: 1;
 }
 /* --- Services Intro & Header --- */
 .services-intro {
@@ -91,13 +85,13 @@
 }
 .service-card {
     padding: 3.5rem var(--layout-margin);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(255, 255, 255, 0.02);
-    -webkit-backdrop-filter: blur(12px);
-    backdrop-filter: blur(12px);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.005) 100%);
+    -webkit-backdrop-filter: blur(24px);
+    backdrop-filter: blur(24px);
+    border: 1px solid rgba(255, 255, 255, 0.06);
     transition:
-        background 2s cubic-bezier(0.16, 1, 0.3, 1),
+        background 1.2s cubic-bezier(0.16, 1, 0.3, 1),
+        border-color 0.6s cubic-bezier(0.16, 1, 0.3, 1),
         opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
         transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
@@ -141,7 +135,8 @@
     transform: translateY(0);
 }
 .service-card:hover {
-    background: rgba(255, 255, 255, 0.025);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.02) 100%);
+    border-color: rgba(255, 255, 255, 0.12);
 }
 .service-card-top {
     display: flex;
@@ -301,13 +296,13 @@
 }
 .include-card {
     padding: 3rem 2.5rem;
-    background: rgba(255, 255, 255, 0.015);
-    -webkit-backdrop-filter: blur(8px);
-    backdrop-filter: blur(8px);
-    border-right: 1px solid rgba(255, 255, 255, 0.05);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.02) 0%, rgba(255, 255, 255, 0.005) 100%);
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
     transition: 
-        background 0.3s ease,
+        background 0.4s ease,
+        border-color 0.4s ease,
         opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
         transform 1s cubic-bezier(0.16, 1, 0.3, 1);
     opacity: 0;
@@ -515,10 +510,7 @@
         grid-template-columns: 1fr;
     }
     .service-card {
-        border-right: none;
-    }
-    .service-card:nth-child(even) {
-        border-right: none;
+        border-right: 1px solid rgba(255, 255, 255, 0.06);
     }
     .services-includes-grid {
         grid-template-columns: 1fr;
