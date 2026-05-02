@@ -27,6 +27,18 @@ Options -Indexes
     </IfModule>
 </Files>
 
+# Map /api/chat to /api/chat.php
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^api/chat$ api/chat.php [L]
+</IfModule>
+
+# Block access to .env files
+<Files ".env">
+    Order allow,deny
+    Deny from all
+</Files>
+
 # Prevent viewing of sensitive files
 <FilesMatch "^(package|package-lock|vite\.config|ai\.txt|README\.md|\.env.*)$">
     <IfModule mod_authz_core.c>
