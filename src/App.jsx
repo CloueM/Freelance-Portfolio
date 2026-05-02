@@ -8,6 +8,7 @@ import SoundControl from './layout/SoundControl'
 import SplashScreen from './layout/SplashScreen'
 import SmoothFollower from './layout/SmoothFollower'
 import SmoothScroll from './layout/SmoothScroll'
+import Assistant from './features/Assistant/Assistant'
 
 const Home = React.lazy(() => import('./features/Home'));
 const Aurora = React.lazy(() => import('./components/Aurora'));
@@ -105,6 +106,7 @@ function App() {
                 </AnimatePresence>
                 <Footer />
                 <SoundControl isVisible={bgMusicStarted} />
+                <Assistant />
               </motion.div>
               <ScrollCTA />
             </Suspense>

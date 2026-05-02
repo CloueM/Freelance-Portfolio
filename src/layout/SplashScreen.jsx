@@ -106,7 +106,7 @@ const SplashScreen = ({ onStart, onIntroEnd, onAudioInit }) => {
                         />
                     </svg>
 
-                    <img src="/favicon.svg" alt="Cloue Mac Logo" fetchpriority="high" className={`splash-logo-morph ${isLoaded ? 'visible' : ''}`} />
+                    <img src="/favicon.svg" alt="Cloue Mac Logo" fetchPriority="high" className={`splash-logo-morph ${isLoaded ? 'visible' : ''}`} />
                 </div>
 
                 <div className={`bottom-area ${isLoaded ? 'fade-in-slow' : ''}`}>

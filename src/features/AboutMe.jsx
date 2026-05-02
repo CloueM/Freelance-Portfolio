@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
+import { Icon } from '@iconify/react';
 import { playHoverSound, playSelectSound, playPulseSfx, playUnhoverSound, playMapSwoosh } from '../utils/sound';
 import './AboutMe.css';
 
@@ -59,7 +60,7 @@ const LOCATIONS = {
         zoom: 10
     },
     philippines: {
-        pos: [16.3301, 121.1710],
+        pos: [16.6599, 121.3686],
         tz: 'Asia/Manila',
         label: 'Nueva Vizcaya, PH',
         sub: 'Origins',
@@ -156,10 +157,23 @@ const DynamicMapController = ({ activeLoc }) => {
     return null;
 };
 
+const getWeatherDisplay = (code) => {
+    if (code === 0) return { icon: 'lucide:sun', text: 'Clear' };
+    if (code === 1 || code === 2 || code === 3) return { icon: 'lucide:cloud', text: 'Cloudy' };
+    if (code === 45 || code === 48) return { icon: 'lucide:cloud-fog', text: 'Fog' };
+    if (code >= 51 && code <= 55) return { icon: 'lucide:cloud-drizzle', text: 'Drizzle' };
+    if (code >= 61 && code <= 65) return { icon: 'lucide:cloud-rain', text: 'Rain' };
+    if (code >= 71 && code <= 75) return { icon: 'lucide:snowflake', text: 'Snow' };
+    if (code >= 80 && code <= 82) return { icon: 'lucide:cloud-rain', text: 'Showers' };
+    if (code >= 95) return { icon: 'lucide:cloud-lightning', text: 'Storm' };
+    return { icon: 'lucide:thermometer', text: 'Unknown' };
+};
+
 const AboutMe = () => {
     const [activeLoc, setActiveLoc] = useState('vancouver');
     const [time, setTime] = useState(new Date());
     const [sectionVisible, setSectionVisible] = useState(false);
+    const [weatherData, setWeatherData] = useState({ temp: null, display: null, loading: true });
     const sectionRef = React.useRef(null);
     const pulseIntervalRef = React.useRef(null);
 
@@ -181,6 +195,28 @@ const AboutMe = () => {
             if (sectionRef.current) observer.unobserve(sectionRef.current);
         };
     }, []);
+
+    useEffect(() => {
+        const fetchWeather = async () => {
+            setWeatherData(prev => ({ ...prev, loading: true }));
+            try {
+                const { pos } = LOCATIONS[activeLoc];
+                const res = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${pos[0]}&longitude=${pos[1]}&current=temperature_2m,weather_code&timezone=auto`);
+                const data = await res.json();
+                
+                if (data && data.current) {
+                    const temp = Math.round(data.current.temperature_2m);
+                    const display = getWeatherDisplay(data.current.weather_code);
+                    setWeatherData({ temp, display, loading: false });
+                }
+            } catch (error) {
+                console.error("Failed to fetch weather:", error);
+                setWeatherData({ temp: null, display: null, loading: false });
+            }
+        };
+
+        fetchWeather();
+    }, [activeLoc]);
 
     
     useEffect(() => {
@@ -350,7 +386,19 @@ const AboutMe = () => {
                         <div className="location-meta">
                             <span className="location-tag">{LOCATIONS[activeLoc].label}</span>
                             <span className="location-subtext">{LOCATIONS[activeLoc].sub}</span>
-                            <span className="time-date-label">{localDayDate}</span>
+                            <div className="time-date-weather">
+                                <span className="time-date-label">{localDayDate}</span>
+                                <span className="weather-divider">•</span>
+                                <span className="weather-label">
+                                    {weatherData.loading ? 'Loading...' : 
+                                     weatherData.temp !== null ? (
+                                         <>
+                                            <Icon icon={weatherData.display.icon} width="14" height="14" />
+                                            {weatherData.temp}°C, {weatherData.display.text}
+                                         </>
+                                     ) : 'Weather unavailable'}
+                                </span>
+                            </div>
                         </div>
                     </div>
                 </div>

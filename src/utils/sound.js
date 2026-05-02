@@ -13,6 +13,11 @@ import processUrl from '../assets/sounds/process-sfx.mp3';
 import serviceHoverUrl from '../assets/sounds/service-hover.mp3';
 import buttonHoverUrl from '../assets/sounds/button-hover.mp3';
 
+// Assistant SFX
+import messageSentUrl from '../assets/sounds/message-sent.mp3';
+import callUrl from '../assets/sounds/call.mp3';
+import callEndedUrl from '../assets/sounds/call-ended.mp3';
+
 // Helper to play sounds safely
 const playSound = (url, volume = 1) => {
     try {
@@ -45,7 +50,7 @@ export const playSelectSound = () => {
 export const playStartSound = () => playSound(startSoundUrl);
 
 // Pre-instantiate signature sounds lazily to reduce latency
-let _swooshAudio, _swooshMapAudio, _pulseAudio, _hoverAudio, _selectAudio, _serviceHoverAudio, _buttonHoverAudio;
+let _swooshAudio, _swooshMapAudio, _pulseAudio, _hoverAudio, _selectAudio, _serviceHoverAudio, _buttonHoverAudio, _messageSentAudio, _callAudio, _callEndedAudio;
 
 const getSwooshAudio = () => { if (!_swooshAudio) { _swooshAudio = new Audio(swooshUrl); _swooshAudio.volume = 0.6; } return _swooshAudio; };
 const getSwooshMapAudio = () => { if (!_swooshMapAudio) { _swooshMapAudio = new Audio(swooshMapUrl); _swooshMapAudio.volume = 0.6; } return _swooshMapAudio; };
@@ -54,10 +59,13 @@ const getHoverAudio = () => { if (!_hoverAudio) { _hoverAudio = new Audio(hoverU
 const getSelectAudio = () => { if (!_selectAudio) { _selectAudio = new Audio(selectUrl); _selectAudio.volume = 0.6; } return _selectAudio; };
 const getServiceHoverAudio = () => { if (!_serviceHoverAudio) { _serviceHoverAudio = new Audio(serviceHoverUrl); _serviceHoverAudio.volume = 0.4; } return _serviceHoverAudio; };
 const getButtonHoverAudio = () => { if (!_buttonHoverAudio) { _buttonHoverAudio = new Audio(buttonHoverUrl); _buttonHoverAudio.volume = 0.5; } return _buttonHoverAudio; };
+const getMessageSentAudio = () => { if (!_messageSentAudio) { _messageSentAudio = new Audio(messageSentUrl); _messageSentAudio.volume = 0.6; } return _messageSentAudio; };
+const getCallAudio = () => { if (!_callAudio) { _callAudio = new Audio(callUrl); _callAudio.volume = 0.7; } return _callAudio; };
+const getCallEndedAudio = () => { if (!_callEndedAudio) { _callEndedAudio = new Audio(callEndedUrl); _callEndedAudio.volume = 0.5; } return _callEndedAudio; };
 
 export const initSounds = () => {
     getSwooshAudio(); getSwooshMapAudio(); getPulseAudio(); getHoverAudio(); getSelectAudio();
-    getServiceHoverAudio(); getButtonHoverAudio();
+    getServiceHoverAudio(); getButtonHoverAudio(); getMessageSentAudio(); getCallAudio(); getCallEndedAudio();
 };
 
 if (typeof window !== 'undefined') {
@@ -159,3 +167,28 @@ export const playIntroSound = (onEnded) => {
 
 export const playLoadingSound = () => { };
 export const stopLoadingSound = () => { };
+
+// Assistant exports
+export const playMessageSent = () => {
+    const audio = getMessageSentAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Message sent SFX failed:", err);
+    });
+};
+
+export const playCall = () => {
+    const audio = getCallAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Call SFX failed:", err);
+    });
+};
+
+export const playCallEnded = () => {
+    const audio = getCallEndedAudio();
+    audio.currentTime = 0;
+    audio.play().catch(err => {
+        if (err.name !== 'NotAllowedError') console.warn("Call ended SFX failed:", err);
+    });
+};

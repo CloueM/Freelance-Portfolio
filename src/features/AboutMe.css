@@ -349,12 +349,33 @@
     letter-spacing: 0.05em;
 }
 
-.time-date-label {
+.time-date-weather {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
     font-size: 0.65rem;
     font-weight: 500;
     color: var(--color-neutral);
-    opacity: 0.6;
-    margin-top: 0.2rem;
+    opacity: 0.7;
+    font-family: var(--font-primary);
+}
+
+.time-date-label {
+    /* Inherits from parent, just keeping class for structure */
+}
+
+.weather-divider {
+    opacity: 0.4;
+    font-size: 0.5rem;
+}
+
+.weather-label {
+    display: flex;
+    align-items: center;
+    gap: 0.3rem;
+    color: var(--color-off-white);
+    opacity: 0.9;
 }
 
 /* --- Map Tiles & Custom Marker --- */
