@@ -9,7 +9,6 @@
     -webkit-backdrop-filter: blur(60px);
     color: var(--color-off-white);
     position: relative;
-    overflow: hidden;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 /* --- Services Intro & Header --- */
@@ -268,108 +267,193 @@
 .footer-cta-primary:hover .iconify {
     transform: translateX(5px);
 }
-/* --- Services Includes Section --- */
-.services-includes-wrapper {
-    padding: 6rem var(--layout-margin) 5rem;
-    border-top: 1px solid rgba(255, 255, 255, 0.07);
+/* --- Services Includes Section (Sticky Parallax) --- */
+.services-parallax-wrapper {
+    padding: 0 var(--layout-margin);
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.01), transparent);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10rem;
+    position: relative;
+    align-items: start;
+    min-height: 100vh;
 }
-.services-includes-header {
-    margin-bottom: 3.5rem;
+
+.sticky-left-content {
+    position: sticky;
+    top: 0;
+    height: 100vh;
     display: flex;
     flex-direction: column;
+    justify-content: center;
+    gap: 2.5rem;
+    z-index: 10;
+}
+
+.foundation-badge {
+    display: flex;
+    align-items: center;
     gap: 0.75rem;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 0.6rem 1.2rem;
+    border-radius: 100px;
+    width: fit-content;
 }
-.includes-eyebrow {
-    font-family: var(--font-primary);
-    font-size: var(--text-caption);
-    font-weight: var(--font-weight-h3);
-    color: var(--color-neutral);
-    text-transform: uppercase;
-    letter-spacing: 0.12em;
-    opacity: 0.7;
+
+.badge-dot {
+    width: 6px;
+    height: 6px;
+    background: #fff;
+    border-radius: 50%;
+    box-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
 }
-.includes-title {
+
+.badge-text {
     font-family: var(--font-primary);
-    font-size: clamp(1.4rem, 3vw, 2.4rem);
-    font-weight: var(--font-weight-h1);
+    font-size: 0.65rem;
+    font-weight: 800;
+    letter-spacing: 0.15em;
     color: var(--color-off-white);
+}
+
+.sticky-title {
+    font-family: var(--font-primary);
+    font-size: clamp(3rem, 5.5vw, 6rem);
+    font-weight: 400;
+    line-height: 0.95;
     margin: 0;
-    letter-spacing: -0.02em;
-    line-height: 1.1;
+    letter-spacing: -0.05em;
+    color: var(--color-off-white);
 }
-.services-includes-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.5px;
-    perspective: 1200px;
+
+.title-italic {
+    font-style: italic;
+    font-weight: 300;
+    opacity: 0.6;
 }
-.include-card {
-    padding: 3rem 2.5rem;
-    background: rgba(10, 10, 10, 0.25);
-    -webkit-backdrop-filter: blur(40px);
-    backdrop-filter: blur(40px);
-    border: 1px solid rgba(255, 255, 255, 0.08);
-    transition: 
-        background 0.4s ease,
-        border-color 0.4s ease,
-        opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1),
-        transform 1s cubic-bezier(0.16, 1, 0.3, 1);
-    opacity: 0;
-    transform: rotateX(-30deg) translateY(60px) scale(0.9);
-    transform-origin: top;
+
+.scroll-explore {
+    margin-top: 4rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.explore-text {
+    font-family: var(--font-primary);
+    font-size: 0.65rem;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    color: var(--color-neutral);
+    opacity: 0.4;
+}
+
+.explore-line-wrapper {
     position: relative;
-    overflow: hidden;
-    backface-visibility: hidden;
+    width: 180px;
+    height: 1px;
 }
-.include-card:hover {
-    background: rgba(20, 20, 20, 0.5);
-    border-color: rgba(255, 255, 255, 0.15);
+
+.explore-line-bg {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.1);
 }
-.include-card.visible {
-    opacity: 1;
-    transform: rotateX(0deg) translateY(0) scale(1);
-}
-.include-card::before {
-    content: '';
+
+.explore-line-progress {
     position: absolute;
-    inset: 0;
-    background: radial-gradient(
-        400px circle at var(--mouse-x) var(--mouse-y),
-        rgba(255, 255, 255, 0.04),
-        transparent 40%
-    );
-    opacity: 0;
-    transition: opacity 0.5s ease;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: var(--color-off-white);
+    transform-origin: left;
+}
+
+/* Right Content */
+.scrolling-right-content {
+    display: flex;
+    flex-direction: column;
+    gap: 14rem;
+    padding: 12rem 0;
+    position: relative;
+}
+
+.chapter-item {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    opacity: 0.3;
+    transition: opacity 0.8s ease;
+}
+
+.chapter-item.active {
+    opacity: 1;
+}
+
+.chapter-header {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.chapter-line {
+    width: 1px;
+    height: 30px;
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.chapter-label {
+    font-family: var(--font-primary);
+    font-size: 0.7rem;
+    font-weight: 800;
+    letter-spacing: 0.2em;
+    color: var(--color-neutral);
+}
+
+.chapter-title {
+    font-family: var(--font-primary);
+    font-size: clamp(2.5rem, 4.5vw, 5rem);
+    font-weight: 500;
+    line-height: 1;
+    margin: 0;
+    letter-spacing: -0.03em;
+    color: var(--color-off-white);
+}
+
+.chapter-desc-container {
+    position: relative;
+    padding: 3.5rem 3rem;
+    background: rgba(255, 255, 255, 0.02);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    max-width: 580px;
+    -webkit-backdrop-filter: blur(10px);
+    backdrop-filter: blur(10px);
+}
+
+.chapter-desc {
+    font-family: var(--font-primary);
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--color-off-white);
+    opacity: 0.75;
+    margin: 0;
+}
+
+.corner-accent {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
     pointer-events: none;
 }
-.include-card:hover::before {
-    opacity: 1;
-}
-.include-number {
-    font-family: var(--font-primary);
-    font-size: 0.75rem;
-    color: var(--color-dust);
-    margin-bottom: 1.5rem;
-    display: block;
-    opacity: 0.5;
-    letter-spacing: 0.1em;
-}
-.include-title {
-    font-family: var(--font-primary);
-    font-size: 1.1rem;
-    font-weight: var(--font-weight-h1);
-    color: var(--color-off-white);
-    margin: 0 0 0.75rem;
-    letter-spacing: -0.02em;
-}
-.include-desc {
-    font-family: var(--font-primary);
-    font-size: 0.95rem;
-    color: var(--color-off-white);
-    line-height: 1.6;
-    opacity: 0.45;
-    margin: 0;
-}
+
+.corner-accent.top-left { top: -1px; left: -1px; border-right: none; border-bottom: none; }
+.corner-accent.top-right { top: -1px; right: -1px; border-left: none; border-bottom: none; }
+.corner-accent.bottom-left { bottom: -1px; left: -1px; border-right: none; border-top: none; }
+.corner-accent.bottom-right { bottom: -1px; right: -1px; border-left: none; border-top: none; }
 /* --- Why Choose Us Section --- */
 .services-why-wrapper {
     padding: 8rem var(--layout-margin);
@@ -491,8 +575,30 @@
 }
 
 @media (max-width: 1024px) {
-    .services-includes-grid {
-        grid-template-columns: repeat(2, 1fr);
+    .services-parallax-wrapper {
+        grid-template-columns: 1fr;
+        gap: 6rem;
+    }
+    .sticky-left-content {
+        position: relative;
+        top: 0;
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        background: transparent;
+        -webkit-backdrop-filter: none;
+        backdrop-filter: none;
+        padding: 0;
+        z-index: 10;
+        margin-bottom: 2rem;
+    }
+    .scrolling-right-content {
+        gap: 6rem;
+        padding: 4rem 0 8rem;
+    }
+    .chapter-item {
+        opacity: 1;
     }
     .services-why-wrapper {
         grid-template-columns: 1fr;
@@ -602,11 +708,11 @@
     .service-row {
         padding: 3rem var(--layout-margin);
     }
-    .services-includes-wrapper {
+    .services-parallax-wrapper {
         padding: 4rem var(--layout-margin) 3.5rem;
     }
-    .include-card {
-        padding: 2rem 1.5rem;
+    .chapter-desc-container {
+        padding: 2.5rem 1.5rem;
     }
     .footer-cta-title {
         font-size: 1.6rem;

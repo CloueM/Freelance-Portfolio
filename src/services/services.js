@@ -51,39 +51,39 @@ export const websiteTypes = [
 export const whatsIncluded = [
   {
     id: 1,
-    title: "Modern tech stack",
+    title: "Modern by design",
     description:
-      "I use lightweight frameworks to build fast without the bloat. You get clean code and a custom design that actually fits your brand.",
+      "Every website is built with a clean, lightweight foundation that keeps the experience fast, refined, and free from unnecessary complexity. The result is a custom site that feels current, intentional, and built around your brand.",
   },
   {
     id: 2,
-    title: "Built to perform",
+    title: "Built for performance",
     description:
-      "I build exactly what your business needs. Whether it's a custom booking system or a full shop, everything is designed to work perfectly.",
+      "From structure to functionality, every detail is designed to work smoothly and reliably. Whether your site needs a streamlined customer journey or more advanced features, the build is shaped around what your business actually needs.",
   },
   {
     id: 3,
-    title: "Pixel perfect on any device",
+    title: "Responsive everywhere",
     description:
-      "Your site will look great on everything from an iPhone to a 5K monitor. No broken layouts, just a smooth experience for your users.",
+      "Your website is designed to feel polished across every screen size — from mobile to desktop. No awkward spacing, no broken layouts, just a consistent and seamless experience throughout.",
   },
   {
     id: 4,
-    title: "Fast and easy to find",
+    title: "Fast and discoverable",
     description:
-      "I prioritize performance so your site loads instantly. I also handle the SEO basics to make sure people can actually find you online.",
+      "Performance matters. I build with speed in mind and implement essential SEO foundations so your website is not only smooth to use, but positioned to be found.",
   },
   {
     id: 5,
-    title: "Secure by default",
+    title: "Secure from the start",
     description:
-      "Security is a priority from the start. I set up SSL and secure contact forms so your data and your customers stay safe.",
+      "Security is considered from the beginning, not added later. From SSL to form protection and clean setup practices, your website is built with trust and reliability in mind.",
   },
   {
     id: 6,
-    title: "Total support",
+    title: "Handled from start to launch",
     description:
-      "I handle the technical side from start to finish. Domains, hosting, and the final launch. You get a live site without the headache.",
+      "I manage the technical side with care — from setup to deployment — so the entire process feels clear, smooth, and professionally executed.",
   },
 ];
 

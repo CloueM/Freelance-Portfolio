@@ -1,5 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
-import { motion, useMotionValue, useTransform, useAnimation, useSpring, AnimatePresence } from 'framer-motion';
+import { motion, useMotionValue, useTransform, useAnimation, useSpring, AnimatePresence, useScroll } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../services/services';
 import Process from './Process';
@@ -9,6 +9,18 @@ import './Services.css';
 const Services = () => {
     const cardRefs = useRef([]);
     const includeRefs = useRef([]);
+    const parallaxRef = useRef(null);
+
+    const { scrollYProgress } = useScroll({
+        target: parallaxRef,
+        offset: ["start start", "end end"]
+    });
+
+    const progressScaleX = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     const controls = useAnimation();
     const [visibleCards, setVisibleCards] = useState(new Set());
@@ -187,36 +199,58 @@ const Services = () => {
                 </div>
             </div>
 
-            <div className="services-includes-wrapper">
-                <div className="services-includes-header">
-                    <span className="includes-eyebrow">Service details</span>
-                    <h3 className="includes-title">Standards I bring to every single project.</h3>
+            <div className="services-parallax-wrapper" ref={parallaxRef}>
+                <div className="sticky-left-content">
+                    <div className="foundation-badge">
+                        <span className="badge-dot"></span>
+                        <span className="badge-text">THE FOUNDATION</span>
+                    </div>
+                    
+                    <h2 className="sticky-title">
+                        Built to a <br />
+                        <span className="title-italic">higher standard</span>
+                    </h2>
+
+                    <div className="scroll-explore">
+                        <span className="explore-text">SCROLL TO EXPLORE</span>
+                        <div className="explore-line-wrapper">
+                            <motion.div 
+                                className="explore-line-progress"
+                                style={{ scaleX: progressScaleX, originX: 0 }}
+                            />
+                            <div className="explore-line-bg" />
+                        </div>
+                    </div>
                 </div>
-                <div className="services-includes-grid">
+
+                <div className="scrolling-right-content">
                     {whatsIncluded.map((item, idx) => {
-                        const handleMouseMove = (e) => {
-                            const card = e.currentTarget;
-                            const rect = card.getBoundingClientRect();
-                            const x = e.clientX - rect.left;
-                            const y = e.clientY - rect.top;
-
-                            card.style.setProperty('--mouse-x', `${x}px`);
-                            card.style.setProperty('--mouse-y', `${y}px`);
-                        };
-
                         return (
-                            <div
+                            <motion.div
                                 key={item.id}
-                                className={`include-card ${visibleIncludes.has(idx) ? 'visible' : ''}`}
+                                className={`chapter-item ${visibleIncludes.has(idx) ? 'active' : ''}`}
                                 ref={(el) => (includeRefs.current[idx] = el)}
                                 data-idx={idx}
-                                onMouseMove={handleMouseMove}
-                                style={{ transitionDelay: `${idx * 60}ms` }}
+                                initial={{ opacity: 0, y: 50 }}
+                                whileInView={{ opacity: 1, y: 0 }}
+                                viewport={{ once: false, margin: "-20%" }}
+                                transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                             >
-                                <span className="include-number">0{item.id}</span>
-                                <h4 className="include-title">{item.title}</h4>
-                                <p className="include-desc">{item.description}</p>
-                            </div>
+                                <div className="chapter-header">
+                                    <div className="chapter-line"></div>
+                                    <span className="chapter-label">CHAPTER — 0{item.id}</span>
+                                </div>
+                                
+                                <h3 className="chapter-title">{item.title}</h3>
+                                
+                                <div className="chapter-desc-container">
+                                    <div className="corner-accent top-left"></div>
+                                    <div className="corner-accent top-right"></div>
+                                    <div className="corner-accent bottom-left"></div>
+                                    <div className="corner-accent bottom-right"></div>
+                                    <p className="chapter-desc">{item.description}</p>
+                                </div>
+                            </motion.div>
                         );
                     })}
                 </div>
