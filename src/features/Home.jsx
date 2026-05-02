@@ -41,14 +41,9 @@ const Home = () => {
             <main style={{ position: 'relative' }}>
                 <Hero />
 
-                <div id="home-services" className="home-services-section">
-                    <div className="section-header" data-index="01">
-                        <h2>Services</h2>
-                    </div>
-                    <React.Suspense fallback={<div style={{ height: '500px' }} />}>
-                        <Services />
-                    </React.Suspense>
-                </div>
+                <React.Suspense fallback={<div style={{ height: '500px' }} />}>
+                    <Services />
+                </React.Suspense>
 
                 <div id="home-projects" className="home-projects-section">
                     <div className="section-header" data-index="02">

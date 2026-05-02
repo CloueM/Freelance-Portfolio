@@ -1,74 +1,50 @@
 export const servicesIntro = {
   heading: "SERVICES",
+  title: "Websites designed to look sharp, work smoothly, and help your business grow.",
   description:
-    "I build custom websites tailored to your business. Whether you need a simple landing page or a site you can update yourself without touching code, I'll make sure it looks exactly how you want and performs perfectly.",
+    "I create modern, high-performing websites for brands and businesses that want more than just a nice design. Every project is built to be clear, responsive, and focused on user experience, trust, and results.",
 };
 
 export const websiteTypes = [
   {
     id: 1,
-    category: "E-Commerce Stores",
-    icon: "mdi:shopping-outline",
-    tagline: "Stop scrolling. Start selling.",
-    description:
-      "I build online shops that actually convert. From fresh starts to total upgrades, I handle the technical heavy lifting so you can focus on sales.",
-    examples: [
-      "Clothing & Apparel Brands",
-      "Handmade & Artisan Shops",
-      "Beauty & Skincare Products",
-      "Electronics & Gadgets",
-      "Food & Specialty Goods",
-      "Digital Products & Downloads",
-    ],
+    category: "Website Design",
+    benefit: "Built to strengthen your online presence",
+    description: "Custom website design tailored to your brand, goals, and audience. I design clean, modern interfaces that help your business stand out and make a strong first impression.",
+    bestFor: "businesses that need a professional online presence",
+    includes: ["page layouts", "visual direction", "mobile-friendly design", "polished user experience"],
   },
   {
     id: 2,
-    category: "Service Businesses",
-    icon: "mdi:handshake-outline",
-    tagline: "Turn your visits into bookings.",
-    description:
-      "I build sites for local pros and freelancers. I make it dead simple for clients to find you, see your work, and book you on the spot.",
-    examples: [
-      "Home Care & Cleaning Services",
-      "Car Detailing & Auto Services",
-      "Landscaping & Lawn Care",
-      "Personal Training & Fitness",
-      "Photography & Videography",
-      "Salon, Barbershop & Spa",
-      "Tutoring & Coaching",
-      "Plumbing, Electrical & Trades",
-    ],
+    category: "Website Development",
+    benefit: "Designed to improve usability and trust",
+    description: "Fast, responsive websites built to function smoothly across all devices. I turn designs into fully working websites with clean structure, strong performance, and attention to detail.",
+    bestFor: "businesses that want a reliable, custom-built website",
+    includes: ["front-end development", "responsive build", "smooth interactions", "optimized performance"],
   },
   {
     id: 3,
-    category: "Restaurants & Food",
-    icon: "mdi:silverware-fork-knife",
-    tagline: "From screen to table.",
-    description:
-      "I build websites that make people hungry. From local cafes to catering services, I’ll make sure your menu looks as good as it tastes.",
-    examples: [
-      "Restaurants & Cafes",
-      "Bakeries & Dessert Shops",
-      "Food Trucks & Pop ups",
-      "Catering Services",
-      "Meal Prep & Delivery Brands",
-    ],
+    category: "Ecommerce Websites",
+    benefit: "Structured to help turn visitors into enquiries",
+    description: "Online stores designed to make shopping simple and enjoyable. From product pages to checkout flow, I build ecommerce experiences that feel professional and easy to use.",
+    bestFor: "brands selling products online",
+    includes: ["store setup", "product page design", "mobile optimization", "conversion-focused user flow"],
   },
   {
     id: 4,
-    category: "Professional & Personal Brands",
-    icon: "mdi:briefcase-outline",
-    tagline: "Your reputation, digitized.",
-    description:
-      "I build portfolios for creators and professionals. I’ll make sure you stand out and look like the expert you are from the second they land on your page.",
-    examples: [
-      "Freelancer Portfolios",
-      "Consultants & Coaches",
-      "Real Estate Agents",
-      "Lawyers & Legal Services",
-      "Accountants & Financial Advisors",
-      "Healthcare Professionals",
-    ],
+    category: "Landing Pages",
+    benefit: "Created for a smooth mobile experience",
+    description: "Focused pages built to support campaigns, promotions, or lead generation. Whether you’re running ads, launching an offer, or collecting enquiries, I create pages designed to drive action.",
+    bestFor: "promotions, ad campaigns, product launches, and lead capture",
+    includes: ["clear messaging layout", "call-to-action design", "mobile responsiveness", "conversion-focused structure"],
+  },
+  {
+    id: 5,
+    category: "Website Refresh / Redesign",
+    benefit: "Modernized for better performance and results",
+    description: "Improve an outdated website with a cleaner look, better usability, and stronger structure. If your current site feels old, unclear, or underwhelming, I can redesign it into something more modern and effective.",
+    bestFor: "businesses with an existing site that needs improvement",
+    includes: ["visual redesign", "layout improvements", "updated styling", "better user flow"],
   },
 ];
 

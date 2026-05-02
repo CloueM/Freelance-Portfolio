@@ -13,32 +13,6 @@ const Services = () => {
     const controls = useAnimation();
     const [visibleCards, setVisibleCards] = useState(new Set());
     const [visibleIncludes, setVisibleIncludes] = useState(new Set());
-    const [activeHighlightKey, setActiveHighlightKey] = useState(null);
-
-    useEffect(() => {
-        const flatExamples = [];
-        websiteTypes.forEach((card, cardIdx) => {
-            card.examples.forEach((_, itemIdx) => {
-                flatExamples.push({ cardIdx, itemIdx });
-            });
-        });
-
-        let currentIdx = 0;
-        const triggerHighlight = () => {
-            if (flatExamples.length === 0) return;
-            
-            const { cardIdx, itemIdx } = flatExamples[currentIdx];
-            const key = `${cardIdx}-${itemIdx}`;
-
-            setActiveHighlightKey(key);
-            currentIdx = (currentIdx + 1) % flatExamples.length;
-        };
-
-        triggerHighlight();
-        const interval = setInterval(triggerHighlight, 4000); 
-
-        return () => clearInterval(interval);
-    }, []);
 
     useEffect(() => {
         const cardObserver = new IntersectionObserver(
@@ -110,82 +84,109 @@ const Services = () => {
         <section className="services-section" id="home-services">
             <div className="services-intro">
                 <div className="services-intro-left">
-                    <p className="services-intro-text">{servicesIntro.description}</p>
+                    <div className="services-eyebrow-wrapper">
+                        <span className="services-eyebrow-line"></span>
+                        <span className="services-eyebrow">{servicesIntro.heading}</span>
+                    </div>
+                    <h2 className="services-intro-title">{servicesIntro.title}</h2>
                 </div>
                 <div className="services-intro-right">
-                    <motion.button 
-                        className="services-process-cta" 
-                        onClick={() => {
-                            playSelectSound();
-                            document.getElementById('services-process').scrollIntoView({ behavior: 'smooth' });
-                        }}
-                        onMouseEnter={playButtonHoverSfx}
-                        onMouseMove={handleMagneticMove}
-                        onMouseLeave={handleMagneticReset}
-                        style={{ x: mouseXSpring, y: mouseYSpring }}
-                        whileHover={{ scale: 1.1 }}
-                        whileTap={{ scale: 0.9 }}
-                    >
-                        <span>SEE MY PROCESS</span>
-                        <Icon icon="ph:arrow-down-light" />
-                    </motion.button>
+                    <div className="services-desc-wrapper">
+                        <p className="services-intro-desc">{servicesIntro.description}</p>
+                    </div>
                 </div>
             </div>
 
-            <div className="services-types-grid">
+            <div className="services-list">
                 {websiteTypes.map((type, idx) => {
                     const handleMouseMove = (e) => {
-                        const card = e.currentTarget;
-                        const rect = card.getBoundingClientRect();
+                        const row = e.currentTarget;
+                        const rect = row.getBoundingClientRect();
                         const x = e.clientX - rect.left;
                         const y = e.clientY - rect.top;
 
-                        card.style.setProperty('--mouse-x', `${x}px`);
-                        card.style.setProperty('--mouse-y', `${y}px`);
+                        row.style.setProperty('--mouse-x', `${x}px`);
+                        row.style.setProperty('--mouse-y', `${y}px`);
                     };
 
                     return (
                         <motion.div
                             key={type.id}
-                            className={`service-card ${visibleCards.has(idx) ? 'visible' : ''}`}
+                            className={`service-row ${visibleCards.has(idx) ? 'visible' : ''}`}
                             ref={(el) => (cardRefs.current[idx] = el)}
                             data-idx={idx}
                             onMouseMove={handleMouseMove}
-                            whileHover={{ 
-                                scale: 1.01,
-                                y: -5,
-                                transition: { duration: 0.3 }
-                            }}
-                            style={{ 
-                                transitionDelay: `${idx * 80}ms`
-                            }}
+                            initial={{ opacity: 0, y: 30 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true, margin: "-10%" }}
+                            transition={{ duration: 0.8, delay: idx * 0.1 }}
                         >
-                            <div className="service-card-top">
-                                <span className="service-number">0{type.id}</span>
+                            <div className="service-row-number">
+                                <span>0{type.id}</span>
                             </div>
-                            <h3 className="service-category">{type.category}</h3>
-                            <p className="service-tagline">{type.tagline}</p>
-                            <p className="service-desc">{type.description}</p>
-                            <ul className="service-examples">
-                                {type.examples.map((ex, i) => {
-                                    const isHighlighted = activeHighlightKey === `${idx}-${i}`;
-                                    return (
-                                        <li 
-                                            key={i} 
-                                            className={`service-example-item ${isHighlighted ? 'highlighted' : ''}`}
-                                        >
-                                            {ex}
-                                            <div className="service-item-glow" />
-                                        </li>
-                                    );
-                                })}
-                            </ul>
+
+                            <div className="service-row-title-area">
+                                <h3 className="service-row-title">{type.category}</h3>
+                                <div className="service-row-benefit">
+                                    <span>{type.benefit}</span>
+                                </div>
+                            </div>
+
+                            <div className="service-row-content-area">
+                                <p className="service-row-desc">{type.description}</p>
+                                
+                                <div className="service-row-details">
+                                    <div className="service-detail-group">
+                                        <span className="detail-label">BEST FOR</span>
+                                        <p className="detail-value">{type.bestFor}</p>
+                                    </div>
+                                    <div className="service-detail-group">
+                                        <span className="detail-label">INCLUDES</span>
+                                        <p className="detail-value">{type.includes.join(', ')}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="service-row-hover-bg" />
                         </motion.div>
                     );
                 })}
             </div>
 
-            {}
+            <div className="services-footer-cta">
+                <div className="footer-cta-container">
+                    <div className="footer-cta-left">
+                        <h2 className="footer-cta-title">Need a website that looks professional and works for your business?</h2>
+                        <p className="footer-cta-desc">Let's create something clean, modern, and built around your goals.</p>
+                    </div>
+                    <div className="footer-cta-right">
+                        <button 
+                            className="footer-cta-primary"
+                            onClick={() => {
+                                playButtonHoverSfx();
+                                const contactSection = document.getElementById('contact');
+                                if (contactSection) {
+                                    contactSection.scrollIntoView({ behavior: 'smooth' });
+                                } else {
+                                    window.dispatchEvent(new CustomEvent('open-assistant'));
+                                }
+                            }}
+                        >
+                            Start a Project
+                            <Icon icon="ph:arrow-right" />
+                        </button>
+                        <button 
+                            className="footer-cta-secondary"
+                            onClick={() => {
+                                playButtonHoverSfx();
+                                window.location.href = "mailto:hello@kurowii.com";
+                            }}
+                        >
+                            Get in Touch
+                        </button>
+                    </div>
+                </div>
+            </div>
+
             <div className="services-includes-wrapper">
                 <div className="services-includes-header">
                     <span className="includes-eyebrow">Service details</span>
@@ -221,7 +222,6 @@ const Services = () => {
                 </div>
             </div>
 
-            {}
             <div className="services-why-wrapper">
                 <div className="services-why-left">
                     <span className="why-eyebrow">Why work with me</span>
@@ -244,7 +244,6 @@ const Services = () => {
                 </div>
             </div>
 
-            {}
             <div id="services-process">
                 <Process />
             </div>

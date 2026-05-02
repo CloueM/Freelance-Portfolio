@@ -56,6 +56,17 @@ const AssistantChat = () => {
     };
   }, [isOpen]);
 
+  useEffect(() => {
+    const handleOpen = () => {
+      if (!isOpen) {
+        playCall();
+        setIsOpen(true);
+      }
+    };
+    window.addEventListener('open-assistant', handleOpen);
+    return () => window.removeEventListener('open-assistant', handleOpen);
+  }, [isOpen]);
+
   const runtime = useGeminiRuntime(executeRecaptchaRef);
 
 
