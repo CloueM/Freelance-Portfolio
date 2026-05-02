@@ -15,24 +15,24 @@ const Aurora = React.lazy(() => import('./components/Aurora'));
 import './App.css'
 
 function App() {
-  const [hasStarted, setHasStarted] = useState(() => {
+  const isBot = () => {
     if (typeof navigator === 'undefined') return false;
     const botPattern = /bot|googlebot|crawler|spider|robot|crawling|perplexity|gptbot|claudebot|oai-searchbot/i;
     return botPattern.test(navigator.userAgent);
-  });
-  const [bgMusicStarted, setBgMusicStarted] = useState(false);
-  const [isLocked, setIsLocked] = useState(false);
+  };
+
+  const [hasStarted, setHasStarted] = useState(isBot);
+  const [bgMusicStarted, setBgMusicStarted] = useState(isBot);
+  const [isLocked, setIsLocked] = useState(!isBot());
   const location = useLocation();
 
   useEffect(() => {
-    if (hasStarted) {
+    if (bgMusicStarted) {
+      setIsLocked(false);
+    } else {
       setIsLocked(true);
-      const timer = setTimeout(() => {
-        setIsLocked(false);
-      }, 10500); // 7.8s delay + 2.5s slow reveal = ~10.3s
-      return () => clearTimeout(timer);
     }
-  }, [hasStarted]);
+  }, [bgMusicStarted]);
 
   useEffect(() => {
 
