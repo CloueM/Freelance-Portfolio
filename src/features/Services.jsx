@@ -236,6 +236,7 @@ const Services = () => {
                                 viewport={{ once: false, margin: "-20%" }}
                                 transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
                             >
+                                <div className="chapter-bg-number">0{item.id}</div>
                                 <div className="chapter-header">
                                     <div className="chapter-line"></div>
                                     <span className="chapter-label">CHAPTER — 0{item.id}</span>

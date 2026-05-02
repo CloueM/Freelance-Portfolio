@@ -269,7 +269,7 @@
 }
 /* --- Services Includes Section (Sticky Parallax) --- */
 .services-parallax-wrapper {
-    padding: 0 var(--layout-margin);
+    padding: 12rem var(--layout-margin);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
     background: linear-gradient(to bottom, transparent, rgba(255, 255, 255, 0.01), transparent);
     display: grid;
@@ -282,8 +282,8 @@
 
 .sticky-left-content {
     position: sticky;
-    top: 0;
-    height: 100vh;
+    top: 6rem;
+    height: calc(100vh - 12rem);
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -387,10 +387,39 @@
     gap: 2.5rem;
     opacity: 0.3;
     transition: opacity 0.8s ease;
+    position: relative;
+    padding-bottom: 8rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.chapter-item:last-child {
+    border-bottom: none;
 }
 
 .chapter-item.active {
     opacity: 1;
+}
+
+.chapter-bg-number {
+    position: absolute;
+    bottom: -16rem;
+    right: -4rem;
+    font-family: var(--font-primary);
+    font-size: 32rem;
+    font-weight: 900;
+    line-height: 1;
+    color: transparent;
+    -webkit-text-stroke: 1px rgba(255, 255, 255, 0.08);
+    opacity: 0;
+    pointer-events: none;
+    z-index: -1;
+    transition: all 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    transform: translateY(40px);
+}
+
+.chapter-item.active .chapter-bg-number {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .chapter-header {
@@ -599,6 +628,16 @@
     }
     .chapter-item {
         opacity: 1;
+        padding-bottom: 6rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    }
+    .chapter-bg-number {
+        font-size: 16rem;
+        bottom: -8rem;
+        right: -2rem;
+        opacity: 0.8;
+        color: transparent;
+        -webkit-text-stroke: 1px rgba(255, 255, 255, 0.05);
     }
     .services-why-wrapper {
         grid-template-columns: 1fr;
