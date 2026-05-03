@@ -1,3 +1,4 @@
+import { useMemo } from "react";
 import { useLocalRuntime } from "@assistant-ui/react";
 import { checkRateLimit, recordMessage } from "./rateLimiter";
 import { sanitizeInput } from "./sanitize";
@@ -6,7 +7,7 @@ import { checkDomain } from "./domainGuard";
 const API_URL = import.meta.env.VITE_API_URL || "/api/chat";
 
 export const useGeminiRuntime = (executeRecaptchaRef) => {
-  return useLocalRuntime({
+  const options = useMemo(() => ({
     run: async function* ({ messages, abortSignal }) {
       try {
         checkDomain();
@@ -83,5 +84,7 @@ export const useGeminiRuntime = (executeRecaptchaRef) => {
         };
       }
     },
-  });
+  }), [executeRecaptchaRef]);
+
+  return useLocalRuntime(options);
 };

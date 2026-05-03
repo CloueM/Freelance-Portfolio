@@ -199,6 +199,7 @@
   overflow: hidden;
   height: 100%;
   position: relative;
+  pointer-events: auto !important;
 }
 
 .assistant-window .aui-thread-viewport {
@@ -257,7 +258,8 @@
     0 -10px 40px rgba(0, 0, 0, 0.4),
     inset 0 1px 0 rgba(255, 255, 255, 0.05);
   position: relative;
-  pointer-events: auto;
+  pointer-events: auto !important;
+  z-index: 10;
   flex-shrink: 0;
   padding-top: 0.5rem;
 }
@@ -464,6 +466,7 @@
   box-shadow: 
     0 8px 32px rgba(0, 0, 0, 0.2),
     inset 0 1px 0 rgba(255, 255, 255, 0.05) !important;
+  touch-action: manipulation;
 }
 
 .assistant-window .aui-composer-root:focus-within {
@@ -478,19 +481,31 @@
   transform: translateY(-2px);
 }
 
+@media (max-width: 768px) {
+  .assistant-window .aui-composer-root:focus-within {
+    transform: none !important;
+  }
+}
+
 .assistant-window .aui-composer-input {
   color: var(--color-off-white) !important;
   background: transparent !important;
   font-size: 0.95rem !important;
-  padding: 12px 12px 8px 12px !important;
-  line-height: 1.4 !important;
+  padding: 10px 12px !important;
+  line-height: 1.5 !important;
   resize: none !important;
   overflow-y: auto !important;
   scrollbar-width: none !important;
   -ms-overflow-style: none !important;
   field-sizing: content;
   max-height: 160px;
+  min-height: 44px;
   flex: 1 !important;
+  touch-action: manipulation !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  pointer-events: auto !important;
+  cursor: text !important;
 }
 
 .assistant-window .aui-composer-input::-webkit-scrollbar {
@@ -514,6 +529,9 @@
   flex-shrink: 0 !important;
   opacity: 0.8;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1) !important;
+  pointer-events: auto !important;
+  cursor: pointer !important;
+  z-index: 100 !important;
 }
 
 .assistant-window .aui-composer-send:hover:not(:disabled) {
@@ -522,6 +540,10 @@
   color: var(--color-charcoal) !important;
   transform: scale(1.08) translateY(-1px) !important;
   box-shadow: 0 8px 25px rgba(255, 255, 255, 0.25);
+}
+.assistant-window .aui-composer-send:active {
+  transform: scale(0.9) !important;
+  opacity: 1 !important;
 }
 
 .assistant-window .aui-avatar-root {

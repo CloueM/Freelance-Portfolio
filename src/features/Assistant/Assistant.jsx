@@ -32,6 +32,52 @@ class AssistantErrorBoundary extends React.Component {
 
 
 
+const CustomComposer = ({ runtime }) => {
+  const textareaRef = useRef(null);
+  const composer = runtime.thread?.composer;
+  const [state, setState] = useState(composer?.getState() || {});
+
+  useEffect(() => {
+    if (!composer?.subscribe) return;
+    return composer.subscribe(() => {
+      setState(composer.getState());
+    });
+  }, [composer]);
+
+  const handleChange = (e) => {
+    if (composer?.setText) {
+      composer.setText(e.target.value);
+    }
+    
+    // Stable auto-resize
+    const target = e.target;
+    target.style.height = 'auto';
+    const newHeight = Math.min(target.scrollHeight, 160);
+    target.style.height = `${newHeight}px`;
+  };
+
+  if (!composer) return null;
+
+  return (
+    <textarea
+      id="assistant-composer-input"
+      name="message"
+      ref={textareaRef}
+      className="aui-composer-input"
+      placeholder="Write a message..."
+      rows={1}
+      value={state.text || ""}
+      onInput={handleChange}
+      autoComplete="off"
+      autoCorrect="off"
+      spellCheck={false}
+      data-lenis-prevent="true"
+      onPointerDown={(e) => e.stopPropagation()}
+      onKeyDown={(e) => e.stopPropagation()}
+      onKeyUp={(e) => e.stopPropagation()}
+    />
+  );
+};
 
 const AssistantChat = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -68,6 +114,15 @@ const AssistantChat = () => {
   }, [isOpen]);
 
   const runtime = useGeminiRuntime(executeRecaptchaRef);
+  const [composerState, setComposerState] = useState(runtime.thread?.composer?.getState() || {});
+
+  useEffect(() => {
+    const composer = runtime.thread?.composer;
+    if (!composer?.subscribe) return;
+    return composer.subscribe(() => {
+      setComposerState(composer.getState());
+    });
+  }, [runtime.thread?.composer]);
 
 
 
@@ -113,7 +168,7 @@ const AssistantChat = () => {
             </div>
           </div>
           <AssistantRuntimeProvider runtime={runtime}>
-            <div className="assistant-thread-container">
+            <div className="assistant-thread-container" data-lenis-prevent="true">
               <Thread
                 assistantAvatar={{ src: Logo, alt: "Assistant Avatar" }}
                 welcome={{
@@ -122,26 +177,35 @@ const AssistantChat = () => {
                 }}
               />
               
-              <div className="assistant-footer-area">
+              <div className="assistant-footer-area" data-lenis-prevent="true">
                 <div className="assistant-composer-wrapper">
                   <ComposerPrimitive.Root className="aui-composer-root">
-                    <ComposerPrimitive.Input 
-                      className="aui-composer-input" 
-                      placeholder="Write a message..." 
-                      rows={1}
-                      autoFocus
-                      onInput={(e) => {
-                        const target = e.target;
-                        target.style.height = "auto";
-                        target.style.height = `${target.scrollHeight}px`;
-                      }}
-                    />
-                    <ComposerPrimitive.Send 
+                    <CustomComposer runtime={runtime} />
+                    <button 
                       className="aui-composer-send"
-                      onClick={() => playMessageSent()}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (composerState.text?.trim()) {
+                          runtime.thread.composer.send();
+                          playMessageSent();
+                        }
+                      }}
+                      onTouchEnd={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (composerState.text?.trim()) {
+                          runtime.thread.composer.send();
+                          playMessageSent();
+                        }
+                      }}
+                      disabled={composerState.isEmpty}
+                      type="button"
+                      aria-label="Send message"
+                      onPointerDown={(e) => e.stopPropagation()}
                     >
                       <Icon icon="ph:paper-plane-right-fill" width="20" height="20" />
-                    </ComposerPrimitive.Send>
+                    </button>
                   </ComposerPrimitive.Root>
                   <div className="assistant-footer-info">
                     <span className="assistant-disclaimer">AI can make mistakes. Check important info.</span>
