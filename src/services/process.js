@@ -1,26 +1,26 @@
 export const processData = [
     {
         id: "01",
-        title: "Chat",
+        title: "Discovery",
         icon: "ph:chat-circle-light",
-        description: "We discuss your goals, audience, and what the website needs to do."
+        description: "We align on your business objectives, target audience, and feature scope to map out the website architecture."
     },
     {
         id: "02",
-        title: "Design",
+        title: "Interface",
         icon: "ph:paint-brush-light",
-        description: "I create a clear visual direction and structure that fits your brand and user journey."
+        description: "I design responsive layouts and a custom visual identity focused on clarity and user experience."
     },
     {
         id: "03",
-        title: "Build",
+        title: "Development",
         icon: "ph:code-light",
-        description: "I develop the site with performance, responsiveness, and usability in mind."
+        description: "I engineer the site from scratch using lightweight, optimized code for maximum speed and security."
     },
     {
         id: "04",
-        title: "Launch",
+        title: "Deployment",
         icon: "ph:rocket-launch-light",
-        description: "I test, refine, and prepare everything so your site goes live smoothly."
+        description: "I perform comprehensive device testing, SEO setup, and domain configuration to launch seamlessly."
     }
 ];

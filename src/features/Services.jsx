@@ -6,6 +6,62 @@ import Process from './Process';
 import { playSelectSound, playServiceHoverSfx, playButtonHoverSfx } from '../utils/sound';
 import './Services.css';
 
+const AnimatedStat = ({ stat }) => {
+    if (stat === "1:1") {
+        return <span className="why-stat">1:1</span>;
+    }
+
+    const [count, setCount] = useState(0);
+    const [hasIntersected, setHasIntersected] = useState(false);
+    const ref = useRef(null);
+
+    useEffect(() => {
+        const targetValue = parseInt(stat.replace(/[^0-9]/g, ''), 10) || 0;
+        
+        const observer = new IntersectionObserver((entries) => {
+            if (entries[0].isIntersecting) {
+                setHasIntersected(true);
+                let startTime = null;
+                const duration = 1500; // 1.5s
+                
+                const animate = (timestamp) => {
+                    if (!startTime) startTime = timestamp;
+                    const progress = Math.min((timestamp - startTime) / duration, 1);
+                    const ease = progress * (2 - progress);
+                    setCount(Math.floor(ease * targetValue));
+                    
+                    if (progress < 1) {
+                        requestAnimationFrame(animate);
+                    }
+                };
+                
+                requestAnimationFrame(animate);
+                observer.disconnect();
+            }
+        }, { threshold: 0.1 });
+
+        if (ref.current) {
+            observer.observe(ref.current);
+        }
+
+        return () => observer.disconnect();
+    }, [stat]);
+
+    const displayValue = hasIntersected ? count : 0;
+
+    if (stat.includes(':')) {
+        const parts = stat.split(':');
+        return <span ref={ref} className="why-stat">{parts[0]}:{displayValue}</span>;
+    }
+    if (stat.includes('%')) {
+        return <span ref={ref} className="why-stat">{displayValue}%</span>;
+    }
+    if (stat.includes('+')) {
+        return <span ref={ref} className="why-stat">{displayValue}+</span>;
+    }
+    return <span ref={ref} className="why-stat">{displayValue}</span>;
+};
+
 const Services = () => {
     const cardRefs = useRef([]);
     const includeRefs = useRef([]);
@@ -359,33 +415,30 @@ const Services = () => {
             <div className="services-footer-cta">
                 <div className="footer-cta-container">
                     <div className="footer-cta-left">
-                        <h2 className="footer-cta-title">Need a website that looks professional and works for your business?</h2>
-                        <p className="footer-cta-desc">Let's create something clean, modern, and built around your goals.</p>
+                        <h2 className="footer-cta-title">
+                            Let's build something <br />
+                            <span className="title-italic">exceptional</span>.
+                        </h2>
                     </div>
                     <div className="footer-cta-right">
+                        <p className="footer-cta-desc">
+                            I collaborate with forward-thinking businesses to design and develop custom, 
+                            high-performing websites. By combining clean layout design with optimized code, 
+                            I help turn your business goals into a professional online presence built for results.
+                        </p>
                         <button 
-                            className="footer-cta-primary"
-                            onClick={() => {
-                                playButtonHoverSfx();
-                                const contactSection = document.getElementById('contact');
-                                if (contactSection) {
-                                    contactSection.scrollIntoView({ behavior: 'smooth' });
-                                } else {
-                                    window.dispatchEvent(new CustomEvent('open-assistant'));
-                                }
-                            }}
-                        >
-                            Start a Project
-                            <Icon icon="ph:arrow-right" />
-                        </button>
-                        <button 
-                            className="footer-cta-secondary"
+                            className="footer-cta-btn"
                             onClick={() => {
                                 playButtonHoverSfx();
                                 window.location.href = "mailto:hello@kurowii.com";
                             }}
                         >
-                            Get in Touch
+                            <span className="btn-text-wrapper">
+                                <span className="btn-text" data-text="Get in Touch">Get in Touch</span>
+                            </span>
+                            <span className="btn-icon-wrapper">
+                                <Icon icon="ph:arrow-up-right" className="btn-icon" />
+                            </span>
                         </button>
                     </div>
                 </div>
@@ -451,19 +504,25 @@ const Services = () => {
 
             <div className="services-why-wrapper">
                 <div className="services-why-left">
-                    <span className="why-eyebrow">Why work with me</span>
-                    <h3 className="why-title">
-                        I treat your project like it is my own.
-                    </h3>
-                    <p className="why-body">
-                        I work directly with you from the first call to the final launch to ensure your website looks professional and functions perfectly. I prioritize clear communication and personal dedication to every detail of your project. I use modern frameworks to build efficient sites while focusing my energy on the custom features that actually grow your business.
-                    </p>
-
+                    <div className="why-title-block">
+                        <span className="why-eyebrow">Why work with me</span>
+                        <h3 className="why-title">
+                            Dedicated to <br />
+                            <span className="title-italic">standards</span>, <br />
+                            not shortcuts.
+                        </h3>
+                    </div>
+                    <div className="why-body-block">
+                        <p className="why-body">
+                            I work one-on-one with you from initial layout design to deployment, ensuring a high-performance build with zero templates or bloated code. By prioritizing transparent communication and clean engineering, I create tailored digital products that elevate your brand and drive actual business results.
+                        </p>
+                    </div>
                 </div>
+
                 <div className="services-why-right">
                     {whyMe.map((item) => (
                         <div key={item.id} className="why-stat-card">
-                            <span className="why-stat">{item.stat}</span>
+                            <AnimatedStat stat={item.stat} />
                             <span className="why-label">{item.label}</span>
                             <span className="why-note">{item.note}</span>
                         </div>

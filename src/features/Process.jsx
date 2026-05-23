@@ -1,118 +1,134 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { motion, useScroll, useSpring, useMotionValueEvent } from 'framer-motion';
-import { Icon } from '@iconify/react';
+import React, { useRef } from 'react';
+import { motion } from 'framer-motion';
 import { processData } from '../services/process';
 import { playProcessChat, playProcessDesign, playProcessBuild, playProcessLaunch } from '../utils/sound';
 import './Process.css';
 
 const Process = () => {
-    const [activeStep, setActiveStep] = useState(-1);
-    const [lineOffsets, setLineOffsets] = useState({ top: 0, bottom: 0 });
-    const containerRef = useRef(null);
-    const firstRowRef = useRef(null);
-    const lastRowRef = useRef(null);
-    
-    const { scrollYProgress } = useScroll({
-        target: containerRef,
-        offset: ["start 60%", "end 60%"]
-    });
+    const lastPlayedRef = useRef(-1);
 
-    useMotionValueEvent(scrollYProgress, "change", (latest) => {
-        const stepCount = processData.length;
-
-        if (latest <= 0 || latest >= 1) {
-            setActiveStep(-1);
-            return;
+    // Variants for row elements to trigger scroll animations based on row index (custom)
+    const rowVariants = {
+        hidden: { 
+            opacity: 0.15, 
+            y: 40, 
+            filter: "blur(6px)",
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+        },
+        visible: { 
+            opacity: 1, 
+            y: 0, 
+            filter: "blur(0px)",
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
         }
+    };
 
-        const currentStep = Math.min(
-            Math.floor(latest * stepCount),
-            stepCount - 1
-        );
-        
-        if (currentStep !== activeStep) {
-            
-            if (currentStep === 0) playProcessChat();
-            else if (currentStep === 1) playProcessDesign();
-            else if (currentStep === 2) playProcessBuild();
-            else if (currentStep === 3) playProcessLaunch();
+    const titleVariants = {
+        hidden: { 
+            color: "var(--color-neutral)", 
+            x: 0,
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+        },
+        visible: (index) => ({ 
+            color: "var(--color-off-white)", 
+            x: index % 2 === 0 ? 10 : -10, // alternate translation direction
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+        })
+    };
+
+    const ghostVariants = {
+        hidden: { 
+            opacity: 0, 
+            scale: 0.95,
+            x: 0,
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+        },
+        visible: (index) => ({ 
+            opacity: 0.12, 
+            scale: 1,
+            x: index % 2 === 0 ? -15 : 15, // alternate ghost offsets
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] }
+        })
+    };
+
+    const descVariants = {
+        hidden: { 
+            opacity: 0, 
+            y: 15,
+            transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
+        },
+        visible: { 
+            opacity: 0.85, 
+            y: 0,
+            transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1], delay: 0.15 }
         }
-        setActiveStep(currentStep);
-    });
-
-    useEffect(() => {
-        const updateOffsets = () => {
-            if (firstRowRef.current && lastRowRef.current) {
-                setLineOffsets({
-                    top: firstRowRef.current.offsetTop + (firstRowRef.current.offsetHeight / 2),
-                    bottom: (containerRef.current.offsetHeight - (lastRowRef.current.offsetTop + (lastRowRef.current.offsetHeight / 2)))
-                });
-            }
-        };
-
-        updateOffsets();
-        window.addEventListener('resize', updateOffsets);
-        return () => window.removeEventListener('resize', updateOffsets);
-    }, []);
-
-    const scaleYTarget = activeStep === -1 ? 0 : activeStep / (processData.length - 1);
+    };
 
     return (
         <section className="process-wrapper">
             <div className="process-intro">
-                <span className="process-eyebrow">The plan</span>
-                <h2 className="process-intro-title">How I build your site.</h2>
-                <p className="process-intro-desc">
-                    I keep things simple and transparent. No corporate jargon or hidden steps. Just a clear path from our first call to your new website being live.
-                </p>
-            </div>
-            <div className="process-container" ref={containerRef} style={{ position: 'relative' }}>
-                <div 
-                    className="process-progress-line"
-                    style={{ 
-                        top: `${lineOffsets.top}px`, 
-                        bottom: `${lineOffsets.bottom}px` 
-                    }}
-                >
-                    <motion.div 
-                        className="progress-fill" 
-                        animate={{ scaleY: scaleYTarget }}
-                        style={{ transformOrigin: "top" }}
-                        transition={{ type: "spring", stiffness: 80, damping: 20 }}
-                    />
+                <div className="process-intro-left">
+                    <span className="process-eyebrow">The plan</span>
+                    <h2 className="process-intro-title">
+                        A clear process for <br />
+                        <span className="title-italic">exceptional</span> results.
+                    </h2>
                 </div>
+                <div className="process-intro-right">
+                    <p className="process-intro-desc">
+                        I manage your project through a structured, phase-by-phase approach. From our initial creative brief to the final deployment checks, you will have complete clarity on exactly where your project stands.
+                    </p>
+                </div>
+            </div>
+
+            <div className="process-container">
                 {processData.map((step, index) => (
-                    <div
+                    <motion.div
                         key={step.id}
-                        ref={index === 0 ? firstRowRef : (index === processData.length - 1 ? lastRowRef : null)}
-                        className={`process-row ${activeStep >= index ? 'active' : ''}`}
+                        className="process-row"
+                        initial="hidden"
+                        whileInView="visible"
+                        viewport={{ once: false, amount: 0.4, margin: "-10% 0px -10% 0px" }}
+                        variants={rowVariants}
+                        onViewportEnter={() => {
+                            if (lastPlayedRef.current !== index) {
+                                lastPlayedRef.current = index;
+                                if (index === 0) playProcessChat();
+                                else if (index === 1) playProcessDesign();
+                                else if (index === 2) playProcessBuild();
+                                else if (index === 3) playProcessLaunch();
+                            }
+                        }}
                     >
-                        <div 
-                            className={`process-checkpoint ${activeStep >= index ? 'active' : ''}`}
-                        >
-                            <Icon icon={step.icon} />
-                        </div>
                         <div className="process-row-left">
                             <div className="process-title-wrapper">
-                                <h3 className="process-title">{step.title}</h3>
-                                <span className="process-title-ghost">{step.title}</span>
+                                <span className="process-step-num">0{index + 1} //</span>
+                                <motion.h3 
+                                    className="process-title"
+                                    variants={titleVariants}
+                                    custom={index}
+                                >
+                                    {step.title}
+                                </motion.h3>
+                                <motion.span 
+                                    className="process-title-ghost"
+                                    variants={ghostVariants}
+                                    custom={index}
+                                >
+                                    {step.title}
+                                </motion.span>
                             </div>
                         </div>
 
                         <div className="process-row-right">
                             <motion.p 
                                 className="process-description"
-                                initial={{ opacity: 0, y: 10 }}
-                                animate={{ 
-                                    opacity: activeStep >= index ? 1 : 0,
-                                    y: activeStep >= index ? 0 : 10
-                                }}
-                                transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1], delay: 0.1 }}
+                                variants={descVariants}
                             >
                                 {step.description}
                             </motion.p>
                         </div>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </section>
@@ -120,4 +136,3 @@ const Process = () => {
 };
 
 export default Process;
-

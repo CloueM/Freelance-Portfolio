@@ -46,8 +46,11 @@ const Home = () => {
                 </React.Suspense>
 
                 <div id="home-projects" className="home-projects-section">
-                    <div className="section-header" data-index="02">
-                        <h2>Projects</h2>
+                    <div className="section-header">
+                        <h2>Engineered <br /><span className="title-italic">outcomes</span></h2>
+                        <p className="section-header-desc">
+                            A showcase of bespoke web engineering and brand-aligned design. Every project is custom developed from scratch with clean markup, modern interactions, and responsive interfaces built to drive business growth.
+                        </p>
                     </div>
                     {projects.map((project, index) => (
                         <ProjectItem key={project.id} project={project} index={index} />
@@ -55,8 +58,11 @@ const Home = () => {
                 </div>
 
                 <div id="home-about" className="home-about-section">
-                    <div className="section-header" data-index="03">
-                        <h2>About me</h2>
+                    <div className="section-header">
+                        <h2>Behind the <br /><span className="title-italic">screens</span></h2>
+                        <p className="section-header-desc">
+                            A developer and designer focused on clean code, lightweight builds, and seamless interfaces.
+                        </p>
                     </div>
                     <React.Suspense fallback={<div style={{ height: '400px' }} />}>
                         <AboutMe />

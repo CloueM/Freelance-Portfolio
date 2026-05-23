@@ -90,21 +90,21 @@ export const whatsIncluded = [
 export const whyMe = [
   {
     id: 1,
-    stat: "Direct",
-    label: "Access",
-    note: "I am your only contact",
+    stat: "1:1",
+    label: "DIRECT PARTNERSHIP",
+    note: "No agency layers or middle-men. You collaborate directly with the designer and developer handling your project.",
   },
   {
     id: 2,
-    stat: "Full",
-    label: "Dedication",
-    note: "I care about every detail",
+    stat: "100%",
+    label: "CUSTOM DEVELOPMENT",
+    note: "Zero template builders or bloated codebases. Every website is built from scratch for speed and scalability.",
   },
   {
     id: 3,
-    stat: "Modern",
-    label: "Standards",
-    note: "Built for the future",
+    stat: "90+",
+    label: "SPEED & SEO SCORE",
+    note: "Engineered for search visibility and rapid load times, optimizing user retention and conversion rates.",
   },
 ];
 

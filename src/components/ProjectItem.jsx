@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react';
+import { motion, useScroll, useTransform } from 'framer-motion';
 import './ProjectItem.css';
 import { playSelectSound, playButtonHoverSfx } from '../utils/sound';
 
@@ -9,15 +10,23 @@ const ProjectItem = ({ project, index }) => {
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const itemRef = useRef(null);
 
+  const { scrollYProgress } = useScroll({
+    target: itemRef,
+    offset: ["start end", "end start"]
+  });
+
+  const imageY = useTransform(scrollYProgress, [0, 1], ["-8%", "8%"]);
+
   useEffect(() => {
     
     const visibilityObserver = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-        }
+        setIsVisible(entry.isIntersecting);
       },
-      { threshold: 0.08 }
+      { 
+        threshold: 0.08,
+        rootMargin: '-5% 0px -5% 0px'
+      }
     );
 
     const detailsObserver = new IntersectionObserver(
@@ -65,7 +74,8 @@ const ProjectItem = ({ project, index }) => {
       <div className="project-item-shimmer" aria-hidden="true" />
 
       <div className={`project-item-inner ${isDetailsVisible ? 'details-visible' : ''}`}>
-        {}
+        <span className="project-watermark-index">0{(index ?? 0) + 1}</span>
+        {/* Left Column - Meta & Image */}
         <div className="project-col-left">
           <div className="project-meta-row">
             <span className="project-index">0{(index ?? 0) + 1}</span>
@@ -78,20 +88,21 @@ const ProjectItem = ({ project, index }) => {
             onMouseLeave={handleMouseLeave}
             onClick={handleImageClick}
           >
-            <img 
+            <motion.img 
               src={image} 
               alt={title} 
               className="project-img" 
               loading="lazy" 
               decoding="async"
+              style={{ y: imageY }}
             />
             <div className="project-img-overlay" />
 
             {}
             <div className="project-reveal-hint">
               <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24">
-                <path fill="#1E1E1E" d="M19.3 12.74L13 11.8V7.5c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5V17l-2.75-1.1C6.17 15.47 5 16.26 5 17.42c0 .36.17.71.45.94l4.28 3.42c.18.14.4.22.62.22H20c.55 0 1-.45 1-1v-6.28a2 2 0 0 0-1.7-1.98" />
-                <path fill="#1E1E1E" d="M11.5 4C13.98 4 16 6.02 16 8.5h2C18 4.92 15.08 2 11.5 2S5 4.92 5 8.5h2C7 6.02 9.02 4 11.5 4" />
+                <path fill="currentColor" d="M19.3 12.74L13 11.8V7.5c0-.83-.67-1.5-1.5-1.5S10 6.67 10 7.5V17l-2.75-1.1C6.17 15.47 5 16.26 5 17.42c0 .36.17.71.45.94l4.28 3.42c.18.14.4.22.62.22H20c.55 0 1-.45 1-1v-6.28a2 2 0 0 0-1.7-1.98" />
+                <path fill="currentColor" d="M11.5 4C13.98 4 16 6.02 16 8.5h2C18 4.92 15.08 2 11.5 2S5 4.92 5 8.5h2C7 6.02 9.02 4 11.5 4" />
               </svg>
             </div>
           </div>
@@ -99,12 +110,21 @@ const ProjectItem = ({ project, index }) => {
 
         {}
         <div className="project-col-right">
-          <h3 className="project-title">{title}</h3>
+          <div className="project-title-mask">
+            <h3 className="project-title">{title}</h3>
+          </div>
 
           <div className={`project-details-dropdown ${isDetailsVisible ? 'expanded' : ''}`}>
             <div className="project-details-inner">
               <div className="project-scope-label">The details</div>
               <p className="project-description">{description}</p>
+              {tags && tags.length > 0 && (
+                <div className="project-tags">
+                  {tags.map((tag) => (
+                    <span key={tag} className="project-tag">{tag}</span>
+                  ))}
+                </div>
+              )}
             </div>
           </div>
 

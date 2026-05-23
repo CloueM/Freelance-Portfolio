@@ -109,56 +109,70 @@ body {
 
 /* --- Layout Components --- */
 .section-header {
+    position: -webkit-sticky;
     position: sticky;
     top: 0;
     z-index: 100;
-    padding: 6rem var(--layout-margin) 1.5rem;
-    background-color: rgba(10, 10, 10, 0.1);
+    padding: 5.5rem var(--layout-margin) 2rem;
+    background-color: rgba(18, 18, 18, 0.55);
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
     display: flex;
-    justify-content: flex-start;
-    align-items: center;
-    border-bottom: 1px solid transparent;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: flex-end;
+    gap: 6rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .section-header::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    width: 100%;
-    height: 1px;
-    background: linear-gradient(to right, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.02) 100%);
-}
-
-.section-header::before {
-    content: attr(data-index);
-    font-family: var(--font-primary);
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--color-dust);
-    margin-right: 1.5rem;
-    letter-spacing: 0.15em;
-    text-transform: uppercase;
-    opacity: 0.9;
+    display: none;
 }
 
 .section-header h2 {
+    font-family: var(--font-primary);
+    font-size: clamp(2.2rem, 4vw, 3.8rem);
+    font-weight: 500;
     color: var(--color-off-white);
+    line-height: 0.95;
+    letter-spacing: -0.05em;
     margin: 0;
-    font-size: var(--text-h1);
-    text-align: left;
-    line-height: 1;
-    text-transform: uppercase;
-    letter-spacing: -0.02em;
-    position: relative;
-    background: linear-gradient(90deg, #F7F5F2 0%, #DCD6CC 50%, #F7F5F2 100%);
-    background-size: 200% auto;
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    animation: textShimmer 6s linear infinite;
+    padding-left: 0;
+}
+
+.section-header h2 .title-italic {
+    font-style: italic;
+    font-weight: 300;
+    opacity: 0.6;
+}
+
+.section-header-desc {
+    flex: 1;
+    max-width: 580px;
+    font-family: var(--font-primary);
+    font-size: clamp(1rem, 1.3vw, 1.2rem);
+    color: var(--color-neutral);
+    line-height: 1.6;
+    margin: 0;
+}
+
+@media (max-width: 768px) {
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1.5rem;
+        padding: 4rem var(--layout-margin) 2rem;
+    }
+
+    .section-header h2 {
+        padding-left: 0;
+        font-size: clamp(1.8rem, 8vw, 2.5rem);
+    }
+
+    .section-header-desc {
+        max-width: 100%;
+        font-size: 0.95rem;
+    }
 }
 
 /* --- Global Animations --- */
