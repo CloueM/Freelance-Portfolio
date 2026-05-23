@@ -1,5 +1,5 @@
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, useMotionValue, useTransform, useAnimation, useSpring, AnimatePresence, useScroll } from 'framer-motion';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
+import { motion, useMotionValue, useTransform, useAnimation, useSpring, AnimatePresence, useScroll, animate } from 'framer-motion';
 import { Icon } from '@iconify/react';
 import { servicesIntro, websiteTypes, whatsIncluded, whyMe } from '../services/services';
 import Process from './Process';
@@ -10,17 +10,192 @@ const Services = () => {
     const cardRefs = useRef([]);
     const includeRefs = useRef([]);
     const parallaxRef = useRef(null);
+    const scrollContainerRef = useRef(null);
+    const blockOuterRef = useRef(null);
+    const scrollProgress = useMotionValue(0);
+
+    const progressScaleX = useSpring(scrollProgress, {
+        stiffness: 120,
+        damping: 25,
+        restDelta: 0.001
+    });
+
+    const [activeIndex, setActiveIndex] = useState(0);
+    const activeIndexRef = useRef(0);
+    const scrollAnimationRef = useRef(null);
+
+    // Calculate which card is currently centered in the list container viewport
+    const updateActiveCard = useCallback(() => {
+        const list = scrollContainerRef.current;
+        const cards = cardRefs.current;
+        if (!list || !cards || cards.length === 0) return;
+
+        const listRect = list.getBoundingClientRect();
+        const listCenter = listRect.left + listRect.width / 2;
+
+        let closestIndex = 0;
+        let minDistance = Infinity;
+
+        cards.forEach((card, index) => {
+            if (!card) return;
+            const cardRect = card.getBoundingClientRect();
+            const cardCenter = cardRect.left + cardRect.width / 2;
+            const distance = Math.abs(cardCenter - listCenter);
+            if (distance < minDistance) {
+                minDistance = distance;
+                closestIndex = index;
+            }
+        });
+
+        setActiveIndex(closestIndex);
+        activeIndexRef.current = closestIndex;
+    }, []);
+
+    const animateScrollTo = useCallback((targetLeft) => {
+        const list = scrollContainerRef.current;
+        if (!list) return;
+
+        if (scrollAnimationRef.current) {
+            scrollAnimationRef.current.stop();
+        }
+
+        scrollAnimationRef.current = animate(list.scrollLeft, targetLeft, {
+            type: 'spring',
+            stiffness: 90,
+            damping: 20,
+            mass: 0.8,
+            onUpdate: (latest) => {
+                list.scrollLeft = latest;
+            }
+        });
+    }, []);
+
+    const snapScrollTo = useCallback((index) => {
+        const list = scrollContainerRef.current;
+        const cards = cardRefs.current;
+        if (!list || !cards || !cards[index]) return;
+
+        const card = cards[index];
+        const targetLeft = card.offsetLeft - (list.clientWidth - card.clientWidth) / 2;
+
+        if (scrollAnimationRef.current) {
+            scrollAnimationRef.current.stop();
+        }
+        list.scrollLeft = targetLeft;
+    }, []);
+
+    // Sticky step snap scroll using viewport-relative calculations.
+    useEffect(() => {
+        const outer = blockOuterRef.current;
+        const list = scrollContainerRef.current;
+        if (!outer || !list) return;
+
+        const scrollStep = 500; // Scroll distance in pixels required to transition to next card
+        const N = websiteTypes.length;
+        const totalRange = (N - 1) * scrollStep;
+
+        const recalc = () => {
+            if (window.innerWidth <= 768) {
+                outer.style.height = 'auto';
+                return;
+            }
+            outer.style.height = `calc(100vh + ${totalRange}px)`;
+        };
+
+        const onScroll = (isImmediate = false) => {
+            if (window.innerWidth <= 768) return;
+            const rect = outer.getBoundingClientRect();
+            const scrolled = -rect.top;
+
+            let index = 0;
+            if (rect.top <= 0) {
+                index = Math.min(
+                    N - 1,
+                    Math.max(0, Math.round(scrolled / scrollStep))
+                );
+            }
+
+            const progress = Math.max(0, Math.min(scrolled, totalRange)) / totalRange;
+            scrollProgress.set(progress);
+
+            if (index !== activeIndexRef.current || isImmediate) {
+                activeIndexRef.current = index;
+                setActiveIndex(index);
+
+                if (isImmediate) {
+                    snapScrollTo(index);
+                } else {
+                    const cards = cardRefs.current;
+                    const card = cards[index];
+                    if (card) {
+                        const targetLeft = card.offsetLeft - (list.clientWidth - card.clientWidth) / 2;
+                        animateScrollTo(targetLeft);
+                    }
+                }
+            }
+        };
+
+        // Initialize positions
+        const initRafId = requestAnimationFrame(() => {
+            recalc();
+            onScroll(true);
+        });
+
+        const ro = new ResizeObserver(() => {
+            recalc();
+            onScroll(true);
+        });
+        ro.observe(list);
+
+        const handleResize = () => {
+            recalc();
+            onScroll(true);
+        };
+
+        const handleWindowScroll = () => {
+            onScroll(false);
+        };
+
+        window.addEventListener('resize', handleResize);
+        window.addEventListener('scroll', handleWindowScroll, { passive: true });
+
+        return () => {
+            cancelAnimationFrame(initRafId);
+            ro.disconnect();
+            window.removeEventListener('resize', handleResize);
+            window.removeEventListener('scroll', handleWindowScroll);
+            if (scrollAnimationRef.current) {
+                scrollAnimationRef.current.stop();
+            }
+        };
+    }, [scrollProgress, animateScrollTo, snapScrollTo]);
+
+    const handleListScroll = () => {
+        if (window.innerWidth <= 768) {
+            const list = scrollContainerRef.current;
+            if (list) {
+                const horizontalRange = list.scrollWidth - list.clientWidth;
+                if (horizontalRange > 0) {
+                    scrollProgress.set(list.scrollLeft / horizontalRange);
+                }
+                updateActiveCard();
+            }
+        }
+    };
 
     const { scrollYProgress } = useScroll({
         target: parallaxRef,
         offset: ["start start", "end end"]
     });
 
-    const progressScaleX = useSpring(scrollYProgress, {
+    const progressScaleX_vertical = useSpring(scrollYProgress, {
         stiffness: 100,
         damping: 30,
         restDelta: 0.001
     });
+
+    // alias for use in vertical parallax section
+    const parallelProgressScaleX = progressScaleX_vertical;
 
     const controls = useAnimation();
     const [visibleCards, setVisibleCards] = useState(new Set());
@@ -94,22 +269,37 @@ const Services = () => {
 
     return (
         <section className="services-section" id="home-services">
-            <div className="services-intro">
-                <div className="services-intro-left">
-                    <div className="services-eyebrow-wrapper">
-                        <span className="services-eyebrow-line"></span>
-                        <span className="services-eyebrow">{servicesIntro.heading}</span>
+            <div className="services-block-outer" ref={blockOuterRef}>
+            <div className="services-block">
+                <div className="services-intro">
+                    <div className="services-intro-left">
+                        <div className="services-eyebrow-wrapper">
+                            <span className="services-eyebrow-line"></span>
+                            <span className="services-eyebrow">{servicesIntro.heading}</span>
+                        </div>
+                        <h2 className="services-intro-title">Websites built <br /> for <span className="title-italic">results</span></h2>
                     </div>
-                    <h2 className="services-intro-title">{servicesIntro.title}</h2>
-                </div>
-                <div className="services-intro-right">
-                    <div className="services-desc-wrapper">
-                        <p className="services-intro-desc">{servicesIntro.description}</p>
+                    <div className="services-intro-right">
+                        <div className="services-desc-wrapper">
+                            <p className="services-intro-desc">{servicesIntro.description}</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div className="services-list">
+                <div className="services-middle-bar">
+                    <div className="services-scroll-controls">
+                        <span className="services-scroll-label">SCROLL TO EXPLORE</span>
+                        <div className="services-scroll-track">
+                            <motion.div
+                                className="services-scroll-thumb"
+                                style={{ scaleX: progressScaleX, originX: 0 }}
+                            />
+                            <div className="services-scroll-track-bg" />
+                        </div>
+                    </div>
+                </div>
+
+                <div className="services-list" ref={scrollContainerRef} onScroll={handleListScroll}>
                 {websiteTypes.map((type, idx) => {
                     const handleMouseMove = (e) => {
                         const row = e.currentTarget;
@@ -124,7 +314,7 @@ const Services = () => {
                     return (
                         <motion.div
                             key={type.id}
-                            className={`service-row ${visibleCards.has(idx) ? 'visible' : ''}`}
+                            className={`service-row ${visibleCards.has(idx) ? 'visible' : ''} ${activeIndex === idx ? 'active' : ''}`}
                             ref={(el) => (cardRefs.current[idx] = el)}
                             data-idx={idx}
                             onMouseMove={handleMouseMove}
@@ -162,6 +352,8 @@ const Services = () => {
                         </motion.div>
                     );
                 })}
+            </div>
+            </div>
             </div>
 
             <div className="services-footer-cta">
@@ -216,7 +408,7 @@ const Services = () => {
                         <div className="explore-line-wrapper">
                             <motion.div 
                                 className="explore-line-progress"
-                                style={{ scaleX: progressScaleX, originX: 0 }}
+                                style={{ scaleX: parallelProgressScaleX, originX: 0 }}
                             />
                             <div className="explore-line-bg" />
                         </div>

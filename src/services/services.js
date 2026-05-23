@@ -1,6 +1,6 @@
 export const servicesIntro = {
   heading: "SERVICES",
-  title: "Websites designed to look sharp, work smoothly, and help your business grow.",
+  title: "Sharp design. Clean code. Real results.",
   description:
     "I create modern, high-performing websites for brands and businesses that want more than just a nice design. Every project is built to be clear, responsive, and focused on user experience, trust, and results.",
 };
