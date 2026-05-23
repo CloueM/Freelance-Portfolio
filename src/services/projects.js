@@ -20,9 +20,19 @@ export const projectsData = [
   {
     id: 3,
     title: 'LUMIX',
-    year: '2024',
+    year: '2026',
     image: '/images/lumix.png',
     liveLink: 'https://kurowii.com/lumix/',
     description: 'An app for browsing movies that uses a huge database of films. You can look through different categories, watch trailers, and save your favorite movies to a list for later.',
+  },
+
+  {
+    id: 4,
+    title: "ABC Driving School",
+    year: "2026",
+    image: "/images/abcdrivingschool.png",
+    liveLink: "https://abc-drivingschool.com/",
+    description: "A professional online platform for a driving school built to establish a strong web presence. Designed from the ground up in Figma and developed using WordPress to deliver a fast, reliable, and easy-to-manage site for the client."
   }
+
 ];
