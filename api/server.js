@@ -115,9 +115,17 @@ function sanitize(text) {
 }
 
 async function verifyRecaptcha(token) {
+  if (process.env.NODE_ENV !== 'production') {
+    return { valid: true };
+  }
   const secretKey = RECAPTCHA_SECRET; 
+  if (!secretKey || secretKey.length < 20) {
+    if (process.env.NODE_ENV === 'production') {
+      console.warn('[SECURITY] reCAPTCHA secret not configured in production!');
+    }
+    return { valid: true }; 
+  }
   if (!token) return { valid: false, reason: "No token provided" };
-  if (!secretKey || secretKey.length < 10) return { valid: true }; 
 
   try {
     const response = await fetch("https://www.google.com/recaptcha/api/siteverify", {
@@ -162,12 +170,17 @@ app.post("/api/chat", async (req, res) => {
       systemInstruction: SYSTEM_PROMPT // Use internal prompt, ignore frontend
     });
 
-    const chat = model.startChat({
-      history: messages.slice(0, -1).map(m => ({
+    const history = [];
+    const startIdx = (messages[0]?.role === "assistant") ? 1 : 0;
+    for (let i = startIdx; i < messages.length - 1; i++) {
+      const m = messages[i];
+      history.push({
         role: m.role === "assistant" ? "model" : "user",
         parts: [{ text: sanitize(m.content[0].text) }]
-      })),
-    });
+      });
+    }
+
+    const chat = model.startChat({ history });
 
     const result = await chat.sendMessage(cleanText);
     const response = await result.response;

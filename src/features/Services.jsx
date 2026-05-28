@@ -329,10 +329,6 @@ const Services = () => {
             <div className="services-block">
                 <div className="services-intro">
                     <div className="services-intro-left">
-                        <div className="services-eyebrow-wrapper">
-                            <span className="services-eyebrow-line"></span>
-                            <span className="services-eyebrow">{servicesIntro.heading}</span>
-                        </div>
                         <h2 className="services-intro-title">Websites built <br /> for <span className="title-italic">results</span></h2>
                     </div>
                     <div className="services-intro-right">
@@ -484,7 +480,7 @@ const Services = () => {
                                 <div className="chapter-bg-number">0{item.id}</div>
                                 <div className="chapter-header">
                                     <div className="chapter-line"></div>
-                                    <span className="chapter-label">CHAPTER — 0{item.id}</span>
+                                    <span className="chapter-label">CHAPTER 0{item.id}</span>
                                 </div>
                                 
                                 <h3 className="chapter-title">{item.title}</h3>

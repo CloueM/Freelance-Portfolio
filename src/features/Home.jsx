@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import Hero from './Hero';
 import ProjectItem from '../components/ProjectItem';
+import CatchyBanner from '../components/CatchyBanner';
 const Services = React.lazy(() => import('./Services'));
 const AboutMe = React.lazy(() => import('./AboutMe'));
 
@@ -41,13 +42,15 @@ const Home = () => {
             <main style={{ position: 'relative' }}>
                 <Hero />
 
+                <CatchyBanner />
+
                 <React.Suspense fallback={<div style={{ height: '500px' }} />}>
                     <Services />
                 </React.Suspense>
 
                 <div id="home-projects" className="home-projects-section">
                     <div className="section-header">
-                        <h2>Engineered <br /><span className="title-italic">outcomes</span></h2>
+                        <h2>Selected <br /><span className="title-italic">works</span></h2>
                         <p className="section-header-desc">
                             A showcase of bespoke web engineering and brand-aligned design. Every project is custom developed from scratch with clean markup, modern interactions, and responsive interfaces built to drive business growth.
                         </p>

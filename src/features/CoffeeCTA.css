@@ -3,7 +3,7 @@
     position: relative;
     width: 100%;
     padding: 10rem var(--layout-margin);
-    background-color: rgba(30, 30, 30, 0.4);
+    background-color: rgba(15, 15, 15, 0.5);
     -webkit-backdrop-filter: blur(40px);
     backdrop-filter: blur(40px);
     border-top: 1px solid rgba(255, 255, 255, 0.05);
@@ -21,15 +21,26 @@
     pointer-events: none;
 }
 
-.coffee-cta-glow {
+.coffee-cta-glow-primary {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 60%;
+    top: 30%;
+    right: 10%;
+    width: 40%;
     height: 60%;
-    background: radial-gradient(circle, rgba(255, 255, 255, 0.03) 0%, transparent 70%);
-    opacity: 0.5;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.04) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(60px);
+}
+
+.coffee-cta-glow-secondary {
+    position: absolute;
+    bottom: 20%;
+    left: 5%;
+    width: 30%;
+    height: 40%;
+    background: radial-gradient(ellipse, rgba(255, 255, 255, 0.025) 0%, transparent 70%);
+    border-radius: 50%;
+    filter: blur(80px);
 }
 
 .coffee-cta-container {
@@ -60,24 +71,51 @@
 .coffee-cta-image-wrapper {
     width: 280px;
     height: 280px;
-    background: rgba(255, 255, 255, 0.02);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+    background: rgba(255, 255, 255, 0.025);
+    border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 40px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    gap: 0.75rem;
     padding: 2rem;
     -webkit-backdrop-filter: blur(20px);
     backdrop-filter: blur(20px);
     box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.3),
-        inset 0 0 0 1px rgba(255, 255, 255, 0.05);
+        0 24px 60px rgba(0, 0, 0, 0.4),
+        inset 0 1px 0 rgba(255, 255, 255, 0.08);
+    cursor: pointer;
+    user-select: none;
+    position: relative;
+}
+
+.coffee-cta-image-wrapper:hover .coffee-cta-image-hint {
+    opacity: 1;
+    transform: translateY(0);
 }
 
 .coffee-cta-image {
     width: 100%;
     height: auto;
-    filter: drop-shadow(0 20px 30px rgba(0, 0, 0, 0.5));
+    filter: drop-shadow(0 16px 24px rgba(0, 0, 0, 0.5));
+    flex: 1;
+    object-fit: contain;
+}
+
+.coffee-cta-image-hint {
+    display: flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.7rem;
+    font-family: var(--font-primary);
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.3);
+    opacity: 0;
+    transform: translateY(4px);
+    transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
 /* --- CTA Text Content --- */
@@ -108,51 +146,79 @@
     text-transform: uppercase;
 }
 
-.coffee-cta-description {
-    font-family: var(--font-primary);
-    font-size: clamp(1rem, 1.2vw, 1.15rem);
-    color: var(--color-off-white);
-    line-height: 1.7;
-    opacity: 0.6;
-    max-width: 540px;
-    margin: 0 0 3rem;
+.coffee-cta-title-accent {
+    color: var(--color-dust);
 }
 
-/* --- CTA Footer & Button --- */
-.coffee-cta-footer {
+.coffee-cta-description {
+    font-family: var(--font-primary);
+    font-size: clamp(1rem, 1.2vw, 1.1rem);
+    color: var(--color-off-white);
+    line-height: 1.75;
+    opacity: 0.65;
+    max-width: 520px;
+    margin: 0 0 2.5rem;
+}
+
+/* --- CTA Actions --- */
+.coffee-cta-actions {
     display: flex;
-    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.75rem;
 }
 
 .coffee-cta-btn {
-    display: flex;
+    display: inline-flex;
     align-items: center;
-    gap: 1.5rem;
-    padding: 1.25rem 3rem;
-    background: var(--color-off-white);
-    color: var(--color-charcoal);
+    gap: 0.65rem;
+    padding: 1rem 2rem;
     border-radius: 100px;
     font-family: var(--font-primary);
     font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
-    transition: background 0.3s ease;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-    text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    border: none;
+    transition: all 0.35s cubic-bezier(0.25, 1, 0.5, 1);
 }
 
-.coffee-cta-btn:hover {
-    background: #fff;
+.coffee-cta-btn-primary {
+    background: var(--color-off-white);
+    color: var(--color-charcoal);
+    box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
 }
 
-.coffee-cta-btn .iconify {
-    font-size: 1.2rem;
-    transition: transform 0.3s ease;
+.coffee-cta-btn-primary:hover {
+    background: #ffffff;
+    box-shadow: 0 12px 32px rgba(255, 255, 255, 0.2);
 }
 
-.coffee-cta-btn:hover .iconify {
-    transform: translateX(5px);
+.coffee-cta-btn-secondary {
+    background: rgba(255, 255, 255, 0.06);
+    color: var(--color-off-white);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+}
+
+.coffee-cta-btn-secondary:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.25);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
+}
+
+/* --- CTA Note --- */
+.coffee-cta-note {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-family: var(--font-primary);
+    font-size: 0.78rem;
+    color: rgba(255, 255, 255, 0.35);
+    font-weight: 500;
 }
 
 /* --- Responsive Styles --- */
@@ -166,12 +232,33 @@
         align-items: center;
     }
     
-    .coffee-cta-footer {
+    .coffee-cta-actions {
+        justify-content: center;
+    }
+    
+    .coffee-cta-note {
         justify-content: center;
     }
     
     .coffee-cta-description {
         margin-left: auto;
         margin-right: auto;
+    }
+}
+
+@media (max-width: 480px) {
+    .coffee-cta-btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .coffee-cta-actions {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .coffee-cta-image-wrapper {
+        width: 220px;
+        height: 220px;
     }
 }

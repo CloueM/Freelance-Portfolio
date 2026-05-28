@@ -102,27 +102,33 @@ $input = json_decode(file_get_contents("php://input"), true);
 $messages = $input['messages'] ?? [];
 $recaptchaToken = $input['recaptchaToken'] ?? '';
 
-// Verify reCAPTCHA
-if (!$recaptchaToken) {
-    http_response_code(403);
-    echo json_encode(["error" => "Security verification failed."]);
-    exit;
-}
+// Verify reCAPTCHA only if secret key is configured and not local environment
+$isLocal = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']) || 
+           (isset($_SERVER['HTTP_HOST']) && strpos($_SERVER['HTTP_HOST'], 'localhost') !== false) ||
+           (isset($env['NODE_ENV']) && $env['NODE_ENV'] !== 'production');
 
-$ch = curl_init("https://www.google.com/recaptcha/api/siteverify");
-curl_setopt($ch, CURLOPT_POST, true);
-curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
-    'secret' => $RECAPTCHA_SECRET,
-    'response' => $recaptchaToken
-]));
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-$reResponse = json_decode(curl_exec($ch), true);
-curl_close($ch);
+if (!$isLocal && $RECAPTCHA_SECRET && strlen($RECAPTCHA_SECRET) >= 20) {
+    if (!$recaptchaToken) {
+        http_response_code(403);
+        echo json_encode(["error" => "Security verification failed."]);
+        exit;
+    }
 
-if (!$reResponse['success'] || $reResponse['score'] < 0.5) {
-    http_response_code(403);
-    echo json_encode(["error" => "Security verification failed."]);
-    exit;
+    $ch = curl_init("https://www.google.com/recaptcha/api/siteverify");
+    curl_setopt($ch, CURLOPT_POST, true);
+    curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+        'secret' => $RECAPTCHA_SECRET,
+        'response' => $recaptchaToken
+    ]));
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    $reResponse = json_decode(curl_exec($ch), true);
+    curl_close($ch);
+
+    if (!$reResponse['success'] || $reResponse['score'] < 0.5) {
+        http_response_code(403);
+        echo json_encode(["error" => "Security verification failed."]);
+        exit;
+    }
 }
 
 // Input Sanitization
@@ -156,7 +162,9 @@ foreach ($injectionPatterns as $pattern) {
 
 // Prepare Gemini API Call
 $history = [];
-foreach (array_slice($messages, 0, -1) as $m) {
+$startIdx = (isset($messages[0]['role']) && $messages[0]['role'] === "assistant") ? 1 : 0;
+$sliced = array_slice($messages, $startIdx, count($messages) - 1 - $startIdx);
+foreach ($sliced as $m) {
     $history[] = [
         "role" => $m['role'] === "assistant" ? "model" : "user",
         "parts" => [["text" => trim(strip_tags($m['content'][0]['text']))]]

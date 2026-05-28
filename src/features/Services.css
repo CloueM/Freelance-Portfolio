@@ -20,7 +20,7 @@
 }
 
 .services-block {
-    --card-width: clamp(520px, 48vw, 720px);
+    --card-width: clamp(440px, 38vw, 600px);
     position: sticky;
     top: 0;
     height: 100vh;
@@ -32,11 +32,11 @@
 
 /* --- Services Intro & Header --- */
 .services-intro {
-    padding: 6.5rem var(--layout-margin) 3.5rem;
+    padding: 3.5rem var(--layout-margin) 1.5rem;
     display: flex;
     flex-direction: row;
     align-items: flex-end;
-    gap: 6rem;
+    gap: 3rem;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
     flex: 0 0 auto;
 }
@@ -69,7 +69,7 @@
 
 .services-intro-title {
     font-family: var(--font-primary);
-    font-size: clamp(2.8rem, 5.2vw, 5.5rem);
+    font-size: clamp(2.2rem, 3.8vw, 3.8rem);
     font-weight: 400;
     color: var(--color-off-white);
     line-height: 0.95;
@@ -79,7 +79,7 @@
 }
 
 .services-intro-right {
-    flex: 0 0 420px;
+    flex: 0 0 550px;
     display: flex;
     flex-direction: column;
     align-self: flex-end;
@@ -105,7 +105,7 @@
 
 /* --- Services Middle Bar --- */
 .services-middle-bar {
-    padding: 1.25rem var(--layout-margin);
+    padding: 0.75rem var(--layout-margin);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -158,13 +158,13 @@
     flex: 1;
     min-height: 0;
     display: flex;
-    /* overflow:hidden — scrollLeft is driven by the scroll handler;
+    /* overflow:hidden - scrollLeft is driven by the scroll handler;
        native scroll is intentionally disabled on desktop */
     overflow: hidden;
     scrollbar-width: none;
-    gap: 3.5rem;
-    padding-top: 2.5rem;
-    padding-bottom: 3.5rem;
+    gap: 3rem;
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
     padding-left: calc(50% - var(--card-width) / 2);
     padding-right: calc(50% - var(--card-width) / 2);
     scroll-padding: 0 var(--layout-margin);
@@ -180,7 +180,7 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    padding: 3rem 2.5rem;
+    padding: 2.25rem 2rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
     border-radius: 20px;
     background: rgba(255, 255, 255, 0.015);
@@ -189,12 +189,13 @@
     /* Centered width layout on desktop */
     flex: 0 0 var(--card-width);
     height: auto;
-    min-height: 580px;
+    min-height: 480px;
     scroll-snap-align: center;
     overflow: hidden;
-    gap: 1.5rem;
-    opacity: 0.2;
-    filter: blur(8px);
+    gap: 1rem;
+    opacity: 0.45;
+    filter: blur(6px);
+    transform: scale(0.95);
     transition: opacity 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                 filter 0.6s cubic-bezier(0.16, 1, 0.3, 1),
                 transform 0.6s cubic-bezier(0.16, 1, 0.3, 1),
@@ -205,6 +206,7 @@
 .service-row.active {
     opacity: 1;
     filter: blur(0);
+    transform: scale(1);
     border-color: rgba(255, 255, 255, 0.18);
     background: rgba(255, 255, 255, 0.035);
     box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25),
@@ -214,7 +216,7 @@
 .service-row:hover {
     opacity: 1;
     filter: blur(0);
-    transform: translateY(-6px);
+    transform: scale(1.01) translateY(-6px);
     border-color: rgba(255, 255, 255, 0.25);
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3),
                 inset 0 1px 1px rgba(255, 255, 255, 0.15);
@@ -261,7 +263,7 @@
 
 .service-row-title {
     font-family: var(--font-primary);
-    font-size: clamp(2rem, 3.4vw, 3.6rem);
+    font-size: clamp(1.8rem, 2.5vw, 2.5rem);
     font-weight: 900;
     color: var(--color-off-white);
     margin: 0;
@@ -299,13 +301,13 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
-    gap: 2rem;
+    gap: 1.25rem;
 }
 
 .service-row-desc {
     font-family: var(--font-primary);
-    font-size: 1.05rem;
-    line-height: 1.6;
+    font-size: 0.98rem;
+    line-height: 1.5;
     color: var(--color-off-white);
     opacity: 0.7;
     margin: 0;
@@ -314,15 +316,15 @@
 .service-row-details {
     display: flex;
     flex-direction: column;
-    gap: 1.25rem;
+    gap: 0.85rem;
     border-top: 1px solid rgba(255, 255, 255, 0.05);
-    padding-top: 1.25rem;
+    padding-top: 1rem;
 }
 
 .service-detail-group {
     display: flex;
     flex-direction: column;
-    gap: 0.4rem;
+    gap: 0.25rem;
 }
 
 .detail-label {
@@ -337,8 +339,8 @@
 
 .detail-value {
     font-family: var(--font-primary);
-    font-size: 1rem;
-    line-height: 1.5;
+    font-size: 0.9rem;
+    line-height: 1.4;
     color: var(--color-off-white);
     opacity: 0.8;
     margin: 0;
@@ -1081,6 +1083,10 @@
 }
 
 @media (max-width: 1024px) {
+    .services-block {
+        --card-width: clamp(300px, 75vw, 420px);
+    }
+
     .services-intro {
         flex-direction: column;
         align-items: flex-start;
@@ -1096,13 +1102,13 @@
     }
 
     .service-row {
-        flex: 0 0 clamp(300px, 75vw, 420px);
+        flex: 0 0 var(--card-width);
     }
 }
 
 
 @media (max-width: 768px) {
-    /* Revert sticky effect — use plain native horizontal swipe on touch */
+    /* Revert sticky effect - use plain native horizontal swipe on touch */
     .services-block-outer {
         height: auto !important;
     }

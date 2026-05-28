@@ -23,16 +23,19 @@ function App() {
 
   const [hasStarted, setHasStarted] = useState(isBot);
   const [bgMusicStarted, setBgMusicStarted] = useState(isBot);
-  const [isLocked, setIsLocked] = useState(!isBot());
   const location = useLocation();
 
+  const isLocked = !isBot() && !bgMusicStarted && location.pathname === '/';
+
+  // Safeguard fallback: automatically unlock scroll after 15 seconds if it hasn't unlocked yet
   useEffect(() => {
-    if (bgMusicStarted) {
-      setIsLocked(false);
-    } else {
-      setIsLocked(true);
+    if (hasStarted && !bgMusicStarted) {
+      const fallbackTimer = setTimeout(() => {
+        setBgMusicStarted(true);
+      }, 15000);
+      return () => clearTimeout(fallbackTimer);
     }
-  }, [bgMusicStarted]);
+  }, [hasStarted, bgMusicStarted]);
 
   useEffect(() => {
 
@@ -42,7 +45,7 @@ function App() {
     return () => clearTimeout(preloadTimer);
   }, []);
 
-  useDynamicTitle("Kurowii | Creative Developer", "Come back! 👋");
+  useDynamicTitle("Kurowii | Creative Developer", "Come back!");
 
   const handleIntroEnd = () => {
     setBgMusicStarted(true);

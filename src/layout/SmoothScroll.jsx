@@ -1,7 +1,9 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Lenis from 'lenis';
 
 const SmoothScroll = ({ children, isLocked = false }) => {
+    const lenisRef = useRef(null);
+
     useEffect(() => {
         const lenis = new Lenis({
             lerp: 0.1,
@@ -14,11 +16,8 @@ const SmoothScroll = ({ children, isLocked = false }) => {
             infinite: false,
         });
 
-        if (isLocked) {
-            lenis.stop();
-        } else {
-            lenis.start();
-        }
+        lenisRef.current = lenis;
+        window.lenis = lenis;
 
         let rafId;
         function raf(time) {
@@ -47,13 +46,52 @@ const SmoothScroll = ({ children, isLocked = false }) => {
         const anchors = document.querySelectorAll('a[href^="#"]');
         anchors.forEach(anchor => anchor.addEventListener('click', handleAnchorClick));
 
-        window.lenis = lenis;
-
         return () => {
             lenis.destroy();
             window.lenis = null;
             cancelAnimationFrame(rafId);
             anchors.forEach(anchor => anchor.removeEventListener('click', handleAnchorClick));
+        };
+    }, []);
+
+    useEffect(() => {
+        const lenis = lenisRef.current;
+        if (!lenis) return;
+
+        const preventDefault = (e) => {
+            e.preventDefault();
+        };
+
+        const preventDefaultForScrollKeys = (e) => {
+            const keys = { 32: 1, 33: 1, 34: 1, 35: 1, 36: 1, 37: 1, 38: 1, 39: 1, 40: 1 };
+            if (keys[e.keyCode]) {
+                e.preventDefault();
+                return false;
+            }
+        };
+
+        if (isLocked) {
+            window.scrollTo(0, 0);
+            lenis.scrollTo(0, { immediate: true });
+            lenis.stop();
+
+            window.addEventListener('wheel', preventDefault, { passive: false });
+            window.addEventListener('touchmove', preventDefault, { passive: false });
+            window.addEventListener('keydown', preventDefaultForScrollKeys, { passive: false });
+
+            document.documentElement.classList.add('scroll-locked');
+            document.body.classList.add('scroll-locked');
+        } else {
+            lenis.start();
+
+            document.documentElement.classList.remove('scroll-locked');
+            document.body.classList.remove('scroll-locked');
+        }
+
+        return () => {
+            window.removeEventListener('wheel', preventDefault);
+            window.removeEventListener('touchmove', preventDefault);
+            window.removeEventListener('keydown', preventDefaultForScrollKeys);
         };
     }, [isLocked]);
 

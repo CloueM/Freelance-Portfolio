@@ -65,7 +65,7 @@ export const whatsIncluded = [
     id: 3,
     title: "Responsive everywhere",
     description:
-      "Your website is designed to feel polished across every screen size — from mobile to desktop. No awkward spacing, no broken layouts, just a consistent and seamless experience throughout.",
+      "Your website is designed to feel polished across every screen size, from mobile to desktop. No awkward spacing, no broken layouts, just a consistent and seamless experience throughout.",
   },
   {
     id: 4,
@@ -83,7 +83,7 @@ export const whatsIncluded = [
     id: 6,
     title: "Handled from start to launch",
     description:
-      "I manage the technical side with care — from setup to deployment — so the entire process feels clear, smooth, and professionally executed.",
+      "I manage the technical side with care, from setup to deployment, so the entire process feels clear, smooth, and professionally executed.",
   },
 ];
 

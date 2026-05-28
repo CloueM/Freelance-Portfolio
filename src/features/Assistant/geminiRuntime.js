@@ -6,20 +6,20 @@ import { checkDomain } from "./domainGuard";
 
 const API_URL = import.meta.env.VITE_API_URL || "/api/chat";
 
-export const useGeminiRuntime = (executeRecaptchaRef) => {
+export const useGeminiRuntime = (executeRecaptcha) => {
   const options = useMemo(() => ({
     run: async function* ({ messages, abortSignal }) {
       try {
         checkDomain();
       } catch (error) {
-        yield { content: [{ type: "text", text: `⚠️ ${error.message}` }] };
+        yield { content: [{ type: "text", text: error.message }] };
         return;
       }
 
       try {
         checkRateLimit();
       } catch (error) {
-        yield { content: [{ type: "text", text: `⏳ ${error.message}` }] };
+        yield { content: [{ type: "text", text: error.message }] };
         return;
       }
 
@@ -30,14 +30,14 @@ export const useGeminiRuntime = (executeRecaptchaRef) => {
       try {
         sanitizedText = sanitizeInput(rawText);
       } catch (error) {
-        yield { content: [{ type: "text", text: `⚠️ ${error.message}` }] };
+        yield { content: [{ type: "text", text: error.message }] };
         return;
       }
 
       let recaptchaToken = null;
-      if (executeRecaptchaRef?.current) {
+      if (executeRecaptcha) {
         try {
-          recaptchaToken = await executeRecaptchaRef.current("chat_message");
+          recaptchaToken = await executeRecaptcha("chat_message");
         } catch (err) {
           // Silent fail, backend handles validation
         }
@@ -73,8 +73,8 @@ export const useGeminiRuntime = (executeRecaptchaRef) => {
         if (error.name === 'AbortError') return;
 
         const message = error.message.includes("verification failed")
-          ? "⚠️ Security check failed. Please refresh the page and try again."
-          : "⚠️ Something went wrong. Please try again shortly.";
+          ? "Security check failed. Please refresh the page and try again."
+          : "Something went wrong. Please try again shortly.";
 
         yield {
           content: [{
@@ -84,7 +84,19 @@ export const useGeminiRuntime = (executeRecaptchaRef) => {
         };
       }
     },
-  }), [executeRecaptchaRef]);
+  }), [executeRecaptcha]);
 
-  return useLocalRuntime(options);
+  return useLocalRuntime(options, {
+    initialMessages: [
+      {
+        role: "assistant",
+        content: [
+          {
+            type: "text",
+            text: "Hey there. I know a lot about Cloue, his projects, his skills, and what he is looking for. Ask me anything."
+          }
+        ]
+      }
+    ]
+  });
 };

@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Icon } from '@iconify/react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { playHoverSound, playSelectSound, playPulseSfx, playUnhoverSound, playMapSwoosh } from '../utils/sound';
 import './AboutMe.css';
 
@@ -171,6 +172,7 @@ const getWeatherDisplay = (code) => {
 
 const AboutMe = () => {
     const [activeLoc, setActiveLoc] = useState('vancouver');
+    const [activeTab, setActiveTab] = useState('about');
     const [time, setTime] = useState(new Date());
     const [sectionVisible, setSectionVisible] = useState(false);
     const [weatherData, setWeatherData] = useState({ temp: null, display: null, loading: true });
@@ -291,51 +293,90 @@ const AboutMe = () => {
 
                 <div className="about-content-overlay">
                     <div className="about-content-inner">
-                        <div className="about-intro-block">
+                        <div className="about-header-area">
                             <h2 className="about-greeting">Hi, I'm Cloue.</h2>
-                            <p className="about-main-desc">
-                                I'm a designer and developer based in Vancouver. I build websites that don't just look great—they actually work. Whether you need a simple static site or a custom build you can maintain yourself, I can bring whatever design you have in mind to life.
-                            </p>
+                            <div className="about-tabs-nav">
+                                <button 
+                                    className={`about-tab-btn ${activeTab === 'about' ? 'active' : ''}`}
+                                    onClick={() => { setActiveTab('about'); playSelectSound(); }}
+                                >
+                                    {activeTab === 'about' && (
+                                        <motion.div layoutId="active-tab-bg" className="active-tab-bg" />
+                                    )}
+                                    <span className="tab-btn-text">Story</span>
+                                </button>
+                                <button 
+                                    className={`about-tab-btn ${activeTab === 'education' ? 'active' : ''}`}
+                                    onClick={() => { setActiveTab('education'); playSelectSound(); }}
+                                >
+                                    {activeTab === 'education' && (
+                                        <motion.div layoutId="active-tab-bg" className="active-tab-bg" />
+                                    )}
+                                    <span className="tab-btn-text">Education</span>
+                                </button>
+                            </div>
                         </div>
 
-                        <div className="about-details-stack">
-                            <div className="about-detail-item">
-                                <span className="detail-label">My approach</span>
-                                <p>A good website should be as reliable as it is beautiful. Because I have a background in technical systems, I build sites that don't just look good on the surface. They are stable, fast, and ready for whatever comes next.</p>
-                            </div>
-
-                            <div className="about-detail-item">
-                                <span className="detail-label">The technical side</span>
-                                <p>I understand the web from the inside out. I don't just design the surface; I make sure everything behind the scenes is secure and built on a solid foundation that lasts.</p>
-                            </div>
-
-                            <div className="about-detail-item">
-                                <span className="detail-label">Education</span>
-                                <div className="edu-list">
-                                    <div className="edu-row" onMouseEnter={playHoverSound}>
-                                        <div className="edu-logo-wrapper">
-                                            <img src="/images/BCIT-Logo.webp" alt="BCIT" className="edu-logo" />
-                                        </div>
-                                        <div className="edu-content">
-                                            <div className="edu-header">
-                                                <span className="edu-year">2025</span>
-                                                <p>Front End Web Development, BCIT</p>
+                        <div className="about-tab-content-wrapper">
+                            <AnimatePresence mode="wait">
+                                {activeTab === 'about' ? (
+                                    <motion.div
+                                        key="about"
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -15 }}
+                                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                        className="about-tab-pane"
+                                    >
+                                        <p className="about-main-desc">
+                                            I design and build websites in Vancouver. I love making sites that look clean and work exactly the way you expect. Whether you need a simple page to show off your work or a custom site you can easily edit yourself, I'm here to build it for you.
+                                        </p>
+                                    </motion.div>
+                                ) : (
+                                    <motion.div
+                                        key="education"
+                                        initial={{ opacity: 0, y: 15 }}
+                                        animate={{ opacity: 1, y: 0 }}
+                                        exit={{ opacity: 0, y: -15 }}
+                                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                                        className="about-tab-pane"
+                                    >
+                                        <p className="about-main-desc">
+                                            I studied web development and computer systems in school. Here is my education:
+                                        </p>
+                                        <div className="about-details-stack">
+                                            <div className="about-detail-item">
+                                                <div className="edu-list">
+                                                    <div className="edu-row" onMouseEnter={playHoverSound}>
+                                                        <div className="edu-logo-wrapper">
+                                                            <img src="/images/BCIT-Logo.webp" alt="BCIT" className="edu-logo" />
+                                                        </div>
+                                                        <div className="edu-content">
+                                                            <div className="edu-header">
+                                                                <span className="edu-year">2025</span>
+                                                                <p className="edu-degree">Front End Web Development</p>
+                                                                <p className="edu-school">British Columbia Institute of Technology</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div className="edu-row" onMouseEnter={playHoverSound}>
+                                                        <div className="edu-logo-wrapper">
+                                                            <img src="/images/BCIT-Logo.webp" alt="BCIT" className="edu-logo" />
+                                                        </div>
+                                                        <div className="edu-content">
+                                                            <div className="edu-header">
+                                                                <span className="edu-year">2022</span>
+                                                                <p className="edu-degree">Computer Information Technology</p>
+                                                                <p className="edu-school">British Columbia Institute of Technology</p>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div className="edu-row" onMouseEnter={playHoverSound}>
-                                        <div className="edu-logo-wrapper">
-                                            <img src="/images/BCIT-Logo.webp" alt="BCIT" className="edu-logo" />
-                                        </div>
-                                        <div className="edu-content">
-                                            <div className="edu-header">
-                                                <span className="edu-year">2022</span>
-                                                <p>Computer Information Technology, BCIT</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+                                    </motion.div>
+                                )}
+                            </AnimatePresence>
                         </div>
 
                         <div className="about-footer">

@@ -38,3 +38,7 @@
     cursor: none !important;
   }
 }
+
+body.hide-global-cursor .smooth-follower-container {
+  display: none !important;
+}

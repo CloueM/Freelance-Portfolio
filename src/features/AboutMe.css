@@ -33,49 +33,59 @@
 
 .about-content-overlay {
     position: absolute;
-    inset: 0;
+    top: 0;
+    left: 0;
+    width: 50%;
+    height: 100%;
     z-index: 10;
     background: linear-gradient(to right,
-            rgba(15, 15, 15, 0.95) 0%,
-            rgba(15, 15, 15, 0.8) 30%,
-            rgba(15, 15, 15, 0.4) 50%,
+            rgba(15, 15, 15, 0.98) 0%,
+            rgba(15, 15, 15, 0.88) 60%,
             rgba(15, 15, 15, 0) 100%);
-    
-    
-    
-    
-    
     
     mask-image: linear-gradient(to right, 
         rgba(0,0,0,1) 0%, 
-        rgba(0,0,0,1) 35%, 
-        rgba(0,0,0,0) 65%);
+        rgba(0,0,0,1) 70%, 
+        rgba(0,0,0,0) 100%);
     -webkit-mask-image: linear-gradient(to right, 
         rgba(0,0,0,1) 0%, 
-        rgba(0,0,0,1) 35%, 
-        rgba(0,0,0,0) 65%);
+        rgba(0,0,0,1) 70%, 
+        rgba(0,0,0,0) 100%);
 
-    pointer-events: none;
+    pointer-events: auto;
+    overflow-y: auto;
+    scrollbar-width: none;
     display: flex;
-    align-items: center;
-    padding: 0 var(--layout-margin);
+    align-items: flex-start;
+    padding: 8.5rem var(--layout-margin) 3.5rem var(--layout-margin);
+}
+
+.about-content-overlay::-webkit-scrollbar {
+    display: none;
 }
 
 .about-content-inner {
     max-width: 600px;
+    max-height: calc(100vh - 10rem);
     pointer-events: auto;
     display: flex;
     flex-direction: column;
-    gap: 4rem;
+    gap: 2.5rem;
 }
 
 /* --- Typography & Text Content --- */
+.about-header-area {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
 .about-greeting {
     font-family: var(--font-primary);
     font-size: clamp(2.5rem, 6vw, 4.5rem);
     font-weight: var(--font-weight-h1);
     color: var(--color-off-white);
-    margin: 0 0 1.5rem;
+    margin: 0;
     letter-spacing: -0.04em;
     line-height: 1;
 }
@@ -87,6 +97,71 @@
     color: var(--color-off-white);
     opacity: 0.9;
     margin: 0;
+}
+
+/* --- Tabs --- */
+.about-tabs-nav {
+    display: inline-flex;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.06);
+    padding: 0.25rem;
+    border-radius: 100px;
+    position: relative;
+    width: fit-content;
+    z-index: 10;
+}
+
+.about-tab-btn {
+    position: relative;
+    background: transparent;
+    border: none;
+    padding: 0.5rem 1.5rem;
+    border-radius: 100px;
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.5);
+    font-family: var(--font-primary);
+    font-size: 0.75rem;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    transition: color 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.about-tab-btn.active {
+    color: var(--color-charcoal);
+}
+
+.about-tab-btn:hover:not(.active) {
+    color: rgba(255, 255, 255, 0.95);
+}
+
+.active-tab-bg {
+    position: absolute;
+    inset: 0;
+    background: var(--color-off-white);
+    border-radius: 100px;
+    z-index: 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+}
+
+.tab-btn-text {
+    position: relative;
+    z-index: 1;
+}
+
+.about-tab-content-wrapper {
+    position: relative;
+    flex: 1;
+}
+
+.about-tab-pane {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+    min-height: 320px;
 }
 
 .about-details-stack {
@@ -122,7 +197,7 @@
 .edu-list {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    gap: 1.5rem;
 }
 
 .edu-row {
@@ -154,6 +229,22 @@
     display: flex;
     flex-direction: column;
     gap: 0.2rem;
+}
+
+.edu-degree {
+    font-family: var(--font-primary);
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--color-off-white);
+    margin: 0;
+}
+
+.edu-school {
+    font-family: var(--font-primary);
+    font-size: 0.85rem;
+    color: var(--color-neutral);
+    opacity: 0.8;
+    margin: 0;
 }
 
 .edu-year {
@@ -457,6 +548,7 @@
 
     .about-content-overlay {
         position: relative;
+        width: 100%;
         background: linear-gradient(to bottom,
                 rgba(15, 15, 15, 1) 0%,
                 rgba(15, 15, 15, 0.95) 25%,
